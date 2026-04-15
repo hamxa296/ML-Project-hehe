@@ -1,0 +1,59 @@
+2-WEEK  ROADMAP  
+ Day/Period  
+Goal/Focus  ALL  MEMBERS  Tasks  
+ML  Engineer  Tasks  
+Pipeline  Engineer  Tasks  
+DevOps  Tasks  
+Backend  Tasks  
+Day  1–2  Planning  +  Dataset  
+Finalize  dataset  (fraud  detection);  Define  target  variable,  features,  and  problem  type  
+Start  EDA  (imbalanced  data,  distributions)  
+Define  preprocessing  steps  
+  
+Day  3–4  Baseline  Model   Train  baseline  model  (Logistic  Regression);  Handle  imbalance  (SMOTE  or  class  weights);  Evaluate  metrics  
+Write  preprocessing  functions  (modular)  
+Setup  repo  structure  +  GitHub  Actions  skeleton  
+Setup  FastAPI  basic  app  
+Day  5–6  Advanced  ML  +  Pipeline  
+ Train  Random  Forest  /  XGBoost;  Add  PCA  and  Clustering  (KMeans)  
+Build  Prefect  flow:  ingest  →  preprocess  →  train  →  evaluate  →  save  
+Add  basic  tests:  Data  validation,  Model  output  checks  
+Connect  model  to  API  (/predict)  
+Day  7  Integration  Day  Connect  Prefect  →  Model  and  Model  →  FastAPI;  First  working  system  
+  Run  CI  pipeline  
+Test  API  with  real  inputs  
+Day  8–9  Docker  +  API  Completion  
+ Improve  models  
+Ensure  Prefect  runs  smoothly  
+ Write  Dockerfile;  
+Day/Period  
+Goal/Focus  ALL  MEMBERS  Tasks  
+ML  Engineer  Tasks  
+Pipeline  Engineer  Tasks  
+DevOps  Tasks  
+Backend  Tasks  
+(hyperparameter  tuning)  
+Containerize  FastAPI  
+Day  10–11  
+CI/CD  +  Testing     Full  GitHub  Actions  pipeline:  Run  tests,  Validate  data,  Build  Docker  image;  Add  DeepChecks  (data  drift,  integrity)  
+ 
+Day  12  Advanced  Features  
+ Add  Time-series  fraud  trends,  Association  rules  (Apriori),  or  Risk  scoring  system  
+   
+Day  13  Final  Integration  Test  FULL  system:  Pipeline  →  Model  →  API  →  Docker  →  CI/CD;  Fix  bugs,  broken  endpoints,  and  pipeline  errors  
+    
+Day  14  Report  +  Submission  
+Focus  on  process  explanation:  model  choices,  problems  faced,  CI/CD  benefits,  Prefect  utility,  
+    
+Day/Period  
+Goal/Focus  ALL  MEMBERS  Tasks  
+ML  Engineer  Tasks  
+Pipeline  Engineer  Tasks  
+DevOps  Tasks  
+Backend  Tasks  
+and  experiment  observations  
+Suggested  Project  Structure  
+project/  │  ├──  data/  ├──  notebooks/  ├──  src/  │    ├──  preprocessing/  │    ├──  models/  │    ├──  pipelines/  │    ├──  api/  │    └──  utils/  │  ├──  tests/  ├──  .github/workflows/  ├──  Dockerfile  ├──  docker-compose.yml  └──  requirements.txt   
+Pro  Tips  (from  experience)  
+●  Start  integration  EARLY  (Day  7  is  crucial)  ●  Don’t  overcomplicate  models  →  focus  on  system  ●  Fraud  datasets  are  imbalanced  →  handle  carefully  ●  Logging  everything  helps  your  report  A  LOT  ●  Take  screenshots  during  development  →  use  in  report  
+ 
