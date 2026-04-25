@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Stealth Gold - Sophisticated Matte Palette */
+  --bg-space: #080808;
+  --bg-card: rgba(20, 20, 20, 0.8);
+  --bg-card-hover: rgba(30, 30, 30, 0.95);
+  --border-glass: rgba(255, 255, 255, 0.03);
+  --border-glass-bright: rgba(255, 255, 255, 0.08);
+  --border-accent: #c5a059;
+
+  --text-primary: #ffffff;
+  --text-secondary: #d1d1d1;
+  --text-muted: #666666;
+
+  /* Sophisticated Secondary Indicators */
+  --safe: #8ca67e; /* Muted Sage */
+  --safe-glow: rgba(140, 166, 126, 0.2);
+  --suspicious: #c5a059; /* Champagne Gold */
+  --suspicious-glow: rgba(197, 160, 89, 0.2);
+  --severe: #a65d5d; /* Muted Garnet */
+  --severe-glow: rgba(166, 93, 93, 0.3);
+
+  --accent: #c5a059;
+  --accent-glow: rgba(197, 160, 89, 0.4);
+  --accent-gradient: linear-gradient(135deg, #c5a059 0%, #8e7341 100%);
+  --text-gradient: linear-gradient(to right, #ffffff, #c5a059);
+
+  font-family: 'Outfit', sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  color: var(--text-primary);
+  background-color: var(--bg-space);
+  overflow: hidden; 
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Animated Ambient Background --- */
+.app-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.08), transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(45, 45, 45, 0.3), transparent 40%),
+    radial-gradient(circle at 50% 50%, #000000, transparent 80%);
+  filter: blur(140px);
+  animation: bg-pulse 12s ease-in-out infinite alternate;
+}
+
+.app-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,1) 30%, transparent 80%);
+  animation: grid-shift 30s linear infinite;
+  opacity: 0.6;
+}
+
+/* --- Next-Gen Glassmorphism --- */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid var(--border-glass-bright);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px 0 rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15); /* Inset light reflection */
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); /* ultra smooth */
+  position: relative;
+  overflow: hidden;
+}
+
+/* The neon sweep effect on hover */
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -200%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: skewX(-20deg);
+  transition: 0.7s ease-in-out;
+  pointer-events: none;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  background: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 20px 40px -10px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(255, 0, 255, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+
+.glass-card:hover::after {
+  left: 200%;
+}
+
+/* Main Content Area */
+.scroll-container {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  padding: 3rem;
+  perspective: 1000px; /* For 3D transforms inside */
+}
+
+/* --- Typography Elevate --- */
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  background: var(--text-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  color: var(--accent);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Premium Interactive Buttons --- */
+.btn-action {
+  background: transparent;
+  border: 1px solid var(--border-accent);
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  color: var(--accent);
+  font-weight: 600;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-action:hover {
+  background: var(--accent);
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px var(--accent-glow);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  border: 2px solid var(--bg-space);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Micro-Layouts */
+.grid-cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.flex-col { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+
+/* Status Indicators */
+.badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  backdrop-filter: blur(10px);
+}
+
+/* --- Keyframe Animations --- */
+@keyframes pulse-dot {
+  0% { transform: scale(0.95); opacity: 0.5; box-shadow: 0 0 0 0 var(--safe-glow); }
+  50% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 15px 4px var(--safe-glow); }
+  100% { transform: scale(0.95); opacity: 0.5; box-shadow: 0 0 0 0 transparent; }
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--safe);
+  animation: pulse-dot 2.5s infinite;
+}
+
+@keyframes bg-pulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes grid-shift {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(50px); }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-delayed { animation: float 6s ease-in-out 3s infinite; }
+
+@keyframes slide-up-fade {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Fixed the stagger bug by defining animation-fill-mode and opacity in the keyframe */
+.animate-slide-up { 
+  opacity: 0; 
+  animation: slide-up-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.text-gradient-animate {
+  background: linear-gradient(270deg, #ffffff, #93c5fd, #c4b5fd, #ffffff);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 6s ease infinite;
+}
