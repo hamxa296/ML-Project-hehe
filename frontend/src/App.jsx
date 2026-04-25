@@ -1,35 +1,33 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
-import TransactionsList from './pages/TransactionsList';
-import InvestigationView from './pages/InvestigationView';
 import Landing from './pages/Landing';
-import SimulationEngine from './pages/SimulationEngine';
-import PatternExplorer from './pages/PatternExplorer';
+import PipelineLog from './pages/PipelineLog';
+import EDA from './pages/EDA';
+import Simulator from './pages/Simulator';
+import RunDetail from './pages/RunDetail';
 import './index.css';
 
 function App() {
   return (
     <Router>
-      <div className="flex-row" style={{ width: '100vw', height: '100vh', background: 'var(--bg-space)', position: 'relative' }}>
+      <div className="flex-row" style={{ width: '100vw', height: '100vh', position: 'relative' }}>
         <div className="app-bg" />
         <div className="app-grid" />
         
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/*" element={
-            <div className="flex-row" style={{ width: '100%', height: '100%' }}>
+            <div className="flex-row w-full h-full">
               <Sidebar />
-              <main style={{ flex: 1, position: 'relative' }}>
-                <div className="scroll-container">
-                  <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/simulation" element={<SimulationEngine />} />
-                    <Route path="/patterns" element={<PatternExplorer />} />
-                    <Route path="/transactions" element={<TransactionsList />} />
-                    <Route path="/tx/:id" element={<InvestigationView />} />
-                  </Routes>
-                </div>
+              <main className="flex-1" style={{ position: 'relative' }}>
+                <Routes>
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/pipeline" element={<PipelineLog />} />
+                  <Route path="/pipeline/:id" element={<RunDetail />} />
+                  <Route path="/eda" element={<EDA />} />
+                  <Route path="/simulator" element={<Simulator />} />
+                </Routes>
               </main>
             </div>
           } />

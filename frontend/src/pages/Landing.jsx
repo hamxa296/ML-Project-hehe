@@ -1,78 +1,63 @@
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShieldCheck, Cpu, Code2, Rocket, Globe, Zap, ArrowRight, BrainCircuit, Activity, Database } from 'lucide-react';
+import { Play, Database, Server, GitMerge, Activity, CheckCircle2 } from 'lucide-react';
 
 const Landing = () => {
   const navigate = useNavigate();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
-    <div className="scroll-container animate-slide-up" style={{ padding: 0, width: '100vw', overflowX: 'hidden', position: 'relative' }}>
-      {/* Interactive Cursor Spotlight */}
-      <div style={{
-         position: 'fixed',
-         top: 0, left: 0,
-         width: '100vw', height: '100vh',
-         pointerEvents: 'none',
-         zIndex: 1,
-         background: `radial-gradient(circle 500px at ${mousePosition.x}px ${mousePosition.y}px, rgba(197, 160, 89, 0.05), transparent 80%)`,
-         transition: 'background 0.3s ease'
-      }} />
-      {/* Hero Section */}
-      <section style={{ 
-        minHeight: '90vh', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        textAlign: 'center', 
-        padding: '4rem 2rem',
-        position: 'relative',
-        width: '100%',
-        zIndex: 2
-      }}>
-        <div className="badge stagger-1" style={{ background: 'var(--accent-glow)', color: 'var(--accent)', marginBottom: '2.5rem', border: '1px solid var(--accent)', padding: '8px 24px', filter: 'drop-shadow(0 0 10px rgba(59,130,246,0.5))' }}>
-           v1.0.0 Neural Core Active
+    <div className="scroll-container p-0 w-full h-screen relative">
+      <div className="app-bg" />
+      <div className="app-grid" />
+      
+      <div className="flex-col items-center justify-center h-full text-center px-4 relative z-10" style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        
+        <div className="badge badge-violet animate-in mb-8" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}>
+          <Activity size={14} className="mr-2" />
+          v2.0 ML Pipeline Engine Active
         </div>
-        <h1 className="stagger-2 text-gradient-animate" style={{ fontSize: '5.5rem', lineHeight: '1', maxWidth: '1000px', margin: '0 auto 2rem auto', paddingBottom: '1rem' }}>
-          Next-Gen Fraud <br/> 
-          <span style={{ color: 'var(--accent)', WebkitTextFillColor: 'initial', filter: 'drop-shadow(0 0 15px rgba(59,130,246,0.3))' }}>Intelligence Defense</span>
+        
+        <h1 className="animate-in delay-1" style={{ fontSize: '4.5rem', marginBottom: '1.5rem' }}>
+          Automate Your <br/>
+          <span className="gradient-text-violet">Machine Learning Lifecycle</span>
         </h1>
-        <p className="text-secondary stagger-3" style={{ fontSize: '1.5rem', maxWidth: '800px', margin: '0 auto 3.5rem auto', lineHeight: '1.6', fontWeight: 400 }}>
-          Harnessing advanced machine learning to secure financial ecosystems. <br/> 
-          Detect, simulate, and neutralize threats in real-time.
+        
+        <p className="text-secondary animate-in delay-2" style={{ fontSize: '1.25rem', maxWidth: '700px', margin: '0 auto 3rem auto' }}>
+          Continuous integration and deployment for AI models. Monitor data drift, track training metrics, and deploy to production with confidence.
         </p>
-        <div className="flex-row gap-4 stagger-4" style={{ justifyContent: 'center' }}>
-          <button className="btn-action" style={{ padding: '1.4rem 3.5rem', fontSize: '1.2rem' }} onClick={() => navigate('/dashboard')}>
-             Dashboard <ArrowRight size={22} style={{ marginLeft: '0.5rem' }} />
+        
+        <div className="flex-row gap-4 animate-in delay-3">
+          <button className="btn btn-primary" style={{ padding: '0.8rem 2rem', fontSize: '1.1rem' }} onClick={() => navigate('/dashboard')}>
+            <Play size={18} /> Open Dashboard
+          </button>
+          <button className="btn btn-ghost" style={{ padding: '0.8rem 2rem', fontSize: '1.1rem' }}>
+            View Documentation
           </button>
         </div>
-      </section>
 
-      {/* Dashboard Feature Preview */}
-      <section style={{ padding: '6rem 2rem', maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-... (existing feature preview section content) ...
-      </section>
-
-      {/* Tech Stack Sections */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', padding: '6rem 2rem', maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 2 }}>
-... (existing tech stack content) ...
+        <div className="grid-3 mt-16 animate-in delay-4 w-full">
+          <div className="glass-card p-6 flex-col items-center text-center gap-4">
+            <div style={{ background: 'var(--violet-dim)', color: 'var(--violet)', padding: '1rem', borderRadius: '50%' }}>
+              <Database size={24} />
+            </div>
+            <h3>Automated EDA</h3>
+            <p className="text-secondary text-sm">Real-time exploratory data analysis and feature drift monitoring.</p>
+          </div>
+          <div className="glass-card p-6 flex-col items-center text-center gap-4">
+            <div style={{ background: 'var(--cyan-dim)', color: 'var(--cyan)', padding: '1rem', borderRadius: '50%' }}>
+              <GitMerge size={24} />
+            </div>
+            <h3>CI/CD for Models</h3>
+            <p className="text-secondary text-sm">Automated training pipelines, model versioning, and validation checks.</p>
+          </div>
+          <div className="glass-card p-6 flex-col items-center text-center gap-4">
+            <div style={{ background: 'var(--emerald-dim)', color: 'var(--emerald)', padding: '1rem', borderRadius: '50%' }}>
+              <Server size={24} />
+            </div>
+            <h3>1-Click Deploy</h3>
+            <p className="text-secondary text-sm">Push approved models directly to high-performance inference endpoints.</p>
+          </div>
+        </div>
       </div>
-
-      {/* Minimal Footer */}
-      <footer style={{ padding: '2rem', textAlign: 'center', borderTop: '1px solid var(--border-glass)', marginTop: '4rem', background: 'rgba(255,255,255,0.01)', position: 'relative', zIndex: 2 }}>
-        <p className="text-muted" style={{ fontSize: '0.85rem', margin: 0, letterSpacing: '0.1em' }}>
-           SYSTEM-01 // ORACLE AI SURVEILLANCE &copy; 2026
-        </p>
-      </footer>
     </div>
   );
 };

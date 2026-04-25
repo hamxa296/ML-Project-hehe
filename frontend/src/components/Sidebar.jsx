@@ -1,71 +1,38 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, List, ShieldCheck, Settings, Activity, SlidersHorizontal, Database } from 'lucide-react';
+import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity } from 'lucide-react';
 
 const Sidebar = () => {
-  const activeStyle = {
-    background: 'rgba(197, 160, 89, 0.1)',
-    color: 'var(--accent)',
-    borderLeft: '4px solid var(--accent)',
-    fontWeight: '700'
-  };
-  
-  const linkStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '0.8rem',
-    padding: '14px 20px',
-    color: 'var(--text-secondary)',
-    textDecoration: 'none',
-    transition: 'all 0.3s ease',
-    fontWeight: '500',
-    borderRadius: '8px',
-    margin: '4px 0',
-    fontSize: '0.9rem'
-  };
-
   return (
-    <div className="glass-card animate-slide-up" style={{ width: '280px', height: 'calc(100vh - 40px)', margin: '20px', borderRadius: '16px', display: 'flex', flexDirection: 'column', border: '1px solid var(--border-glass-bright)', zIndex: 10 }}>
-      <div style={{ padding: '2.5rem 1.5rem', marginBottom: '1rem' }}>
-        <h2 style={{ color: 'white', display: 'flex', alignItems: 'center', gap: '0.8rem', fontSize: '1.3rem', margin: 0 }}>
-          <Activity size={24} color="var(--accent)" /> 
-          <span style={{ letterSpacing: '-0.02em', fontWeight: '800' }}>Oracle AI</span>
+    <div className="glass-card flex-col animate-in" style={{ width: '260px', height: 'calc(100vh - 40px)', margin: '20px', padding: '1.5rem', zIndex: 10 }}>
+      <div className="flex-col gap-2 mb-8">
+        <h2 className="flex items-center gap-2 text-primary" style={{ margin: 0 }}>
+          <Activity size={24} className="text-violet" /> 
+          <span>MLxFlow</span>
         </h2>
-        <div className="flex-row items-center gap-2" style={{ marginTop: '0.6rem' }}>
-          <div className="live-dot" style={{ width: '6px', height: '6px', background: 'var(--accent)' }} />
-          <span className="text-muted" style={{ fontSize: '0.75rem', fontWeight: '600' }}>Secure Sequence Active</span>
+        <div className="flex items-center gap-2">
+          <div className="live-dot" />
+          <span className="label">Cluster Online</span>
         </div>
       </div>
 
-      <nav style={{ display: 'flex', flexDirection: 'column', flex: 1, padding: '0 1rem' }}>
-        <NavLink to="/dashboard" 
-          style={({ isActive }) => isActive ? { ...linkStyle, ...activeStyle } : linkStyle}
-          className={({ isActive }) => isActive ? "" : "hover:bg-[rgba(255,255,255,0.03)]"}
-        >
-          <LayoutDashboard size={18} /> System Status
+      <nav className="flex-col gap-2 flex-1">
+        <NavLink to="/dashboard" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <LayoutDashboard size={18} /> Overview
         </NavLink>
-        <NavLink to="/simulation" 
-          style={({ isActive }) => isActive ? { ...linkStyle, ...activeStyle } : linkStyle}
-          className={({ isActive }) => isActive ? "" : "hover:bg-[rgba(255,255,255,0.03)]"}
-        >
-          <SlidersHorizontal size={18} /> Live Simulator
+        <NavLink to="/pipeline" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <GitMerge size={18} /> Pipeline Runs
         </NavLink>
-        <NavLink to="/patterns" 
-          style={({ isActive }) => isActive ? { ...linkStyle, ...activeStyle } : linkStyle}
-          className={({ isActive }) => isActive ? "" : "hover:bg-[rgba(255,255,255,0.03)]"}
-        >
-          <Database size={18} /> Knowledge Base
+        <NavLink to="/eda" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <BarChart2 size={18} /> EDA Insights
         </NavLink>
-        <NavLink to="/transactions" 
-          style={({ isActive }) => isActive ? { ...linkStyle, ...activeStyle } : linkStyle}
-          className={({ isActive }) => isActive ? "" : "hover:bg-[rgba(255,255,255,0.03)]"}
-        >
-          <List size={18} /> Transactions Log
+        <NavLink to="/simulator" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <PlayCircle size={18} /> Model Simulator
         </NavLink>
       </nav>
 
-      <div style={{ padding: '1.5rem', borderTop: '1px solid var(--border-glass-bright)' }}>
-        <div style={{ ...linkStyle, cursor: 'default', opacity: 0.4 }}>
-          <Settings size={18} /> Configuration
+      <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+        <div className="sidebar-link" style={{ cursor: 'not-allowed', opacity: 0.5 }}>
+          <Settings size={18} /> Settings
         </div>
       </div>
     </div>
