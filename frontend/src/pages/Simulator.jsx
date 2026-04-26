@@ -1,16 +1,61 @@
 import { useState } from 'react';
-import { PlayCircle, Cpu, ShieldCheck } from 'lucide-react';
+import { PlayCircle, Cpu, ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
+import { predictTransaction } from '../services/api';
 
 const Simulator = () => {
-  const [val, setVal] = useState(1500);
+  const [formData, setFormData] = useState({
+    TransactionAmt: 1500,
+    card1: 1000,
+    addr1: 120,
+    TransactionDT: 86400,
+    P_emaildomain: 'gmail.com'
+  });
 
-  const getPrediction = () => {
-    if (val > 2500) return { prob: '98%', class: 'Fraud', color: 'var(--rose)', glow: 'var(--rose-glow)' };
-    if (val > 800) return { prob: '65%', class: 'Suspicious', color: 'var(--amber)', glow: 'var(--amber-glow)' };
-    return { prob: '12%', class: 'Legitimate', color: 'var(--emerald)', glow: 'var(--emerald-glow)' };
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [pred, setPred] = useState(null);
+
+  const handlePredict = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await predictTransaction(formData);
+      
+      const probPercent = (result.probability * 100).toFixed(1);
+      
+      let classLabel, color, glow;
+      if (result.is_fraud === 1) {
+        classLabel = 'Fraud';
+        color = 'var(--rose)';
+        glow = 'var(--rose-glow)';
+      } else if (result.probability > 0.5) {
+        classLabel = 'Suspicious';
+        color = 'var(--amber)';
+        glow = 'var(--amber-glow)';
+      } else {
+        classLabel = 'Legitimate';
+        color = 'var(--emerald)';
+        glow = 'var(--emerald-glow)';
+      }
+
+      setPred({ prob: `${probPercent}%`, class: classLabel, color, glow });
+      
+      // Save to local storage for Dashboard stats
+      const history = JSON.parse(localStorage.getItem('predictionHistory') || '[]');
+      history.push({ ...result, timestamp: new Date().toISOString() });
+      localStorage.setItem('predictionHistory', JSON.stringify(history));
+      
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const pred = getPrediction();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: name === 'P_emaildomain' ? value : Number(value) }));
+  };
 
   return (
     <div className="scroll-container flex-col gap-6">
@@ -25,39 +70,76 @@ const Simulator = () => {
         <div className="glass-card p-8 flex-col gap-8">
           <h3 className="flex items-center gap-2"><PlayCircle size={18} className="text-violet"/> Test Input Features</h3>
           
-          <div className="flex-col gap-2">
-            <div className="flex-row justify-between items-center">
-              <label className="text-secondary text-sm">Transaction Volume ($)</label>
-              <span className="mono font-medium text-violet">${val}</span>
+          <div className="flex-col gap-4">
+            <div className="flex-col gap-2">
+              <div className="flex-row justify-between items-center">
+                <label className="text-secondary text-sm">Transaction Volume ($)</label>
+                <span className="mono font-medium text-violet">${formData.TransactionAmt}</span>
+              </div>
+              <input 
+                name="TransactionAmt"
+                type="range" min="0" max="5000" step="50" 
+                value={formData.TransactionAmt} onChange={handleChange}
+                style={{ width: '100%', accentColor: 'var(--violet)', cursor: 'pointer' }}
+              />
             </div>
-            <input 
-              type="range" min="0" max="5000" step="50" 
-              value={val} onChange={(e) => setVal(Number(e.target.value))}
-              style={{ width: '100%', accentColor: 'var(--violet)', cursor: 'pointer' }}
-            />
-          </div>
+            
+            <div className="flex-col gap-2">
+              <label className="text-secondary text-sm">Card ID (card1)</label>
+              <input 
+                name="card1"
+                type="number" className="input" 
+                value={formData.card1} onChange={handleChange}
+              />
+            </div>
 
-          <div className="flex-col gap-4 opacity-50 pointer-events-none">
             <div className="flex-col gap-2">
-              <label className="text-secondary text-sm">Time of Day (Locked for simulation)</label>
-              <input type="text" className="input" value="03:45 AM" readOnly />
+              <label className="text-secondary text-sm">Billing Region (addr1)</label>
+              <input 
+                name="addr1"
+                type="number" className="input" 
+                value={formData.addr1} onChange={handleChange}
+              />
             </div>
-            <div className="flex-col gap-2">
-              <label className="text-secondary text-sm">Location Match (Locked for simulation)</label>
-              <input type="text" className="input" value="Mismatch (IP: RU -> Billing: US)" readOnly />
-            </div>
+            
+            <button 
+              onClick={handlePredict} 
+              disabled={loading}
+              className="mt-4"
+              style={{
+                background: 'var(--violet)', color: 'white', padding: '0.75rem', borderRadius: '8px', 
+                border: 'none', cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem'
+              }}
+            >
+              {loading ? <Loader2 className="animate-spin" size={18} /> : 'Run Prediction'}
+            </button>
+            
+            {error && (
+              <div className="p-3 mt-2 rounded-md flex items-center gap-2" style={{ background: 'rgba(244, 63, 94, 0.1)', color: 'var(--rose)', border: '1px solid var(--rose)' }}>
+                <AlertCircle size={16} />
+                <span className="text-sm">{error}</span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="flex-col gap-6">
-          <div className="glass-card p-8 flex-col gap-4 justify-center items-center text-center" style={{ flex: 1, borderTop: `4px solid ${pred.color}`, boxShadow: `0 8px 30px ${pred.glow}` }}>
-            <Cpu size={32} color={pred.color} />
-            <h3 className="mt-2 text-muted">Model Output Prediction</h3>
-            <div className="stat-number" style={{ color: pred.color }}>{pred.class}</div>
-            <span className="badge" style={{ background: pred.glow, color: pred.color, border: `1px solid ${pred.color}` }}>
-              Confidence: {pred.prob}
-            </span>
-          </div>
+          {pred ? (
+            <div className="glass-card p-8 flex-col gap-4 justify-center items-center text-center" style={{ flex: 1, borderTop: `4px solid ${pred.color}`, boxShadow: `0 8px 30px ${pred.glow}` }}>
+              <Cpu size={32} color={pred.color} />
+              <h3 className="mt-2 text-muted">Model Output Prediction</h3>
+              <div className="stat-number" style={{ color: pred.color }}>{pred.class}</div>
+              <span className="badge" style={{ background: pred.glow, color: pred.color, border: `1px solid ${pred.color}` }}>
+                Confidence: {pred.prob}
+              </span>
+            </div>
+          ) : (
+            <div className="glass-card p-8 flex-col gap-4 justify-center items-center text-center opacity-50" style={{ flex: 1 }}>
+              <Cpu size={32} className="text-muted" />
+              <h3 className="mt-2 text-muted">Awaiting Input</h3>
+              <p className="text-sm text-secondary">Run prediction to see results.</p>
+            </div>
+          )}
 
           <div className="glass-card p-6 flex-row items-center gap-4">
             <ShieldCheck className="text-cyan" size={24} />

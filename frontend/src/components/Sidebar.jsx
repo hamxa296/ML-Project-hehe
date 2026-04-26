@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity } from 'lucide-react';
+import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet } from 'lucide-react';
 
 const Sidebar = () => {
   return (
@@ -27,6 +27,9 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to="/simulator" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <PlayCircle size={18} /> Model Simulator
+        </NavLink>
+        <NavLink to="/evaluator" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <FileSpreadsheet size={18} /> Batch Evaluator
         </NavLink>
       </nav>
 

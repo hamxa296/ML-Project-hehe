@@ -96,11 +96,16 @@ body {
 
 /* ─── Scroll Containers ─── */
 .scroll-container {
-  height: 100vh;
+  position: absolute;
+  inset: 0;
   overflow-y: auto;
   overflow-x: hidden;
   scroll-behavior: smooth;
   padding: 2.5rem;
+}
+
+.scroll-container > * {
+  flex-shrink: 0;
 }
 
 .scroll-container::-webkit-scrollbar { width: 4px; }

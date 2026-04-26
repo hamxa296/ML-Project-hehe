@@ -1,8 +1,36 @@
+import { useState, useEffect } from 'react';
 import { Activity, Database, GitCommit, Play, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 import { pipelineRuns, performanceData, driftData } from '../data/mockData';
 
 const Dashboard = () => {
+  const [stats, setStats] = useState({
+    total: 0,
+    fraud: 0,
+    safe: 0,
+    avgProb: 0
+  });
+
+  useEffect(() => {
+    try {
+      const history = JSON.parse(localStorage.getItem('predictionHistory') || '[]');
+      if (history.length > 0) {
+        const total = history.length;
+        const fraud = history.filter(item => item.is_fraud === 1).length;
+        const avgProb = history.reduce((acc, curr) => acc + curr.probability, 0) / total;
+        
+        setStats({
+          total,
+          fraud,
+          safe: total - fraud,
+          avgProb: (avgProb * 100).toFixed(1)
+        });
+      }
+    } catch (err) {
+      console.error("Failed to load local stats", err);
+    }
+  }, []);
+
   return (
     <div className="scroll-container flex-col gap-8">
       <header className="flex-col gap-1 animate-in delay-1">
@@ -16,10 +44,10 @@ const Dashboard = () => {
       {/* KPI Section */}
       <div className="grid-4 animate-in delay-2">
         {[
-          { label: 'Active Pipelines', val: '3', icon: <Play size={20}/>, color: 'var(--violet)' },
-          { label: 'Avg Latency', val: '42ms', icon: <Activity size={20}/>, color: 'var(--cyan)' },
-          { label: 'Data Processed', val: '1.2TB', icon: <Database size={20}/>, color: 'var(--emerald)' },
-          { label: 'Total Commits', val: '842', icon: <GitCommit size={20}/>, color: 'var(--amber)' }
+          { label: 'Total Predictions', val: stats.total.toString(), icon: <Activity size={20}/>, color: 'var(--cyan)' },
+          { label: 'Fraud Detected', val: stats.fraud.toString(), icon: <Play size={20}/>, color: 'var(--rose)' },
+          { label: 'Safe Transactions', val: stats.safe.toString(), icon: <Database size={20}/>, color: 'var(--emerald)' },
+          { label: 'Avg Fraud Prob', val: `${stats.avgProb}%`, icon: <GitCommit size={20}/>, color: 'var(--amber)' }
         ].map((kpi, i) => (
           <div key={i} className="glass-card p-6 flex-col gap-4">
             <div className="flex-row items-center gap-3">

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+    environment:
+      - PREFECT_API_URL=http://prefect:4200/api
+    depends_on:
+      - prefect
+
+  prefect:
+    image: prefecthq/prefect:2-python3.11
+    ports:
+      - "4200:4200"
+    command: prefect server start --host 0.0.0.0
