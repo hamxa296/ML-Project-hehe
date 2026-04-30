@@ -23,10 +23,7 @@ const Sidebar = () => {
           <GitMerge size={18} /> Pipeline Runs
         </NavLink>
         <NavLink to="/eda" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-          <BarChart2 size={18} /> EDA Insights
-        </NavLink>
-        <NavLink to="/simulator" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
-          <PlayCircle size={18} /> Model Simulator
+          <BarChart2 size={18} /> Model Metrics
         </NavLink>
         <NavLink to="/evaluator" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <FileSpreadsheet size={18} /> Batch Evaluator

@@ -1,17 +1,37 @@
 services:
-  api:
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./models:/app/models
-    environment:
-      - PREFECT_API_URL=http://prefect:4200/api
-    depends_on:
-      - prefect
 
+  # ── Prefect Orchestration Server ────────────────────────────────────────────
   prefect:
     image: prefecthq/prefect:2-python3.11
     ports:
       - "4200:4200"
     command: prefect server start --host 0.0.0.0
+
+  # ── ML Pipeline Runner ───────────────────────────────────────────────────────
+  # Trains the model, evaluates it, writes artifacts, then exits (one-shot).
+  # depends_on only waits for container START not completion, so the API
+  # uses /reload_model and /graph_list polling to pick up new artifacts.
+  pipeline:
+    build: .
+    command: python pipeline/prefect_flow.py
+    depends_on:
+      - prefect
+    volumes:
+      - ./models:/app/models          # trained .pkl files (shared with api)
+      - ./results:/app/results        # graphs dir (shared with api)
+      - ./data:/app/data              # read-only input CSVs
+      # Mount the DIRECTORY for json artifacts — avoids Docker creating a dir
+      # in place of a file when the host file doesn't yet exist
+      - ./artifacts:/app/artifacts
+
+  # ── FastAPI Backend ───────────────────────────────────────────────────────────
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - prefect
+    volumes:
+      - ./models:/app/models          # picks up new models without rebuild
+      - ./results:/app/results        # serves latest_*.png graph files
+      - ./artifacts:/app/artifacts    # reads latest_metrics.json + results.csv

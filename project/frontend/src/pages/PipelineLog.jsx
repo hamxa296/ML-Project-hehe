@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, ChevronRight, Hash, CheckCircle2, XCircle, Clock } from 'lucide-react';
-import { pipelineRuns } from '../data/mockData';
 
 const PipelineLog = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
+  const [runs, setRuns] = useState([]);
 
-  const filteredRuns = pipelineRuns.filter(r => 
-    r.id.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    r.model.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    fetch('http://localhost:8000/model_evaluations')
+      .then(res => res.json())
+      .then(data => {
+         if(data.evaluations) setRuns(data.evaluations.reverse());
+      })
+      .catch(err => console.error("Failed to load runs", err));
+  }, []);
+
+  const filteredRuns = runs.filter(r => 
+    r.version.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    r.model_type.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -49,20 +58,18 @@ const PipelineLog = () => {
           <tbody>
             {filteredRuns.map((run) => (
               <tr 
-                key={run.id} 
+                key={run.version} 
                 style={{ cursor: 'pointer' }}
-                onClick={() => navigate(`/pipeline/${run.id}`)}
+                onClick={() => navigate(`/pipeline/${run.version}`)}
               >
-                <td className="mono text-violet font-medium">{run.id}</td>
-                <td className="font-medium">{run.model}</td>
-                <td className="text-secondary mono text-sm">{run.dataset}</td>
+                <td className="mono text-violet font-medium">{run.version}</td>
+                <td className="font-medium">{run.model_type}</td>
+                <td className="text-secondary mono text-sm">train.csv</td>
                 <td>
-                  {run.status === 'success' && <span className="badge badge-emerald"><CheckCircle2 size={12}/> Success</span>}
-                  {run.status === 'failed' && <span className="badge badge-rose"><XCircle size={12}/> Failed</span>}
-                  {run.status === 'running' && <span className="badge badge-amber"><Clock size={12}/> Running</span>}
+                  <span className="badge badge-emerald"><CheckCircle2 size={12}/> Success</span>
                 </td>
-                <td className="text-secondary">{run.author}</td>
-                <td className="text-secondary">{run.time}</td>
+                <td className="text-secondary">System</td>
+                <td className="text-secondary">{new Date(run.timestamp).toLocaleString()}</td>
                 <td className="text-right">
                   <ChevronRight size={18} className="text-muted" />
                 </td>

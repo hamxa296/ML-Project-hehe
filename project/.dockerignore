@@ -17,3 +17,9 @@ venv
 .github
 tests
 results.csv
+latest_metrics.json
+# These are mounted as volumes at runtime — don't bake into the image
+data/
+models/
+results/
+artifacts/

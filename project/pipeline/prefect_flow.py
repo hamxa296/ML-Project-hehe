@@ -3,7 +3,12 @@ import os
 import json
 from pathlib import Path
 from datetime import datetime
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+# Anchor to the project root (project/) regardless of CWD
+PROJECT_ROOT  = Path(__file__).resolve().parent.parent
+ARTIFACTS_DIR = PROJECT_ROOT / 'artifacts'   # shared with api via volume mount
+ARTIFACTS_DIR.mkdir(exist_ok=True)           # ensure it exists before any write
+sys.path.append(str(PROJECT_ROOT))
 
 from prefect import flow, task
 import joblib
@@ -16,10 +21,10 @@ from sklearn.metrics import precision_score, recall_score, roc_auc_score, averag
 
 @task(retries=2)
 def load_task():
-    base_dir = Path(__file__).resolve().parent.parent.parent
-    train_path = os.path.join(base_dir, 'data', 'train_unbalanced.csv')
-    test_path = os.path.join(base_dir, 'data', 'test.csv')
-    return load_data(train_path, test_path)
+    # Use PROJECT_ROOT (project/) — was incorrectly going 3 levels up before
+    train_path = PROJECT_ROOT / 'data' / 'train_unbalanced.csv'
+    test_path = PROJECT_ROOT / 'data' / 'test.csv'
+    return load_data(str(train_path), str(test_path))
 
 @task
 def train_pipeline_task(X_train, y_train):
@@ -42,7 +47,8 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version):
         "learning_rate": model_params.get("learning_rate")
     }
     
-    results_path = "results.csv"
+    # Write to artifacts/ dir — shared volume between pipeline + api containers
+    results_path = ARTIFACTS_DIR / 'results.csv'
     res_df = pd.DataFrame([{
         "timestamp": datetime.now().isoformat(),
         "version": version,
@@ -54,12 +60,15 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version):
         "auc_pr": auc_pr
     }])
     
-    if os.path.exists(results_path):
+    if results_path.exists():
         res_df.to_csv(results_path, mode='a', header=False, index=False)
     else:
         res_df.to_csv(results_path, index=False)
         
-    evaluate_model(y_test, probs, preds)
+    evaluate_model(y_test, probs, preds,
+                   project_root=PROJECT_ROOT,
+                   version=version,
+                   artifacts_dir=ARTIFACTS_DIR)
     
     # Print explicit metrics for CI/CD Actions visibility
     print("\n--- PIPELINE METRICS FOR CI/CD ---")
@@ -72,9 +81,10 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version):
 
 @task
 def save_model_task(pipeline, version):
-    Path("models").mkdir(exist_ok=True)
-    joblib.dump(pipeline, f"models/model_{version}.pkl")
-    joblib.dump(pipeline, "models/model_latest.pkl")
+    models_dir = PROJECT_ROOT / 'models'
+    models_dir.mkdir(exist_ok=True)
+    joblib.dump(pipeline, models_dir / f"model_{version}.pkl")
+    joblib.dump(pipeline, models_dir / "model_latest.pkl")
     print(f"Pipeline saved as models/model_{version}.pkl and model_latest.pkl")
 
 @flow(name="Robust Fraud Detection Unified Pipeline")

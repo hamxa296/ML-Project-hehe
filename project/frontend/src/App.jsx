@@ -4,7 +4,6 @@ import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import PipelineLog from './pages/PipelineLog';
 import EDA from './pages/EDA';
-import Simulator from './pages/Simulator';
 import RunDetail from './pages/RunDetail';
 import DatasetEvaluator from './pages/DatasetEvaluator';
 import './index.css';
@@ -27,7 +26,6 @@ function App() {
                   <Route path="/pipeline" element={<PipelineLog />} />
                   <Route path="/pipeline/:id" element={<RunDetail />} />
                   <Route path="/eda" element={<EDA />} />
-                  <Route path="/simulator" element={<Simulator />} />
                   <Route path="/evaluator" element={<DatasetEvaluator />} />
                 </Routes>
               </main>
