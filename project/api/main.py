@@ -29,6 +29,10 @@ MODEL_PATH     = PROJECT_ROOT / "models" / "model_latest.pkl"
 RESULTS_PATH   = ARTIFACTS_DIR / "results.csv"
 METRICS_PATH   = ARTIFACTS_DIR / "latest_metrics.json"
 GRAPHS_DIR     = PROJECT_ROOT / "results" / "graphs"
+EDA_RAW_DIR    = ARTIFACTS_DIR / "eda_raw"
+EDA_PROC_DIR   = ARTIFACTS_DIR / "eda_processed"
+EDA_RAW_JSON   = EDA_RAW_DIR  / "raw_eda_data.json"
+EDA_PROC_JSON  = EDA_PROC_DIR / "processed_eda_data.json"
 
 model_pipeline = None
 
@@ -179,11 +183,61 @@ def get_graph(filename: str):
         str(graph_path),
         media_type="image/png",
         headers={
-            # Prevent browser caching — critical for dynamic graph updates
             "Cache-Control": "no-store, no-cache, must-revalidate",
             "Pragma": "no-cache",
         }
     )
+
+@app.get("/eda_list")
+def get_eda_list():
+    """Returns all EDA plots grouped by category (raw / processed)."""
+    def _list(d: Path):
+        if not d.exists():
+            return []
+        return sorted(f.name for f in d.iterdir() if f.suffix == ".png")
+    return {
+        "raw":       _list(EDA_RAW_DIR),
+        "processed": _list(EDA_PROC_DIR),
+    }
+
+@app.get("/eda/{category}/{filename}")
+def get_eda_plot(category: str, filename: str):
+    """Serves an EDA PNG. category must be 'raw' or 'processed'."""
+    if category not in ("raw", "processed"):
+        raise HTTPException(status_code=400, detail="category must be 'raw' or 'processed'")
+    if "/" in filename or "\\" in filename or ".." in filename:
+        raise HTTPException(status_code=400, detail="Invalid filename")
+    base_dir = EDA_RAW_DIR if category == "raw" else EDA_PROC_DIR
+    path = base_dir / filename
+    if not path.exists() or path.suffix != ".png":
+        raise HTTPException(status_code=404, detail=f"EDA plot '{filename}' not found. Run the pipeline first.")
+    return FileResponse(
+        str(path),
+        media_type="image/png",
+        headers={"Cache-Control": "no-store, no-cache, must-revalidate", "Pragma": "no-cache"},
+    )
+
+@app.get("/eda_stats/raw")
+def get_raw_eda_stats():
+    """Returns the computed raw EDA statistics as JSON for interactive frontend charts."""
+    if not EDA_RAW_JSON.exists():
+        return {"available": False, "message": "Run the pipeline first to generate EDA stats."}
+    try:
+        with open(EDA_RAW_JSON, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error reading raw EDA data: {str(e)}")
+
+@app.get("/eda_stats/processed")
+def get_processed_eda_stats():
+    """Returns the computed processed EDA statistics as JSON for interactive frontend charts."""
+    if not EDA_PROC_JSON.exists():
+        return {"available": False, "message": "Run the pipeline first to generate EDA stats."}
+    try:
+        with open(EDA_PROC_JSON, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error reading processed EDA data: {str(e)}")
 
 @app.post("/reload_model")
 def reload_model():
