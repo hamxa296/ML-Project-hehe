@@ -1,4 +1,6 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import Optional
@@ -122,3 +124,12 @@ def batch_predict(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Batch processing error: {str(e)}")
+
+# Serve static files from the 'frontend/dist' directory
+# (This folder is created by the build step in Docker)
+if os.path.exists("frontend/dist"):
+    app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
+
+    @app.exception_handler(404)
+    async def custom_404_handler(request, __):
+        return FileResponse("frontend/dist/index.html")
