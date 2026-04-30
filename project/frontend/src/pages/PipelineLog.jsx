@@ -1,19 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, ChevronRight, Hash, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Search, ChevronRight, Hash, CheckCircle2, XCircle, Clock, RefreshCw } from 'lucide-react';
 
 const PipelineLog = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [runs, setRuns] = useState([]);
+  const [pipelineStatus, setPipelineStatus] = useState({ status: 'IDLE' });
 
-  useEffect(() => {
+  const fetchRuns = () => {
     fetch('http://localhost:8000/model_evaluations')
       .then(res => res.json())
       .then(data => {
          if(data.evaluations) setRuns(data.evaluations.reverse());
       })
       .catch(err => console.error("Failed to load runs", err));
+
+    fetch('http://localhost:8000/pipeline/status')
+      .then(res => res.json())
+      .then(data => setPipelineStatus(data))
+      .catch(err => console.error("Failed to load status", err));
+  };
+
+  useEffect(() => {
+    fetchRuns();
+    const interval = setInterval(fetchRuns, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   const filteredRuns = runs.filter(r => 
@@ -56,6 +68,21 @@ const PipelineLog = () => {
             </tr>
           </thead>
           <tbody>
+            {pipelineStatus.status === 'RUNNING' && (
+              <tr style={{ background: 'rgba(245, 158, 11, 0.05)' }}>
+                <td className="mono text-amber font-medium">{pipelineStatus.id?.slice(0, 8)}...</td>
+                <td className="font-medium text-amber">Building: {pipelineStatus.name}</td>
+                <td className="text-secondary mono text-sm">train.csv</td>
+                <td>
+                  <span className="badge badge-amber" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--amber)', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
+                    <RefreshCw size={12} className="animate-spin" /> {pipelineStatus.state}
+                  </span>
+                </td>
+                <td className="text-secondary">System</td>
+                <td className="text-secondary">{new Date(pipelineStatus.start_time).toLocaleString()}</td>
+                <td></td>
+              </tr>
+            )}
             {filteredRuns.map((run) => (
               <tr 
                 key={run.version} 

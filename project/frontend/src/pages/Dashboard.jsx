@@ -20,6 +20,7 @@ const Dashboard = () => {
   const [activeGraph, setActiveGraph] = useState('');
   const [loading, setLoading] = useState(false);
   const [lastRefresh, setLastRefresh] = useState(null);
+  const [pipelineStatus, setPipelineStatus] = useState({ status: 'IDLE' });
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -33,10 +34,11 @@ const Dashboard = () => {
         setStats({ total, fraud, safe: total - fraud, avgProb: (avgProb * 100).toFixed(1) });
       }
 
-      const [evalRes, metricsRes, graphRes] = await Promise.allSettled([
+      const [evalRes, metricsRes, graphRes, statusRes] = await Promise.allSettled([
         fetch(`${API_BASE}/model_evaluations`).then(r => r.json()),
         fetch(`${API_BASE}/latest_metrics`).then(r => r.json()),
         fetch(`${API_BASE}/graph_list`).then(r => r.json()),
+        fetch(`${API_BASE}/pipeline/status`).then(r => r.json()),
       ]);
 
       if (evalRes.status === 'fulfilled' && evalRes.value.evaluations)
@@ -50,6 +52,10 @@ const Dashboard = () => {
         setActiveGraph(g => g || graphRes.value.graphs[0]);
       }
 
+      if (statusRes.status === 'fulfilled') {
+        setPipelineStatus(statusRes.value);
+      }
+
       setLastRefresh(new Date());
     } catch (err) {
       console.error('Fetch error:', err);
@@ -60,6 +66,11 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
+    // Auto-refresh every 30s if running
+    const interval = setInterval(() => {
+      fetchData();
+    }, 15000);
+    return () => clearInterval(interval);
   }, [fetchData]);
 
   return (
@@ -98,6 +109,37 @@ const Dashboard = () => {
           )}
         </div>
       </header>
+
+      {/* ── Pipeline Status Banner ── */}
+      {pipelineStatus.status === 'RUNNING' && (
+        <div className="glass-card flex-row items-center gap-5 p-5 animate-in" 
+             style={{ 
+               background: 'rgba(245, 158, 11, 0.04)', 
+               borderColor: 'rgba(245, 158, 11, 0.2)', 
+               borderLeft: '4px solid var(--amber)',
+               marginBottom: '-1rem' 
+             }}>
+          <div className="flex-col items-center justify-center" style={{ 
+            width: 40, height: 40, borderRadius: '50%', background: 'rgba(245, 158, 11, 0.1)' 
+          }}>
+            <RefreshCw size={20} className="text-amber" style={{ animation: 'spin 2s linear infinite' }} />
+          </div>
+          <div className="flex-col gap-1 flex-1">
+            <div className="flex-row items-center gap-2">
+              <span className="label text-amber">Active Pipeline Run</span>
+              <span className="text-xs text-muted" style={{ fontWeight: 400 }}>• Started {new Date(pipelineStatus.start_time).toLocaleTimeString()}</span>
+            </div>
+            <h4 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-primary)' }}>
+              {pipelineStatus.state}: <span style={{ fontWeight: 400 }}>{pipelineStatus.name}</span>
+            </h4>
+          </div>
+          <div className="flex-row gap-2">
+             <div className="badge badge-amber" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--amber)' }}>
+               Live Training
+             </div>
+          </div>
+        </div>
+      )}
 
       {/* KPI Section */}
       <div className="grid-4 animate-in delay-2">

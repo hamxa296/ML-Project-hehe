@@ -11,7 +11,8 @@ from pathlib import Path
 import os
 import json
 import shutil
-from datetime import datetime
+from datetime import datetime, timezone
+from prefect.client.orchestration import get_client
 
 app = FastAPI(title="Robust Fraud Detection API")
 
@@ -255,6 +256,33 @@ def reload_model():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to reload model: {str(e)}")
 
+@app.get("/pipeline/status")
+async def get_pipeline_status():
+    """Queries the Prefect API for the current state of the ML pipeline."""
+    try:
+        async with get_client() as client:
+            # Look for recent flow runs
+            runs = await client.read_flow_runs(limit=5)
+            if not runs:
+                return {"status": "IDLE"}
+            
+            # Find any run that is not in a terminal state
+            active_runs = [r for r in runs if r.state_name not in ("Completed", "Failed", "Cancelled", "Crashed")]
+            
+            if active_runs:
+                r = active_runs[0]
+                return {
+                    "status": "RUNNING",
+                    "state": r.state_name,
+                    "name": r.name,
+                    "id": str(r.id),
+                    "start_time": r.start_time.isoformat() if r.start_time else None
+                }
+            
+            return {"status": "IDLE", "last_run": runs[0].state_name}
+    except Exception as e:
+        return {"status": "UNKNOWN", "error": str(e)}
+
 @app.get("/models")
 def list_models():
     """Returns a list of all versioned models available in the registry."""
@@ -272,7 +300,7 @@ def list_models():
             models.append({
                 "name": f.name,
                 "size_mb": round(stats.st_size / (1024 * 1024), 2),
-                "created_at": datetime.fromtimestamp(stats.st_mtime).isoformat(),
+                "created_at": datetime.fromtimestamp(stats.st_mtime, tz=timezone.utc).isoformat(),
             })
     
     # Sort by date descending (newest first)

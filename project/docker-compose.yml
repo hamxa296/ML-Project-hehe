@@ -6,6 +6,8 @@ services:
     ports:
       - "4200:4200"
     command: prefect server start --host 0.0.0.0
+    environment:
+      - TZ=Asia/Karachi
 
   # ── ML Pipeline Runner ───────────────────────────────────────────────────────
   # Trains the model, evaluates it, writes artifacts, then exits (one-shot).
@@ -16,12 +18,13 @@ services:
     command: python pipeline/prefect_flow.py
     depends_on:
       - prefect
+    environment:
+      - PREFECT_API_URL=http://prefect:4200/api
+      - TZ=Asia/Karachi
     volumes:
       - ./models:/app/models          # trained .pkl files (shared with api)
       - ./results:/app/results        # graphs dir (shared with api)
       - ./data:/app/data              # read-only input CSVs
-      # Mount the DIRECTORY for json artifacts — avoids Docker creating a dir
-      # in place of a file when the host file doesn't yet exist
       - ./artifacts:/app/artifacts
 
   # ── FastAPI Backend ───────────────────────────────────────────────────────────
@@ -31,6 +34,9 @@ services:
       - "8000:8000"
     depends_on:
       - prefect
+    environment:
+      - PREFECT_API_URL=http://prefect:4200/api
+      - TZ=Asia/Karachi
     volumes:
       - ./models:/app/models          # picks up new models without rebuild
       - ./results:/app/results        # serves latest_*.png graph files

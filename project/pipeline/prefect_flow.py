@@ -2,7 +2,7 @@ import sys
 import os
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 
 # Anchor to the project root (project/) regardless of CWD
 PROJECT_ROOT  = Path(__file__).resolve().parent.parent
@@ -99,7 +99,7 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version):
 
     results_path = ARTIFACTS_DIR / 'results.csv'
     res_df = pd.DataFrame([{
-        "timestamp":      datetime.now().isoformat(),
+        "timestamp":      datetime.now(timezone.utc).isoformat(),
         "version":        version,
         "model_type":     "XGBClassifier (w/ KMeans)",
         "hyperparameters": json.dumps(interesting_hyperparams),
