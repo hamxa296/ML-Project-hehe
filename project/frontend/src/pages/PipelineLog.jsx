@@ -40,8 +40,22 @@ const PipelineLog = () => {
           <span className="label text-violet">CI/CD Triggers</span>
           <h1 className="gradient-text-violet">Pipeline Execution Log</h1>
         </div>
-        
-        <div style={{ width: '300px', position: 'relative' }}>
+
+        <div className="flex-row gap-4 items-center">
+          {pipelineStatus.status === 'RUNNING' && (
+            <button 
+              className="btn btn-ghost btn-sm" 
+              onClick={async () => {
+                if (!window.confirm("Cancel this build?")) return;
+                await fetch(`http://localhost:8000/pipeline/cancel/${pipelineStatus.id}`, { method: 'POST' });
+                fetchRuns();
+              }}
+              style={{ borderColor: 'rgba(244, 63, 94, 0.2)', color: 'var(--rose)' }}
+            >
+              <XCircle size={14} /> Kill Active Build
+            </button>
+          )}
+          <div style={{ width: '300px', position: 'relative' }}>
           <Search size={18} style={{ position: 'absolute', top: '50%', left: '1rem', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
           <input 
             type="text" 
@@ -51,6 +65,7 @@ const PipelineLog = () => {
             className="input"
             style={{ paddingLeft: '2.5rem' }}
           />
+          </div>
         </div>
       </header>
 

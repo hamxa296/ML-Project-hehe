@@ -13,6 +13,7 @@ import json
 import shutil
 from datetime import datetime, timezone
 from prefect.client.orchestration import get_client
+from prefect.server.schemas.states import State, StateType
 
 app = FastAPI(title="Robust Fraud Detection API")
 
@@ -282,6 +283,21 @@ async def get_pipeline_status():
             return {"status": "IDLE", "last_run": runs[0].state_name}
     except Exception as e:
         return {"status": "UNKNOWN", "error": str(e)}
+
+@app.post("/pipeline/cancel/{run_id}")
+async def cancel_pipeline(run_id: str):
+    """Cancels an active flow run in Prefect."""
+    try:
+        async with get_client() as client:
+            # We set the state to CANCELLED. Prefect's engine will pick this up
+            # and send a SIGTERM to the pipeline process.
+            await client.set_flow_run_state(
+                flow_run_id=run_id,
+                state=State(type=StateType.CANCELLED, name="Cancelled")
+            )
+            return {"status": "cancelled", "run_id": run_id}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to cancel run: {str(e)}")
 
 @app.get("/models")
 def list_models():

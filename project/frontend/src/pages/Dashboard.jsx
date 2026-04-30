@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Activity, Database, GitCommit, Play, CheckCircle2, Image as ImageIcon, BarChart2, RefreshCw } from 'lucide-react';
+import { Activity, Database, GitCommit, Play, CheckCircle2, Image as ImageIcon, BarChart2, RefreshCw, XCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
@@ -63,6 +63,19 @@ const Dashboard = () => {
       setLoading(false);
     }
   }, []);
+
+  const handleCancel = async (runId) => {
+    if (!window.confirm("Are you sure you want to terminate this training run?")) return;
+    try {
+      const res = await fetch(`${API_BASE}/pipeline/cancel/${runId}`, { method: 'POST' });
+      if (res.ok) {
+        setPipelineStatus({ status: 'IDLE' });
+        fetchData();
+      }
+    } catch (e) {
+      console.error("Cancellation failed", e);
+    }
+  };
 
   useEffect(() => {
     fetchData();
@@ -133,7 +146,14 @@ const Dashboard = () => {
               {pipelineStatus.state}: <span style={{ fontWeight: 400 }}>{pipelineStatus.name}</span>
             </h4>
           </div>
-          <div className="flex-row gap-2">
+          <div className="flex-row gap-3">
+             <button 
+               className="btn btn-ghost btn-sm" 
+               onClick={() => handleCancel(pipelineStatus.id)}
+               style={{ borderColor: 'rgba(244, 63, 94, 0.2)', color: 'var(--rose)' }}
+             >
+               <XCircle size={14} /> Cancel Build
+             </button>
              <div className="badge badge-amber" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--amber)' }}>
                Live Training
              </div>
