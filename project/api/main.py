@@ -10,6 +10,8 @@ from io import StringIO
 from pathlib import Path
 import os
 import json
+import shutil
+from datetime import datetime
 
 app = FastAPI(title="Robust Fraud Detection API")
 
@@ -25,7 +27,8 @@ app.add_middleware(
 # so they always resolve correctly regardless of launch CWD.
 PROJECT_ROOT   = Path(__file__).resolve().parent.parent
 ARTIFACTS_DIR  = PROJECT_ROOT / "artifacts"      # maps to ./artifacts volume
-MODEL_PATH     = PROJECT_ROOT / "models" / "model_latest.pkl"
+MODELS_DIR     = PROJECT_ROOT / "models"
+MODEL_PATH     = MODELS_DIR / "model_latest.pkl"
 RESULTS_PATH   = ARTIFACTS_DIR / "results.csv"
 METRICS_PATH   = ARTIFACTS_DIR / "latest_metrics.json"
 GRAPHS_DIR     = PROJECT_ROOT / "results" / "graphs"
@@ -251,6 +254,52 @@ def reload_model():
         return {"status": "reloaded", "model_path": str(MODEL_PATH)}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to reload model: {str(e)}")
+
+@app.get("/models")
+def list_models():
+    """Returns a list of all versioned models available in the registry."""
+    if not MODELS_DIR.exists():
+        return {"models": []}
+    
+    models = []
+    # Identify which actual file model_latest.pkl is pointing to (by comparing content or just having it)
+    # Since we use shutil.copy2, we can't easily check symlink. 
+    # But we can check results.csv to see which version corresponds to which metrics.
+    
+    for f in MODELS_DIR.iterdir():
+        if f.suffix == ".pkl" and f.name != "model_latest.pkl":
+            stats = f.stat()
+            models.append({
+                "name": f.name,
+                "size_mb": round(stats.st_size / (1024 * 1024), 2),
+                "created_at": datetime.fromtimestamp(stats.st_mtime).isoformat(),
+            })
+    
+    # Sort by date descending (newest first)
+    models.sort(key=lambda x: x["created_at"], reverse=True)
+    return {"models": models}
+
+@app.post("/models/activate/{name}")
+def activate_model(name: str):
+    """Hot-swaps the active model in memory and updates model_latest.pkl for persistence."""
+    global model_pipeline
+    if "/" in name or "\\" in name or ".." in name:
+        raise HTTPException(status_code=400, detail="Invalid model name")
+        
+    target = MODELS_DIR / name
+    if not target.exists():
+        raise HTTPException(status_code=404, detail=f"Model {name} not found")
+    
+    try:
+        # 1. Load into memory for instant hot-swap
+        model_pipeline = joblib.load(target)
+        
+        # 2. Overwrite the 'latest' pointer so it persists across container restarts
+        shutil.copy2(target, MODEL_PATH)
+        
+        return {"status": "activated", "model": name}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to activate model: {str(e)}")
 
 # Serve static files from the 'frontend/dist' directory (Docker build step)
 frontend_dist = PROJECT_ROOT / "frontend" / "dist"
