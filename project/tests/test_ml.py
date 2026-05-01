@@ -57,9 +57,19 @@ def test_prediction_output_format():
     assert set(preds).issubset({0, 1}), "Predictions must be exactly binary class"
 
 def test_distribution_drift_simulation():
-    """Real ML Validation: Simulate a distribution check comparing train vs new data statistics."""
-    train_stat = 100.0
-    new_data_stat = 105.0
-    drift_ratio = abs(train_stat - new_data_stat) / train_stat
+    """Real ML Validation: Simulate a distribution check comparing train vs new data statistics using Evidently."""
+    from evidently.test_suite import TestSuite
+    from evidently.tests import TestShareOfDriftedColumns
+    import pandas as pd
+    import numpy as np
     
-    assert drift_ratio < 0.2, f"Significant distribution drift detected: {drift_ratio*100}%"
+    np.random.seed(42)
+    train_data = pd.DataFrame({"feature1": np.random.normal(0, 1, 100), "feature2": np.random.normal(5, 2, 100)})
+    new_data = pd.DataFrame({"feature1": np.random.normal(0.1, 1, 100), "feature2": np.random.normal(5.5, 2, 100)})
+    
+    drift_suite = TestSuite(tests=[TestShareOfDriftedColumns(lt=0.5)])
+    drift_suite.run(reference_data=train_data, current_data=new_data)
+    
+    results = drift_suite.as_dict()
+    assert results["summary"]["all_passed"], f"Significant distribution drift detected by Evidently: {results}"
+

@@ -394,6 +394,11 @@ tbody tr:last-child td { border-bottom: none; }
   100% { background-position: 0% 50%; }
 }
 
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 @keyframes shimmer {
   0% { left: -100%; }
   100% { left: 200%; }

@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers } from 'lucide-react';
+import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers, Brain } from 'lucide-react';
 
 const Sidebar = () => {
   return (
@@ -30,6 +30,9 @@ const Sidebar = () => {
         </NavLink>
         <NavLink to="/models" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <Layers size={18} /> Model Registry
+        </NavLink>
+        <NavLink to="/ml-tasks" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <Brain size={18} /> ML Tasks
         </NavLink>
       </nav>
 

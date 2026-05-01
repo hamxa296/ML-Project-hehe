@@ -7,6 +7,7 @@ import EDA from './pages/EDA';
 import RunDetail from './pages/RunDetail';
 import DatasetEvaluator from './pages/DatasetEvaluator';
 import Models from './pages/Models';
+import MLTasks from './pages/MLTasks';
 import './index.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
                   <Route path="/eda" element={<EDA />} />
                   <Route path="/evaluator" element={<DatasetEvaluator />} />
                   <Route path="/models" element={<Models />} />
+                  <Route path="/ml-tasks" element={<MLTasks />} />
                 </Routes>
               </main>
             </div>

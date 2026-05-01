@@ -12,7 +12,9 @@ WORKDIR /app
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu && \
+    pip install --default-timeout=1000 --retries 10 --no-cache-dir -r requirements.txt
 
 # Copy the built frontend dist from stage 1
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
