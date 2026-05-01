@@ -23,7 +23,6 @@ class PruningTransformer(BaseEstimator, TransformerMixin):
         
     def fit(self, X, y):
         print("Fitting PruningTransformer...")
-        # Save training schema for robust inference validation
         self.input_schema = X.dtypes.to_dict()
         
         # 1. Missing Value Filter (>95%)
@@ -43,7 +42,7 @@ class PruningTransformer(BaseEstimator, TransformerMixin):
         
         # 4. Information Gain Filter (Keep top 167)
         print("Calculating Information Gain...")
-        sample_tr = X_tmp.fillna(-1).sample(min(50000, len(X_tmp)), random_state=42)
+        sample_tr = X_tmp.fillna(-1).sample(min(20000, len(X_tmp)), random_state=42)
         sample_y = y.loc[sample_tr.index]
         importances = mutual_info_classif(sample_tr, sample_y)
         
@@ -56,20 +55,48 @@ class PruningTransformer(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         X_out = X.copy()
-        
-        # Robust real-world input handling
-        # 1. Missing columns: Add with default values
         for col, dtype in self.input_schema.items():
             if col not in X_out.columns:
                 X_out[col] = 0 if np.issubdtype(dtype, np.number) else ""
-                
-        # 2. Type inconsistencies: Cast safely
-        for col, dtype in self.input_schema.items():
             try:
                 X_out[col] = X_out[col].astype(dtype)
             except Exception:
                 X_out[col] = pd.to_numeric(X_out[col], errors='coerce').fillna(0)
-                
-        # 3. Extra/unexpected columns: Drop safely (by strictly selecting keep_cols)
-        # 4. Incorrect column order: Realign to match training schema
         return X_out[self.keep_cols]
+
+class PaperFeatureEngineeringTransformer(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.medians = None
+        self.velocity_mapping = {}
+        
+    def fit(self, X, y=None):
+        self.medians = X.median()
+        if 'card1' in X.columns:
+            self.velocity_mapping = X.groupby('card1').size().to_dict()
+        return self
+
+    def transform(self, X):
+        X_out = X.copy()
+        # 1. Missingness Indicators
+        for col in X_out.columns:
+            if X_out[col].isnull().mean() > 0.2:
+                X_out[f'{col}_null'] = X_out[col].isnull().astype(int)
+        
+        # 2. Temporal
+        if 'TransactionDT' in X_out.columns:
+            X_out['hour'] = (X_out['TransactionDT'] // 3600) % 24
+            X_out['day_of_week'] = (X_out['TransactionDT'] // (3600 * 24)) % 7
+            X_out['day_of_month'] = (X_out['TransactionDT'] // (3600 * 24)) % 30
+            
+        # 3. Velocity
+        if 'card1' in X_out.columns:
+            X_out['card1_count'] = X_out['card1'].map(self.velocity_mapping).fillna(0)
+            
+        # 4. Amount-based
+        if 'TransactionAmt' in X_out.columns:
+            X_out['Amt_Log'] = np.log1p(X_out['TransactionAmt'])
+            
+        # Final Impute
+        X_out.fillna(self.medians, inplace=True)
+        X_out.fillna(-1, inplace=True)
+        return X_out

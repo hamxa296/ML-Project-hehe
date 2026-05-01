@@ -1,0 +1,39 @@
+
+EXECUTION SUMMARY
+--------------------------------------------------------------------------------
+Data Path:            data/merged_raw_train.csv
+Sample Size:          2000
+Rows Processed:       2,000
+Baseline Features:    431
+Final Features:       154
+Fraud Rate:           0.0205
+
+COMPLIANCE STATUS
+--------------------------------------------------------------------------------
+✅ Data Loading:                True
+✅ Feature Engineering:         True
+⚠️  Metric Gap Analysis:        See details below
+
+KEY FINDINGS
+--------------------------------------------------------------------------------
+Feature Count Target: 167 (Paper Table 3)
+Feature Count Actual: 154
+Feature Match:        ❌ MISMATCH
+
+Stacking PR-AUC Target: 0.891000 (Paper Table 4)
+Stacking PR-AUC Actual: 0.100488
+Metric Gap:             +0.790512
+Gap Percentage:         +88.7%
+
+ERRORS & WARNINGS (0 errors, 2 warnings)
+--------------------------------------------------------------------------------
+⚠️  Feature count mismatch: got 154, expected 167 (gap: +-13 / +-7.8%)
+⚠️  Large metric gap detected: 0.790512
+
+NEXT STEPS
+--------------------------------------------------------------------------------
+1. Verify feature pruning pipeline produces exactly 167 features
+2. Add LightGBM and CatBoost to base learner ensemble
+3. Run full dataset (590k samples) evaluation
+4. Compare all metrics from Table 4
+5. Document any persistent gaps with root cause analysis

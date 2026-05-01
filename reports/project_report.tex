@@ -1,0 +1,140 @@
+\documentclass[10pt,journal,compsoc,twocolumn]{IEEEtran}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{array}
+
+% Custom colors for a premium feel
+\definecolor{techblue}{RGB}{0, 102, 204}
+\definecolor{alertred}{RGB}{204, 0, 0}
+
+\begin{document}
+
+\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Ecosystem:}\\ \large \textit{A Chronological Journey from Raw Data to Stacking Ensembles and Deep Learning}}
+
+\author{Project Engineering Team}
+
+\markboth{IEEE-CIS Project Report, April 2026}%
+{Technical Narrative: Evolution of a Fraud Detection Ecosystem}
+
+\IEEEtitleabstractindextext{
+\begin{abstract}
+The IEEE-CIS Fraud Detection dataset presents a formidable challenge due to its massive scale, extreme class imbalance, and anonymized feature space. This paper documents a systematic, 6-day engineering sprint that transformed raw financial data into a deployment-ready MLOps system. We detail the evolution from memory-optimized preprocessing and SMOTE-based balancing to a hybrid stacking ensemble and a deep learning-based Artificial Neural Network (ANN). The report highlights a critical architectural shift where targeted dimensionality reduction (PCA) on V-features and K-Means clustering provided the model with a multi-perspective view of transaction behavior, resulting in a Grand Champion model with an ROC-AUC of 0.9921.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Fraud Detection, MLOps, Stacking Ensemble, SMOTE, Deep Learning, PCA, Cluster Analysis.
+\end{IEEEkeywords}}
+
+\maketitle
+
+\section{Introduction}
+\IEEEPARstart{T}{he} modern digital economy necessitates real-time vigilance against increasingly sophisticated fraudulent actors. While standard machine learning models offer a baseline defense, they often fail to capture the subtle, cyclical, and high-dimensional patterns inherent in financial transaction data. This project documents the end-to-end development of a fraud detection ecosystem, emphasizing the transition from exploratory research to a containerized production environment. We focus on the IEEE-CIS dataset, chosen for its vast feature set and the realistic challenges it presents in terms of memory management and class imbalance.
+
+\section{Phase 1: Foundation and Preprocessing (Days 1--2)}
+
+\subsection{Dataset Selection and Strategy}
+The project initiated with a comparative analysis of fraud datasets. While alternatives like the "Credit Card Fraud Detection" dataset or "PaySim" were considered, the IEEE-CIS dataset was selected due to its rich feature set, which allowed for a more nuanced exploration of feature engineering and interpretability.
+
+The initial strategy focused on eight critical preprocessing pillars: Data Integration, Missing Value Handling, Irrelevant Feature Removal, Categorical Encoding, Temporal Transformation, Feature Engineering, Imbalance Correction, and Feature Selection.
+
+\subsection{The Preprocessing Pipeline Infrastructure}
+Handling a 1.5GB dataset required a focus on memory efficiency. We implemented a custom \texttt{MemoryOptimizer} that automatically downcasted data types (e.g., \texttt{float64} to \texttt{float32}), preventing kernel crashes and ensuring local processing viability.
+
+A robust \texttt{DataMerger} was developed to resolve naming discrepancies between training and test sets (e.g., \texttt{id-01} vs \texttt{id\_01}). Furthermore, we engineered a \texttt{TimeFeatureExtractor} to mine the \texttt{TransactionDT} delta for cyclical patterns such as \textit{Hour of Day} and \textit{Day of Week}, acknowledging that fraud often peaks during specific temporal windows.
+
+To handle sparsity, columns with $>80\%$ null values were dynamically dropped using a \texttt{DropHighNulls} transformer, while the remaining values were filled using a \texttt{SmartImputer}. Categorical data was handled via \texttt{FrequencyEncoding}, which replaces categories with their normalized frequency—a technique highly effective for tree-based models like XGBoost.
+
+\section{Phase 2: Exploratory Analysis and Data Integrity (Days 3--4)}
+
+\subsection{Multi-Dimensional EDA}
+The exploratory phase utilized a 7-section automated analysis suite. This included class imbalance audits (revealing a ~3\% fraud ratio), KDE plots of transaction amounts on a log-scale, and fraud rate heatmaps. These visualizations validated our temporal engineering and identified "hotspots" such as card testing at micro-amounts ($<\$10$) and high-value fraud ($>\$5000$).
+
+\begin{figure}[h]
+    \centering
+    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
+        \textit{[Placeholder: Class Imbalance Bar/Pie Charts]}
+    \end{tcolorbox}
+    \caption{Visualizing the severe class imbalance driving the choice of PR-AUC as a primary metric.}
+\end{figure}
+
+\subsection{Handling the Imbalance Crisis}
+To prevent the model from adopting a "lazy" strategy of predicting 100\% legitimacy, we implemented a dual-phase strategy in the \texttt{ClassImbalanceHandler}. This involved:
+\begin{enumerate}
+    \item \textbf{SMOTE (Synthetic Minority Over-sampling Technique)}: Generating synthetic fraud samples to enrich the minority class.
+    \item \textbf{Random Undersampling}: Trimming the majority class to reach a manageable balance for memory-intensive algorithms like SVM.
+\end{enumerate}
+Crucially, this balancing was applied only to the training data to prevent data leakage into the validation sets.
+
+\section{Phase 3: Model Evolution (Day 5)}
+
+\subsection{The Hybrid Feature Set}
+A critical breakthrough occurred when we shifted from global PCA to \textbf{Targeted PCA}. We identified that the 339 anonymized V-columns were highly redundant. By compressing only these features into 50 components—while keeping high-signal features like \texttt{TransactionAmt} in their raw form—we created a "Hybrid" feature set. This was further enriched by K-Means Cluster IDs, allowing models to see data from three perspectives: raw, compressed, and grouped.
+
+\subsection{Benchmarking Baselines}
+Initial models included Logistic Regression and Random Forest as baselines. While Logistic Regression provided a low PR-AUC (0.3405), it served as a vital "sanity check" for our preprocessing and scaling.
+
+\begin{figure}[h]
+    \centering
+    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
+        \textit{[Placeholder: Model Comparison Bar Chart]}
+    \end{tcolorbox}
+    \caption{Benchmarking results showing the progression from linear baselines to ensemble methods.}
+\end{figure}
+
+\section{Phase 4: Advanced Architectures (Day 6)}
+
+\subsection{Deep Learning: The ANN Integration}
+We challenged the dominance of XGBoost by implementing a multi-layer \textbf{Artificial Neural Network (ANN)} using TensorFlow. Designing an ANN for tabular data required strict scaling (StandardScaler) and Dropout layers (20--30\%) to prevent overfitting on synthetic SMOTE samples. The ANN's ability to learn complex latent relationships served as a powerful benchmark against traditional gradient boosting.
+
+\subsection{The Grand Champion Stacking Ensemble}
+The pinnacle of our modeling effort was the \textbf{Optimized Hybrid Ensemble}. This model combines:
+\begin{itemize}
+    \item \textbf{XGBoost (Enhanced)}: Trained on the full dataset, PCA components, and Cluster IDs.
+    \item \textbf{Random Forest Regressor}: Specifically tuned to predict financial loss on fraudulent rows.
+    \item \textbf{Kernel SVM}: Leveraging PCA for high-dimensional boundary detection.
+\end{itemize}
+
+\section{Experimental Results and Analysis}
+
+The following table summarizes the performance of the various iterations of our ecosystem. The "Optimized Hybrid" model emerged as the clear leader.
+
+\begin{table}[h]
+\centering
+\caption{Benchmark Comparison of Fraud Detection Models}
+\begin{tabular}{l c c r}
+\toprule
+\textbf{Model} & \textbf{PR-AUC} & \textbf{ROC-AUC} & \textbf{Status} \\
+\midrule
+Optimized Hybrid & 0.7124 & 0.9921 & \textcolor{techblue}{🥇 Grand Champion} \\
+Advanced Experiments & 0.6882 & 0.9899 & \textcolor{gray}{🥈 Silver Medal} \\
+Random Forest & 0.6157 & 0.9542 & \textcolor{orange}{🥉 Bronze Medal} \\
+XGBoost Baseline & 0.6029 & 0.9412 & Solid \\
+KNN & 0.3863 & 0.7512 & Baseline \\
+Logistic Regression & 0.3405 & 0.7421 & Baseline \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+    \centering
+    \begin{tcolorbox}[colback=white,colframe=black,height=6cm,valign=center, halign=center]
+        \textit{[Placeholder: ROC and PR Curves for the Grand Champion]}
+    \end{tcolorbox}
+    \caption{Performance curves demonstrating high precision-recall balance even under extreme class imbalance.}
+\end{figure}
+
+\section{Production MLOps and Deployment}
+The final phase involved containerizing the system using \textbf{Docker} and \textbf{FastAPI}. This architecture allows for a "Plug-and-Play" deployment where the ANN and XGBoost models coexist. The FastAPI backend ensures that incoming transactions are preprocessed through the exact same pipeline used in training, maintaining data parity and ensuring reliable real-time predictions.
+
+\section{Conclusion}
+This project demonstrates that high-performance fraud detection is a multi-stage engineering endeavor. By systematically addressing memory constraints, feature redundancy (via Targeted PCA), and class imbalance (via SMOTE), we evolved a 0.34 PR-AUC baseline into a 0.7124 PR-AUC production-ready system. The integration of hybrid feature sets and deep learning proves that modern fraud detection benefits significantly from viewing data through multiple algorithmic lenses.
+
+\bibliographystyle{IEEEtran}
+\end{document}
