@@ -7,55 +7,13 @@
 \usepackage{amsmath}
 \usepackage{booktabs}
 \usepackage{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
 \usepackage{tcolorbox}
 \usepackage{array}
 \usepackage{float}
 
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
-\pgfplotsset{compat=1.18}
-
 % Custom colors for a premium feel
 \definecolor{techblue}{RGB}{0, 102, 204}
 \definecolor{alertred}{RGB}{204, 0, 0}
-
-\tikzset{
-    flowbox/.style={
-        rectangle,
-        rounded corners=2pt,
-        draw=techblue,
-        fill=techblue!8,
-        very thick,
-        align=center,
-        text width=2.2cm,
-        minimum height=1cm,
-        font=\small
-    },
-    stage/.style={
-        rectangle,
-        rounded corners=2pt,
-        draw=techblue,
-        fill=techblue!6,
-        very thick,
-        align=center,
-        text width=2.0cm,
-        minimum height=0.9cm,
-        font=\small
-    },
-    decision/.style={
-        diamond,
-        draw=alertred,
-        fill=alertred!8,
-        very thick,
-        align=center,
-        aspect=2,
-        text width=1.7cm,
-        inner sep=1pt,
-        font=\small
-    },
-    flowarrow/.style={-{Latex[length=2.2mm]}, very thick, draw=techblue}
-}
 
 \begin{document}
 
@@ -113,22 +71,7 @@ Our methodology is built on a "Pruning-First" foundation. We found that engineer
 
 \begin{figure}[H]
     \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tikzpicture}[node distance=6mm and 8mm]
-        \node[flowbox] (raw) {Raw Data};
-        \node[flowbox, right=of raw] (prune) {Feature Pruning};
-        \node[flowbox, right=of prune] (engineer) {Feature Engineering};
-        \node[flowbox, right=of engineer] (cluster) {K-Means Clustering};
-        \node[flowbox, right=of cluster] (ensemble) {Stacked Ensemble};
-        \node[flowbox, right=of ensemble] (eval) {Model Evaluation};
-
-        \draw[flowarrow] (raw) -- (prune);
-        \draw[flowarrow] (prune) -- (engineer);
-        \draw[flowarrow] (engineer) -- (cluster);
-        \draw[flowarrow] (cluster) -- (ensemble);
-        \draw[flowarrow] (ensemble) -- (eval);
-    \end{tikzpicture}%
-    }
+    \includegraphics[width=0.48\textwidth]{assets/methodology_flow.png}
     \caption{End-to-end Machine Learning methodology from raw data to evaluation.}
 \end{figure}
 
@@ -168,30 +111,7 @@ Logistic Regression & 0.3405 & 0.7421 & Baseline \\
 
 \begin{figure}[H]
     \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        ybar,
-        bar shift auto,
-        bar width=4pt,
-        width=\columnwidth,
-        height=6cm,
-        ymin=0.3,
-        ymax=1.0,
-        enlarge x limits=0.12,
-        symbolic x coords={Optimized Hybrid,Advanced Experiments,Random Forest,XGBoost Baseline,KNN,Logistic Regression},
-        xtick=data,
-        x tick label style={rotate=25, anchor=east, font=\scriptsize},
-        ylabel={Score},
-        legend style={at={(0.5,1.08)}, anchor=south, legend columns=2, draw=none, font=\scriptsize},
-        nodes near coords,
-        nodes near coords style={font=\scriptsize, rotate=90, anchor=west},
-        every node near coord/.append style={black}
-    ]
-        \addplot+[fill=techblue!55] coordinates {(Optimized Hybrid,0.7124) (Advanced Experiments,0.6882) (Random Forest,0.6157) (XGBoost Baseline,0.6029) (KNN,0.3863) (Logistic Regression,0.3405)};
-        \addplot+[fill=alertred!45] coordinates {(Optimized Hybrid,0.9921) (Advanced Experiments,0.9899) (Random Forest,0.9542) (XGBoost Baseline,0.9412) (KNN,0.7512) (Logistic Regression,0.7421)};
-        \legend{PR-AUC, ROC-AUC}
-    \end{axis}
-    \end{tikzpicture}
+    \includegraphics[width=0.45\textwidth]{assets/model_comparison.png}
     \caption{PR-AUC comparison across all model iterations.}
 \end{figure}
 
@@ -202,20 +122,7 @@ The system is built as a microservices architecture. The React Frontend provides
 
 \begin{figure}[H]
     \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tikzpicture}[node distance=10mm and 14mm]
-        \node[stage] (frontend) {React Frontend};
-        \node[stage, right=of frontend, xshift=8mm] (backend) {FastAPI Backend};
-        \node[stage, below=of backend] (models) {Models and Artifacts};
-        \node[stage, left=of models, xshift=-8mm] (data) {Shared Data Volume};
-
-        \draw[flowarrow] (frontend) -- node[above, font=\scriptsize] {API calls} (backend);
-        \draw[flowarrow] (backend) -- node[right, font=\scriptsize] {load / save} (models);
-        \draw[flowarrow] (backend) -- node[below, font=\scriptsize] {read features} (data);
-        \draw[flowarrow] (models) -- node[left, font=\scriptsize] {predictions} (backend);
-        \draw[flowarrow] (backend) -- node[below, font=\scriptsize] {responses} (frontend);
-    \end{tikzpicture}%
-    }
+    \includegraphics[width=0.48\textwidth]{assets/system_architecture.png}
     \caption{Integrated system architecture showing frontend, backend, and shared volumes.}
 \end{figure}
 
@@ -224,44 +131,13 @@ We utilize a multi-stage Docker build to ensure environment parity. The CI/CD pi
 
 \begin{figure}[H]
     \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tikzpicture}[node distance=8mm and 8mm]
-        \node[flowbox] (src) {Source Code};
-        \node[flowbox, right=of src] (deps) {Install Dependencies};
-        \node[flowbox, right=of deps] (image) {Build Docker Image};
-        \node[flowbox, right=of image] (run) {Run Container};
-        \node[flowbox, below=of image] (ship) {Ship to Runtime};
-
-        \draw[flowarrow] (src) -- (deps);
-        \draw[flowarrow] (deps) -- (image);
-        \draw[flowarrow] (image) -- (run);
-        \draw[flowarrow] (run) -- (ship);
-    \end{tikzpicture}%
-    }
+    \includegraphics[width=0.45\textwidth]{assets/containerization_workflow.png}
     \caption{Multi-stage Docker build process for unified deployment.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tikzpicture}[node distance=8mm and 8mm]
-        \node[stage] (push) {Code Push};
-        \node[stage, right=of push] (actions) {GitHub Actions};
-        \node[stage, right=of actions] (tests) {Lint and Tests};
-        \node[stage, right=of tests] (build) {Build Artifact};
-        \node[decision, right=of build] (gate) {Quality Gate};
-        \node[stage, above right=of gate] (deploy) {Deploy};
-        \node[stage, below right=of gate] (block) {Block Release};
-
-        \draw[flowarrow] (push) -- (actions);
-        \draw[flowarrow] (actions) -- (tests);
-        \draw[flowarrow] (tests) -- (build);
-        \draw[flowarrow] (build) -- (gate);
-        \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {pass} (deploy);
-        \draw[flowarrow] (gate) -- node[below, font=\scriptsize] {fail} (block);
-        \draw[flowarrow] (block.west) |- (tests.south);
-    \end{tikzpicture}%
-    }
+    \includegraphics[width=0.45\textwidth]{assets/cicd_pipeline.png}
     \caption{Automated CI/CD workflow from code push to deployment.}
 \end{figure}
 
@@ -270,24 +146,7 @@ All machine learning tasks are orchestrated by Prefect. This ensures that data l
 
 \begin{figure}[H]
     \centering
-    \resizebox{\columnwidth}{!}{%
-    \begin{tikzpicture}[node distance=8mm and 8mm]
-        \node[flowbox] (load) {Load Data};
-        \node[flowbox, right=of load] (prep) {Preprocess Features};
-        \node[flowbox, right=of prep] (train) {Train Model};
-        \node[flowbox, right=of train] (validate) {Validate Metrics};
-        \node[flowbox, right=of validate] (save) {Save Best Run};
-        \node[decision, below=of validate] (retry) {Metrics OK?};
-
-        \draw[flowarrow] (load) -- (prep);
-        \draw[flowarrow] (prep) -- (train);
-        \draw[flowarrow] (train) -- (validate);
-        \draw[flowarrow] (validate) -- (save);
-        \draw[flowarrow] (validate) -- (retry);
-        \draw[flowarrow] (retry.west) -| node[pos=0.25, below, font=\scriptsize] {no} (train.south);
-        \draw[flowarrow] (retry.east) -| node[pos=0.25, below, font=\scriptsize] {yes} (save.south);
-    \end{tikzpicture}%
-    }
+    \includegraphics[width=0.45\textwidth]{assets/prefect_orchestration.png}
     \caption{Prefect orchestration flow for model training and validation.}
 \end{figure}
 
