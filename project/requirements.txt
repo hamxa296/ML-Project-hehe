@@ -6,7 +6,7 @@ pandas
 numpy
 scikit-learn
 xgboost
-prefect
+prefect<3.0.0
 pytest
 joblib
 matplotlib

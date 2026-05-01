@@ -1,0 +1,25 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+README.md
+.env
+.env.local
+__pycache__
+*.pyc
+.pytest_cache
+.venv
+venv
+.vscode
+.idea
+*.log
+.DS_Store
+.github
+tests
+results.csv
+latest_metrics.json
+# These are mounted as volumes at runtime — don't bake into the image
+data/
+models/
+results/
+artifacts/
