@@ -54,8 +54,8 @@ def render_matplotlib(boxes, edges, name, size=(11,6), dpi=200):
         xb, yb = boxes[b][0], boxes[b][1]
         arrow = FancyArrowPatch((xa + 0.2, ya), (xb - 0.2, yb), arrowstyle='->', mutation_scale=20, linewidth=1.2, color='#0066CC')
         ax.add_patch(arrow)
-    ax.set_xlim(0, 11)
-    ax.set_ylim(0, 6)
+    ax.set_xlim(0, figw)
+    ax.set_ylim(0, figh)
     fig.savefig(out_path, bbox_inches='tight')
     plt.close(fig)
     print(f"Wrote {out_path} (matplotlib)")
@@ -81,14 +81,14 @@ def make_system_architecture():
     else:
         boxes = {
             'CI': (1.5, 3.0, 2.8, 0.9, 'CI/CD\n(GitHub Actions)', '#0066CC'),
-            'Prefect': (4.0, 3.0, 2.8, 0.9, 'Prefect\nOrchestration', '#0066CC'),
-            'Training': (6.5, 3.0, 2.8, 0.9, 'Training\n(XGBoost + KMeans)', '#0066CC'),
-            'Registry': (8.5, 3.0, 2.8, 0.9, 'Model Registry\n(Artifacts)', '#0066CC'),
-            'API': (8.5, 1.7, 2.6, 0.9, 'FastAPI\nInference', '#0066CC'),
-            'Dashboard': (10.5, 1.7, 2.6, 0.9, 'React Dashboard', '#0066CC'),
+            'Prefect': (4.5, 3.0, 2.8, 0.9, 'Prefect\nOrchestration', '#0066CC'),
+            'Training': (7.5, 3.0, 2.8, 0.9, 'Training\n(XGBoost + KMeans)', '#0066CC'),
+            'Registry': (10.5, 3.0, 2.8, 0.9, 'Model Registry\n(Artifacts)', '#0066CC'),
+            'API': (10.5, 1.6, 2.6, 0.9, 'FastAPI\nInference', '#0066CC'),
+            'Dashboard': (7.5, 1.6, 2.6, 0.9, 'React Dashboard', '#0066CC'),
         }
         edges = [('CI', 'Prefect'), ('Prefect', 'Training'), ('Training', 'Registry'), ('Registry', 'API'), ('API', 'Dashboard')]
-        render_matplotlib(boxes, edges, 'system_architecture', size=(11,6), dpi=200)
+        render_matplotlib(boxes, edges, 'system_architecture', size=(13,5), dpi=200)
 
 
 def make_methodology_flow():
@@ -110,17 +110,17 @@ def make_methodology_flow():
         render_dot(d, 'methodology_flow')
     else:
         boxes = {
-            'Raw': (1.0, 3.0, 2.6, 0.9, 'Raw CSVs\n(train_transaction.csv + train_identity.csv)', '#0066CC'),
-            'Merge': (3.0, 3.0, 2.2, 0.9, 'Merge & Memory Downcast', '#0066CC'),
-            'Feat': (5.0, 3.0, 2.6, 0.9, 'Feature Engineering\n(time, freq enc, log)', '#0066CC'),
-            'Prune': (7.0, 3.0, 2.4, 0.9, 'Pruning (>70% nulls)', '#0066CC'),
-            'Cluster': (9.0, 3.0, 2.2, 0.9, 'KMeans\n(n=5)', '#0066CC'),
-            'Train': (5.0, 1.6, 2.6, 0.9, 'Train XGBoost\n(scale_pos_weight)', '#0066CC'),
-            'Eval': (7.5, 1.6, 2.4, 0.9, 'Evaluate\n(PR/ROC, Confusion)', '#0066CC'),
-            'Serve': (9.5, 1.6, 2.6, 0.9, 'Save & Serve\n(model_latest.pkl)', '#0066CC'),
+            'Raw': (1.6, 3.0, 3.0, 1.0, 'Raw CSVs\n(train_transaction.csv\n+ train_identity.csv)', '#0066CC'),
+            'Merge': (5.0, 3.0, 2.8, 0.9, 'Merge & Memory\nDowncast', '#0066CC'),
+            'Feat': (8.2, 3.0, 2.8, 0.9, 'Feature Engineering\n(time, freq enc, log)', '#0066CC'),
+            'Prune': (11.4, 3.0, 2.6, 0.9, 'Pruning\n(>70% nulls)', '#0066CC'),
+            'Cluster': (11.4, 1.6, 2.4, 0.9, 'KMeans\n(n=5)', '#0066CC'),
+            'Train': (8.2, 1.6, 2.8, 0.9, 'Train XGBoost\n(scale_pos_weight)', '#0066CC'),
+            'Eval': (5.0, 1.6, 2.6, 0.9, 'Evaluate\n(PR/ROC, Confusion)', '#0066CC'),
+            'Serve': (1.6, 1.6, 2.8, 0.9, 'Save & Serve\n(model_latest.pkl)', '#0066CC'),
         }
         edges = [('Raw','Merge'),('Merge','Feat'),('Feat','Prune'),('Prune','Cluster'),('Cluster','Train'),('Train','Eval'),('Eval','Serve')]
-        render_matplotlib(boxes, edges, 'methodology_flow', size=(11,6), dpi=200)
+        render_matplotlib(boxes, edges, 'methodology_flow', size=(13.5, 5), dpi=200)
 
 
 def make_prefect_orchestration():
@@ -138,15 +138,15 @@ def make_prefect_orchestration():
         render_dot(d, 'prefect_orchestration')
     else:
         boxes = {
-            'ingest': (5.5, 5.0, 2.2, 0.8, 'Ingest', '#CC6600'),
-            'eda': (5.5, 4.0, 2.2, 0.8, 'Raw EDA', '#CC6600'),
-            'preproc': (5.5, 3.0, 2.6, 0.8, 'Preprocessing', '#CC6600'),
-            'train': (5.5, 2.0, 2.2, 0.8, 'Training', '#CC6600'),
-            'eval': (5.5, 1.0, 2.2, 0.8, 'Evaluation', '#CC6600'),
-            'publish': (5.5, 0.0, 2.6, 0.8, 'Publish Artifacts', '#CC6600'),
+            'ingest': (3.0, 5.5, 2.2, 0.8, 'Ingest', '#CC6600'),
+            'eda': (3.0, 4.5, 2.2, 0.8, 'Raw EDA', '#CC6600'),
+            'preproc': (3.0, 3.5, 2.6, 0.8, 'Preprocessing', '#CC6600'),
+            'train': (3.0, 2.5, 2.2, 0.8, 'Training', '#CC6600'),
+            'eval': (3.0, 1.5, 2.2, 0.8, 'Evaluation', '#CC6600'),
+            'publish': (3.0, 0.5, 2.6, 0.8, 'Publish Artifacts', '#CC6600'),
         }
         edges = [('ingest','eda'),('eda','preproc'),('preproc','train'),('train','eval'),('eval','publish')]
-        render_matplotlib(boxes, edges, 'prefect_orchestration', size=(11,6), dpi=200)
+        render_matplotlib(boxes, edges, 'prefect_orchestration', size=(6, 6.5), dpi=200)
 
 
 def make_containerization_workflow():
@@ -163,14 +163,14 @@ def make_containerization_workflow():
         render_dot(d, 'containerization_workflow')
     else:
         boxes = {
-            'dev': (1.5, 2.0, 2.4, 0.8, 'Developer', '#2E8B57'),
-            'ci': (4.0, 2.0, 2.6, 0.8, 'CI Runner\n(GitHub Actions)', '#2E8B57'),
-            'build': (6.5, 2.0, 2.6, 0.8, 'Docker Build', '#2E8B57'),
-            'push': (8.5, 2.0, 2.6, 0.8, 'Registry\n(Container Image)', '#2E8B57'),
-            'deploy': (10.0, 2.0, 2.4, 0.8, 'Production', '#2E8B57'),
+            'dev': (3.0, 5.0, 2.4, 0.8, 'Developer', '#2E8B57'),
+            'ci': (3.0, 4.0, 2.6, 0.8, 'CI Runner\n(GitHub Actions)', '#2E8B57'),
+            'build': (3.0, 3.0, 2.6, 0.8, 'Docker Build', '#2E8B57'),
+            'push': (3.0, 2.0, 2.6, 0.8, 'Registry\n(Container Image)', '#2E8B57'),
+            'deploy': (3.0, 1.0, 2.4, 0.8, 'Production', '#2E8B57'),
         }
         edges = [('dev','ci'),('ci','build'),('build','push'),('push','deploy')]
-        render_matplotlib(boxes, edges, 'containerization_workflow', size=(11,4), dpi=200)
+        render_matplotlib(boxes, edges, 'containerization_workflow', size=(6, 6), dpi=200)
 
 
 def main():
