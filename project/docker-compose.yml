@@ -28,14 +28,18 @@ services:
       - PREFECT_API_URL=http://prefect:4200/api
       - TZ=Asia/Karachi
       - PYTHONPATH=/app
-      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - SMTP_SERVER=smtp.gmail.com
+      - SMTP_PORT=587
+      - SENDER_EMAIL=hamzzarif296@gmail.com
+      - SENDER_PASSWORD=zmtvybdauhrhdnxl
+      - RECIPIENT_EMAIL=ammarbatman9@gmail.com
     volumes:
       - ./src:/app/src                # Mount local model code
       - ./pipeline:/app/pipeline      # Mount local pipeline scripts
       - ./models:/app/models          # trained .pkl files (shared with api)
       - ./results:/app/results        # graphs dir (shared with api)
       - ./data:/app/data              # read-only input CSVs
-      - ./artifacts:/app/artifacts ?
+      - ./artifacts:/app/artifacts
 
   # ── FastAPI Backend ───────────────────────────────────────────────────────────
   api:
@@ -54,3 +58,4 @@ services:
       - ./models:/app/models          # picks up new models without rebuild
       - ./results:/app/results        # serves latest_*.png graph files
       - ./artifacts:/app/artifacts    # reads latest_metrics.json + results.csv
+      - ./frontend/dist:/app/frontend/dist # Sync built frontend for instant updates

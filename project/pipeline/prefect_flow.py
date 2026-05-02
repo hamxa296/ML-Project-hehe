@@ -40,10 +40,12 @@ def processed_eda_task(pipeline, X_train, y_train):
     """EDA on data AFTER the full preprocessing pipeline has been applied."""
     print("\n>>> Running Processed Data EDA...")
     from src.eda_processed import run_processed_eda
-    steps = pipeline.named_steps
-    X_t = steps['prune'].transform(X_train)
-    X_t = steps['fe'].transform(X_t)
-    X_t = steps['clustering'].transform(X_t)
+    
+    # Transform through all steps except the final model
+    X_t = X_train
+    for name, step in pipeline.steps[:-1]:
+        X_t = step.transform(X_t)
+    
     feature_names = list(X_t.columns)
     X_array = X_t.values
     out_dir = ARTIFACTS_DIR / 'eda_processed'
@@ -69,7 +71,7 @@ def load_task():
         train_path = PROJECT_ROOT / 'data' / 'train_unbalanced.csv'
         test_path  = PROJECT_ROOT / 'data' / 'test.csv'
     return load_data(str(train_path), str(test_path))
-    
+
 
 
 
@@ -148,12 +150,14 @@ def timeseries_task(train_df: pd.DataFrame):
 
 @task(name="Dimensionality Reduction — PCA")
 def dimensionality_reduction_task(pipeline, X_train: pd.DataFrame, y_train: pd.Series):
-    """PCA on processed 175-feature space — 2D scatter plot, variance explained."""
+    """PCA on processed feature space — 2D scatter plot, variance explained."""
     from src.dimensionality_reduction import run_dimensionality_reduction
-    steps = pipeline.named_steps
-    X_t = steps['prune'].transform(X_train)
-    X_t = steps['fe'].transform(X_t)
-    X_t = steps['clustering'].transform(X_t)
+    
+    # Transform through all steps except the final model
+    X_t = X_train
+    for name, step in pipeline.steps[:-1]:
+        X_t = step.transform(X_t)
+    
     feature_names = list(X_t.columns)
     graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
     return run_dimensionality_reduction(
@@ -233,13 +237,13 @@ def evidently_report_task(X_train, X_test, y_train, y_test, pipeline):
 
 # ── Main Flow ─────────────────────────────────────────────────────────────────
 
-from pipeline.notify import send_discord
+from pipeline.notify import send_email
 
 def notify_success(flow, flow_run, state):
-    send_discord(f"Pipeline {flow_run.name} succeeded! View dashboard for metrics.", color=3066993, title="✅ Pipeline Success")
+    send_email("✅ Pipeline Success", f"Pipeline {flow_run.name} succeeded! View dashboard for metrics.")
 
 def notify_failure(flow, flow_run, state):
-    send_discord(f"Pipeline {flow_run.name} failed! Error: {state.message}", color=15158332, title="❌ Pipeline Failed")
+    send_email("❌ Pipeline Failed", f"Pipeline {flow_run.name} failed! Error: {state.message}")
 
 @flow(name="Robust Fraud Detection Unified Pipeline", on_completion=[notify_success], on_failure=[notify_failure])
 def training_pipeline(config: dict = {"min_auc_pr": 0.6}):

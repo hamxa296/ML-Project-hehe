@@ -1,0 +1,543 @@
+22:55:31.638 | INFO    | prefect.engine - Created flow run 'jovial-husky' for flow 'Robust Fraud Detection Unified Pipeline'
+22:55:31.662 | INFO    | Flow run 'cautious-pug' - View at http://localhost:4200/flow-runs/flow-run/55c385c6-4f99-43bd-9097-25eb38d17062
+22:55:31.835 | INFO    | Flow run 'cautious-pug' - Created task run 'Load Data-0' for task 'Load Data'
+22:55:31.838 | INFO    | Flow run 'cautious-pug' - Executing 'Load Data-0' immediately...
+22:55:46.842 | INFO    | Task run 'Load Data-0' - Finished in state Completed()
+22:55:57.741 | INFO    | Flow run 'cautious-pug' - Created task run 'Raw Data EDA-0' for task 'Raw Data EDA'
+22:55:57.743 | INFO    | Flow run 'cautious-pug' - Executing 'Raw Data EDA-0' immediately...
+Loading Raw Datasets...
+Initial Features: 226
+
+>>> Running Raw Data EDA...
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:151: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['hour'] = (df['TransactionDT'] // 3600) % 24
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:152: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
+  df['dow']  = (df['TransactionDT'] // (3600*24)) % 7
+22:59:25.322 | INFO    | Task run 'Raw Data EDA-0' - Finished in state Completed()
+22:59:25.394 | INFO    | Flow run 'cautious-pug' - Created task run 'Baseline Experiment-0' for task 'Baseline Experiment'
+22:59:25.395 | INFO    | Flow run 'cautious-pug' - Executing 'Baseline Experiment-0' immediately...
+23:00:59.416 | INFO    | Task run 'Baseline Experiment-0' - Finished in state Completed()
+23:00:59.516 | INFO    | Flow run 'cautious-pug' - Created task run 'Train Model-0' for task 'Train Model'
+23:00:59.518 | INFO    | Flow run 'cautious-pug' - Executing 'Train Model-0' immediately...
+23:16:29.226 | INFO    | Task run 'Train Model-0' - Finished in state Completed()
+23:16:29.365 | INFO    | Flow run 'cautious-pug' - Created task run 'Processed Data EDA-0' for task 'Processed Data EDA'
+23:16:29.369 | INFO    | Flow run 'cautious-pug' - Executing 'Processed Data EDA-0' immediately...
+
+============================================================
+  RAW DATA EDA
+============================================================
+
+[1] Loading data...
+  Shape            : 472,432 rows x 228 cols
+  Memory           : 861.7 MB
+  Dtypes           : {dtype('float64'): 222, dtype('int64'): 6}
+
+[2] Target Distribution...
+  Fraud     : 16,530  (3.4989%)
+  Safe      : 455,902  (96.5011%)
+  Imbalance : 27.6:1  (Safe:Fraud)
+  Saved -> 01_target_distribution.png
+
+[3] Missing Value Analysis...
+  Cols with any missing : 0
+  Cols with 0% missing  : 228
+  Cols with >50% missing: 0
+  Cols with >95% missing: 0  <- would be pruned
+  No missing values found (data is pre-encoded).
+
+[4] TransactionAmt Analysis...
+  Mean   : 4.3826
+  Median : 4.2460
+  Std    : 0.9375
+  Skew   : 0.4876
+  Fraud mean   : 4.3700  |  Safe mean  : 4.3831
+  Fraud std    : 1.1041   |  Safe std   : 0.9309
+  Mann-Whitney U p-value: 0.137022  (not significant)
+  Saved -> 03_transaction_amount.png
+
+[5] Time-Based Analysis...
+  Peak fraud hour (rate): 7 (10.79%)
+  Peak fraud dow  (rate): 2 (3.71%)
+  Saved -> 04_time_analysis.png
+
+[6] C-Features (Count Features)...
+  Count: 14
+          mean         std  50%     max
+C1   14.032934  132.402160  1.0  4684.0
+C2   15.208716  153.289569  1.0  5692.0
+C3    0.005542    0.141592  0.0    26.0
+C4    4.070294   68.312571  0.0  2252.0
+C5    5.552901   25.731393  0.0   349.0
+C6    9.037017   70.982727  1.0  2252.0
+C7    2.822135   61.099761  0.0  2256.0
+C8    5.110987   94.517418  0.0  3332.0
+C9    4.467680   16.637458  1.0   210.0
+C10   5.204865   94.761080  0.0  3256.0
+C11  10.198236   93.546197  1.0  3188.0
+C12   4.040871   85.789571  0.0  3188.0
+C13  32.418710  128.712660  3.0  2918.0
+C14   8.266002   49.233935  1.0  1429.0
+
+  C-features corr with isFraud:
+C2     0.037032
+C9    -0.031666
+C8     0.031596
+C12    0.031440
+C5    -0.030916
+C1     0.030236
+C4     0.029772
+C10    0.027637
+C7     0.027548
+C11    0.026972
+C6     0.020274
+C13   -0.011883
+C3    -0.007371
+C14    0.007017
+  Saved -> 05_c_features.png
+
+[7] D-Features (Timedelta Features)...
+  Count: 8
+  Missing %:
+D1     0.0
+D2     0.0
+D3     0.0
+D4     0.0
+D5     0.0
+D10    0.0
+D11    0.0
+D15    0.0
+  Corr with isFraud:
+D15   -0.074107
+D10   -0.070449
+D1    -0.066715
+D2    -0.064353
+D11   -0.055007
+D4    -0.054550
+D5    -0.040014
+D3    -0.038200
+  Saved -> 06_d_features.png
+
+[8] V-Features Analysis...
+  Count: 180
+  Missing > 50%: 0 features
+  Missing > 95%: 0 features (would be pruned)
+
+  Top 20 V-features by |corr| with isFraud:
+V45    0.234479
+V86    0.222771
+V87    0.221612
+V44    0.216058
+V52    0.195926
+V51    0.182085
+V40    0.173216
+V79    0.166694
+V38    0.166529
+V39    0.165239
+V43    0.162573
+V94    0.161076
+V33    0.159246
+V18    0.158227
+V17    0.158023
+V34    0.156911
+V74    0.156455
+V81    0.155701
+V15    0.155145
+V42    0.154630
+  Saved -> 07_v_features_corr.png
+  Saved -> 08_v_features_missing.png
+
+[9] Correlation Matrix (Top 25 features with isFraud)...
+  Saved -> 09_correlation_matrix.png
+
+[10] Redundant Feature Pairs (r > 0.98)...
+  Total pairs with r > 0.98: 89
+    hour         <-> Transaction_Hour  r=1.0
+    dow          <-> Transaction_Day  r=1.0
+    V101         <-> V95           r=0.9996
+    C12          <-> C7            r=0.9995
+    V293         <-> V279          r=0.9995
+    V293         <-> V101          r=0.9992
+    V279         <-> V95           r=0.999
+    V103         <-> V97           r=0.9988
+    V279         <-> V101          r=0.9987
+    V293         <-> V95           r=0.9987
+    V295         <-> V280          r=0.9986
+    TransactionDT <-> TransactionID  r=0.9983
+    V316         <-> V132          r=0.9974
+    V102         <-> V96           r=0.9971
+    C10          <-> C8            r=0.997
+
+[11] Category Fraud Rate Analysis...
+
+  ProductCD:
+           fraud_rate   count
+ProductCD                    
+0.116028     0.116700   54987
+0.019690     0.057517    9319
+0.055922     0.046698   26425
+0.063838     0.038147   30251
+0.744522     0.020455  351450
+
+  card4:
+          fraud_rate   count
+card4                       
+0.011263    0.077944    5273
+0.651551    0.034734  307711
+0.320414    0.034293  151547
+0.014102    0.030339    6658
+0.002670    0.025744    1243
+
+  card6:
+          fraud_rate   count
+card6                       
+0.252288    0.066942  119283
+0.002660    0.025000    1240
+0.744976    0.024196  351871
+0.000025    0.000000      13
+0.000051    0.000000      25
+  Saved -> 10_category_fraud_rates.png
+
+[12] Outlier Analysis (IQR method on key features)...
+       feature  n_outliers       pct  fraud_rate_in_outliers
+TransactionAmt       16231  3.435627                0.050397
+            C1       47636 10.083144                0.084705
+            C2       49749 10.530404                0.086273
+            C3        1974  0.417838                0.000507
+            C4      111276 23.553866                0.082174
+            C5       48341 10.232372                0.009971
+  Saved -> 11_outlier_analysis.png
+
+[13] Mann-Whitney U Tests (Top 10 V-features)...
+  Feature          U-stat      p-value  Significant
+  V45          4486954292     0.00e+00          YES
+  V86          4384138362     0.00e+00          YES
+  V87          4452291064     0.00e+00          YES
+  V44          4406357222     0.00e+00          YES
+  V52          4828932068     0.00e+00          YES
+  V51          4810452081     0.00e+00          YES
+  V40          4750682548     0.00e+00          YES
+  V79          4787801728     0.00e+00          YES
+  V38          4432553417     0.00e+00          YES
+  V39          4739955832     0.00e+00          YES
+
+[14] Exporting JSON data for frontend...
+  JSON exported -> raw_eda_data.json
+
+============================================================
+  RAW EDA COMPLETE â€” plots saved to C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
+============================================================
+>>> Raw EDA complete. Plots -> C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
+>>> [Baseline] Training Logistic Regression Baseline...
+>>> Baseline evaluation complete. AUC-PR: 0.3303
+Building Integrated ML Pipeline...
+Training XGBoost + Clustering (this will take time)...
+Fitting PruningTransformer...
+Calculating Information Gain...
+Baseline Feature Set Size after pruning: 167
+
+>>> Running Processed Data EDA...
+23:19:26.284 | INFO    | Task run 'Processed Data EDA-0' - Finished in state Completed()
+23:19:26.676 | INFO    | Flow run 'cautious-pug' - Created task run 'Evidently ML Health Report-0' for task 'Evidently ML Health Report'
+23:19:26.678 | INFO    | Flow run 'cautious-pug' - Executing 'Evidently ML Health Report-0' immediately...
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
+  res = hypotest_fun_out(*samples, **kwds)
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
+  terms = (f_obs - f_exp)**2 / f_exp
+23:20:58.735 | INFO    | Task run 'Evidently ML Health Report-0' - Finished in state Completed()
+23:21:03.289 | INFO    | Flow run 'cautious-pug' - Created task run 'Evaluate and Log-0' for task 'Evaluate and Log'
+23:21:03.292 | INFO    | Flow run 'cautious-pug' - Executing 'Evaluate and Log-0' immediately...
+23:21:42.328 | INFO    | Task run 'Evaluate and Log-0' - Finished in state Completed()
+23:21:42.401 | INFO    | Flow run 'cautious-pug' - Created task run 'Save Model-0' for task 'Save Model'
+23:21:42.403 | INFO    | Flow run 'cautious-pug' - Executing 'Save Model-0' immediately...
+23:21:44.482 | INFO    | Task run 'Save Model-0' - Finished in state Completed()
+23:21:44.584 | INFO    | Flow run 'cautious-pug' - Created task run 'Regression — Transaction Velocity Forecasting-0' for task 'Regression — Transaction Velocity Forecasting'
+23:21:44.586 | INFO    | Flow run 'cautious-pug' - Executing 'Regression — Transaction Velocity Forecasting-0' immediately...
+23:22:00.926 | INFO    | Task run 'Regression — Transaction Velocity Forecasting-0' - Finished in state Completed()
+23:22:01.101 | INFO    | Flow run 'cautious-pug' - Created task run 'Time Series — Fraud Rate Analysis-0' for task 'Time Series — Fraud Rate Analysis'
+23:22:01.104 | INFO    | Flow run 'cautious-pug' - Executing 'Time Series — Fraud Rate Analysis-0' immediately...
+23:22:11.666 | INFO    | Task run 'Time Series — Fraud Rate Analysis-0' - Finished in state Completed()
+23:22:11.826 | INFO    | Flow run 'cautious-pug' - Created task run 'Dimensionality Reduction — PCA-0' for task 'Dimensionality Reduction — PCA'
+23:22:11.828 | INFO    | Flow run 'cautious-pug' - Executing 'Dimensionality Reduction — PCA-0' immediately...
+23:22:41.148 | INFO    | Task run 'Dimensionality Reduction — PCA-0' - Finished in state Completed()
+23:22:41.261 | INFO    | Flow run 'cautious-pug' - Created task run 'Clustering — Behaviour Profile Analysis-0' for task 'Clustering — Behaviour Profile Analysis'
+23:22:41.263 | INFO    | Flow run 'cautious-pug' - Executing 'Clustering — Behaviour Profile Analysis-0' immediately...
+23:22:50.729 | INFO    | Task run 'Clustering — Behaviour Profile Analysis-0' - Finished in state Completed()
+23:22:50.844 | INFO    | Flow run 'cautious-pug' - Created task run 'Association Rules — Fraud Pattern Mining-0' for task 'Association Rules — Fraud Pattern Mining'
+23:22:50.846 | INFO    | Flow run 'cautious-pug' - Executing 'Association Rules — Fraud Pattern Mining-0' immediately...
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\mlxtend\frequent_patterns\association_rules.py:186: RuntimeWarning:
+
+invalid value encountered in divide
+
+23:26:38.812 | INFO    | Task run 'Association Rules — Fraud Pattern Mining-0' - Finished in state Completed()
+23:26:38.909 | INFO    | Flow run 'cautious-pug' - Running hook 'notify_success' in response to entering state 'Completed'
+23:26:38.911 | INFO    | Flow run 'cautious-pug' - Hook 'notify_success' finished running successfully
+23:26:38.912 | INFO    | Flow run 'cautious-pug' - Finished in state Completed('All states completed.')
+
+============================================================
+  PROCESSED DATA EDA
+============================================================
+
+[1] Feature Reduction Summary...
+  Raw features      : 226
+  Processed features: 172
+  Reduction         : 54 features removed
+  Kept (%)          : 76.1%
+  Processed rows    : 472,432
+  Missing values    : 0
+  Dtypes            : {dtype('float64'): 172, dtype('int64'): 1}
+
+[2] Engineered Features Analysis...
+  Engineered features found: ['hour', 'dow', 'Amt_to_Median_User', 'user_count']
+  Saved -> p01_engineered_features.png
+
+[3] Cluster Label Analysis...
+  Cluster distribution:
+    Cluster 0.0: 124,422 samples  |  Fraud rate: 2.690%  |  Fraud count: 3,347
+    Cluster 1.0:  84,343 samples  |  Fraud rate: 3.945%  |  Fraud count: 3,327
+    Cluster 2.0:  89,486 samples  |  Fraud rate: 3.653%  |  Fraud count: 3,269
+    Cluster 3.0:  88,071 samples  |  Fraud rate: 3.372%  |  Fraud count: 2,970
+    Cluster 4.0:  86,110 samples  |  Fraud rate: 4.200%  |  Fraud count: 3,617
+  Saved -> p02_cluster_analysis.png
+  Saved -> p03_cluster_amounts.png
+
+[4] PCA 2D Visualisation...
+  PC1 variance explained: 100.00%
+  PC2 variance explained: 0.00%
+  Saved -> p04_pca_visualisation.png
+
+[5] Processed Feature Distributions (top 20 by corr)...
+  Saved -> p05_top_feature_distributions.png
+
+[6] Processed Feature Correlation Heatmap (top 25)...
+  Saved -> p06_processed_correlation.png
+
+[7] Mutual Information with isFraud (top 30)...
+V87               0.022193
+card1             0.021563
+ProductCD         0.020918
+V86               0.020773
+V45               0.019768
+C4                0.017739
+V44               0.017608
+card2             0.017196
+C7                0.016549
+card3             0.016344
+V38               0.015770
+V111              0.015577
+V23               0.014704
+V78               0.014620
+V113              0.014381
+V47               0.014353
+V67               0.014351
+V37               0.014349
+V109              0.013986
+TransactionAmt    0.013955
+V123              0.013783
+user_count        0.013535
+V114              0.013391
+V66               0.012828
+addr2             0.012603
+V290              0.012474
+V3                0.012353
+V83               0.012322
+V88               0.012179
+V62               0.012095
+  Saved -> p07_mutual_information.png
+
+[8] Mann-Whitney U Tests on Engineered + Top Features...
+  Feature                           U-stat      p-value  Significant
+  hour                          3699957952     7.52e-05          YES
+  dow                           3685325025     1.22e-06          YES
+  Amt_to_Median_User            4119976498     5.78e-93          YES
+  user_count                    4165193990    1.20e-117          YES
+  V45                           4486954292     0.00e+00          YES
+  V86                           4384138362     0.00e+00          YES
+  V87                           4452291064     0.00e+00          YES
+  V44                           4406357222     0.00e+00          YES
+  V52                           4828932068     0.00e+00          YES
+  V51                           4810452081     0.00e+00          YES
+  V40                           4750682548     0.00e+00          YES
+  V79                           4787801728     0.00e+00          YES
+  V38                           4432553417     0.00e+00          YES
+  V39                           4739955832     0.00e+00          YES
+
+[9] Exporting JSON data for frontend...
+  JSON exported -> processed_eda_data.json
+
+============================================================
+  PROCESSED EDA COMPLETE â€” plots saved to C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_processed
+============================================================
+>>> Processed EDA complete. Plots -> C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_processed
+>>> Evidently report generated at C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\evidently_report.html
+
+--- CLASSIFICATION REPORT ---
+              precision    recall  f1-score   support
+
+           0       0.99      0.98      0.99     91180
+           1       0.58      0.79      0.67      3306
+
+    accuracy                           0.97     94486
+   macro avg       0.79      0.88      0.83     94486
+weighted avg       0.98      0.97      0.97     94486
+
+PR-AUC:  0.7896 (Paper XGBoost Benchmark: 0.834)
+ROC-AUC: 0.9635 (Paper XGBoost Benchmark: 0.887)
+Saved roc_curve â†’ roc_curve_v_20260502_225531.png + latest_roc_curve.png
+Saved pr_curve â†’ pr_curve_v_20260502_225531.png + latest_pr_curve.png
+Saved confusion_matrix â†’ confusion_matrix_v_20260502_225531.png + latest_confusion_matrix.png
+Saved metric_summary â†’ metric_summary_v_20260502_225531.png + latest_metric_summary.png
+Saved interactive curve data â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\latest_metrics.json
+All graphs saved to â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs/
+
+--- PIPELINE METRICS FOR CI/CD ---
+AUC-PR:    0.7896
+Recall:    0.7880
+Precision: 0.5779
+----------------------------------
+
+Pipeline saved as models/model_v_20260502_225531.pkl and model_latest.pkl
+
+>>> [Regression] Building time-window aggregation...
+>>> [Regression] 4367 hourly windows found. Building lag features...
+>>> [Regression] Train windows: 3488 | Test windows: 872
+>>> [Regression] RMSE=3.1029 | MAE=2.2810 | RÂ²=0.1608
+>>> [Regression] Metrics saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\regression_metrics.json
+>>> [Regression] Forecast plot saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_regression_forecast.png
+
+>>> [TimeSeries] Aggregating by hourly window...
+>>> [TimeSeries] Windows=4367 | Anomalies=138 | Peak=0.8182
+>>> [TimeSeries] JSON saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\timeseries_fraud_rate.json
+>>> [TimeSeries] Line chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_timeseries_line.png
+>>> [TimeSeries] Heatmap â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_timeseries_heatmap.png
+
+>>> [PCA] Input shape: (472432, 172) | Fitting PCA(n=10)...
+>>> [PCA] PC1=0.196 | PC2=0.055 | Top-10 cumulative=0.501
+>>> [PCA] Results saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\pca_results.json
+>>> [PCA] Scatter plot â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_pca_scatter.png
+>>> [PCA] Variance plot â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_pca_variance.png
+
+>>> [Clustering] Extracting cluster assignments from fitted pipeline...
+>>> [Clustering] 5 clusters | 472432 samples
+>>> [Clustering] Saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\cluster_profiles.json | Cluster 4 has highest fraud rate: 4.20%
+>>> [Clustering] Fraud rate chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_cluster_fraud_rate.png
+>>> [Clustering] Size chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_cluster_size.png
+
+>>> [Association] Discretizing features...
+>>> [Association] Running FPGrowth on 80,000 transactions | min_support=0.01
+>>> [Association] 733 frequent itemsets found
+>>> [Association] 6 fraud-consequent rules | Top lift: 3.278
+>>> [Association] Rules saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\association_rules.json
+>>> [Association] Lift chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_association_lift.png
+DISCORD_WEBHOOK_URL not set, skipping Discord notification.

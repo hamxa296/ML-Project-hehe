@@ -63,14 +63,12 @@ class FeatureEngineeringTransformer(BaseEstimator, TransformerMixin):
 class ClusteringTransformer(BaseEstimator, TransformerMixin):
     """
     Adds a 'cluster_label' feature to the dataset using KMeans.
-    Used for both the model and the standalone clustering analysis.
     """
     def __init__(self, n_clusters=5):
         self.n_clusters = n_clusters
         self.kmeans = KMeans(n_clusters=self.n_clusters, random_state=42, n_init=10)
         
     def fit(self, X, y=None):
-        # We only cluster on numerical columns
         X_num = X.select_dtypes(include=[np.number])
         self.kmeans.fit(X_num.fillna(0))
         return self
