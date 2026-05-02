@@ -16,6 +16,7 @@
 \usepackage{siunitx}
 \usepackage{caption}
 \usepackage{microtype}
+\usepackage[moderate]{savetrees}
 
 \usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 \pgfplotsset{compat=1.18}
@@ -31,11 +32,19 @@
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\tableheader}{}
 \newcommand{\styledtable}[1]{#1}
-\captionsetup[table]{font=small,labelfont=bf}
-\captionsetup[figure]{font=small,labelfont=bf}
+\captionsetup[table]{font=small,labelfont=bf,aboveskip=4pt,belowskip=2pt}
+\captionsetup[figure]{font=small,labelfont=bf,aboveskip=4pt,belowskip=2pt}
 
+\linespread{0.98}
 % Remove the compsoc diamond separator line under the abstract
 \renewcommand{\IEEEcompsocdiamondline}{}
+
+\raggedbottom
+\setlength{\textfloatsep}{5pt plus 1pt minus 1pt}
+\setlength{\intextsep}{5pt plus 1pt minus 1pt}
+
+\usepackage{enumitem}
+\setlist{nosep}
 
 \tikzset{
  flowbox/.style={
@@ -85,8 +94,6 @@ Reg.\ No.\ 2024229     & Reg.\ No.\ 2024206    & Reg.\ No.\ 2024156    & Reg.\ N
 \end{tabular}%
 }
 
-
-
 \maketitle
 
 \begin{abstract}
@@ -107,7 +114,6 @@ of combining diverse algorithmic perspectives within a stable, automated infrast
 \begin{IEEEkeywords}
 Fraud Detection, MLOps, XGBoost, Stacking Ensemble, Prefect Orchestration, FastAPI, Docker, CI/CD.
 \end{IEEEkeywords}
-
 
 \section{Introduction}
 \IEEEPARstart{T}{he} digital economy is under constant threat from increasingly sophisticated fraudulent activities. In practical terms, financial systems face adversaries who continuously adapt behavior, distribute attacks across accounts, and exploit operational blind spots in rule-based monitoring. Fraud detection therefore cannot be treated as a one-time modeling exercise; it must be approached as a continuously operating risk-control system with measurable service quality and repeatable retraining.
@@ -403,7 +409,6 @@ After cleaning and engineering, the feature space is dramatically reduced and en
  \caption{Top feature distributions by class (fraud vs. safe) after preprocessing. Engineered features show notably stronger class separation than raw V-features, confirming the value of the preprocessing pipeline.}
 \end{figure}
 
-
 \section{The Data Transformation: Two-Stage Refinery Process}
 
 The journey from raw Kaggle files to the production training dataset (data/train\_unbalanced.csv) spans two critical stages managed across Notebooks 01 and 03. This section details the engineering decisions, theoretical foundations, and operational impact of each transformation step.
@@ -418,13 +423,11 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 
 \textbf{Impact}: Memory usage decreases from 1.5 GB to approximately 0.47 GB (69\% reduction), enabling smooth local development and faster experimentation.
 
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{assets/03_transaction_amount.png}
 \caption{Transaction amount distribution (raw vs log-transformed). The right-skewed raw distribution is compressed by $\log(1+x)$ into a roughly symmetric form, stabilizing tree splits and reducing the influence of outliers.}
 \end{figure}
-
 
 \subsubsection{The Big Merge (DataMerger)}
 \textbf{Challenge}: Vesta's raw data comes in two files: (1) train\_transaction.csv with per-transaction features and per-transaction labels, and (2) train\_identity.csv with per-identity features (card, device, email signatures). These are related via a \texttt{TransactionID} key, but are stored separately.
@@ -446,13 +449,11 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 
 \textbf{Impact}: Two new engineered features that reduce the effective non-linearity of the learning problem and improve generalization.
 
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{assets/04_time_analysis.png}
 \caption{Time-of-day and day-of-week fraud rate analysis from raw EDA. Off-hours (00:00--06:00 UTC) and certain weekdays show elevated fraud rates, directly motivating the extraction of \texttt{Transaction\_Hour} and \texttt{Transaction\_Day} features.}
 \end{figure}
-
 
 \subsubsection{Skewness Correction (LogTransformer)}
 \textbf{Challenge}: Transaction amounts range from \$0.01 to \$30,000, with a long right tail dominated by outliers. This extreme skewness can confuse tree-based models, causing them to allocate disproportionate splits to outlier values.
@@ -468,13 +469,11 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 
 \textbf{Impact}: Removes 208 columns, reducing feature space from 228 to 20 remaining columns. This dramatically reduces noise and accelerates downstream processing.
 
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\columnwidth]{assets/07_v_features_corr.png}
 \caption{V-feature correlation heatmap. Dense correlation clusters confirm high redundancy within the V-feature family. Correlated pairs (Pearson $r > 0.98$) are pruned to prevent multicollinearity from inflating boosting weights on redundant signals.}
 \end{figure}
-
 
 \subsubsection{Frequency Encoding (FrequencyEncoder)}
 \textbf{Challenge}: Many categorical features (e.g., \texttt{ProductCD}, \texttt{addr1}, \texttt{card1}) must be converted to numeric form, but one-hot encoding creates thousands of sparse columns. For example, \texttt{addr1} has 300+ unique values; one-hot encoding would create a 300-column sparse matrix.
@@ -725,8 +724,6 @@ High-precision slice & 0.2253 & 0.9077 & 0.3610 \\
  \caption{Confusion matrix from the production model at the balanced operating threshold. High recall ensures most fraud is captured; false positives remain manageable within operational review capacity.}
 \end{figure}
 
-
-
 \section{Model Design Rationale}
 \subsection{Why Not Just Use a Simple Model?}
 A simple model is easy to train and maintain, but it underfits the interaction complexity observed in this dataset. Fraud signals are sparse, weak in isolation, and often only separable when temporal behavior, transaction context, and latent cluster structure are considered jointly. The selected architecture therefore prioritizes ranking quality under imbalance rather than single-threshold accuracy.
@@ -763,7 +760,6 @@ Operationally, the model treats missed fraud as substantially more costly than m
  \caption{Precision-recall threshold trade-off from actual model evaluation. Raising the decision threshold improves precision but reduces recall — the operating regime is selected based on the business cost of missed fraud vs. false alarms.}
 \end{figure}
 
-
 \begin{table}[H]
 \centering
 \caption{When to choose each threshold style}
@@ -779,7 +775,6 @@ Balanced operations & Mid threshold + manual review zone & Better compromise bet
 \bottomrule
 \end{tabular}
 \end{table}
-
 
 \section{Model Architecture and Hyperparameter Justification}
 

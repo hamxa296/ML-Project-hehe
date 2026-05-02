@@ -19,18 +19,18 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Fraud rate by product category and card type. Certain categories exhibit dramatically higher fraud rates, confirming that categorical features carry meaningful signal and should be frequency-encoded rather than dropped.}}{3}{figure.caption.8}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Pairwise correlation matrix of retained numeric features after pruning. Several V-feature clusters exhibit high inter-correlation ($r > 0.9$), validating redundancy-based pruning to prevent multicollinearity.}}{3}{figure.caption.9}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Outlier analysis across transaction features. Fraud transactions are disproportionately represented in extreme value ranges, especially for the amount feature, reinforcing the decision to apply log transformation before training.}}{3}{figure.caption.10}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Missing value density across the 180 V-feature columns. The majority exceed 70\% missingness — imputing these would be three parts fiction to one part fact, making their removal the only defensible choice.}}{4}{figure.caption.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology and Preprocessing}{4}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Methodology Flow and Stage Gates}{4}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Missing value density across the 180 V-feature columns. The majority exceed 70\% missingness — imputing these would be three parts fiction to one part fact, making their removal the only defensible choice.}}{3}{figure.caption.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology and Preprocessing}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Methodology Flow and Stage Gates}{3}{subsection.3.1}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces End-to-end methodology flow from data ingestion through model validation and deployment.}}{4}{figure.caption.12}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Preprocessing Philosophy}{4}{subsection.3.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Preprocessing pipeline design and expected contribution of each stage}}{4}{table.caption.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Feature Engineering in Detail (Theoretical Backing)}{5}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Feature Engineering in Detail (Theoretical Backing)}{4}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Why K-Means Clustering Improves XGBoost Performance}{5}{subsection.3.4}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces End-to-end Machine Learning methodology from raw data to evaluation.}}{5}{figure.caption.14}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Post-Preprocessing Validation}{5}{subsection.3.5}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Engineered feature distributions after preprocessing. The pruned and encoded feature set shows cleaner, more separable distributions between safe and fraud classes compared to the raw V-feature noise.}}{5}{figure.caption.15}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces K-Means cluster profiles ($k=5$). Each cluster exhibits a distinct fraud rate, validating that the clustering layer successfully separates high-risk behavioral archetypes from low-risk ones.}}{6}{figure.caption.16}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces K-Means cluster profiles ($k=5$). Each cluster exhibits a distinct fraud rate, validating that the clustering layer successfully separates high-risk behavioral archetypes from low-risk ones.}}{5}{figure.caption.16}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces PCA visualization of the processed feature space colored by cluster assignment. The five behavioral archetypes are largely separable in 2D principal component space, confirming that K-Means captures structurally meaningful groupings.}}{6}{figure.caption.17}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Mutual information scores between engineered features and the fraud label. Features like cluster label, transaction hour, and frequency-encoded categorical variables rank among the most informative, validating the engineering decisions made in Stage 1.}}{6}{figure.caption.18}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Top feature distributions by class (fraud vs. safe) after preprocessing. Engineered features show notably stronger class separation than raw V-features, confirming the value of the preprocessing pipeline.}}{6}{figure.caption.19}\protected@file@percent }
@@ -67,8 +67,8 @@
 \@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Representative operating-point diagnostics from saved PR curve}}{11}{table.caption.30}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {23}{\ignorespaces Validated ROC and PR curves from the production run. The ROC-AUC of 0.965 (exceeds the 0.887 benchmark) and PR-AUC of 0.793 (near the 0.834 target) confirm the model's strong ranking quality under heavy class imbalance.}}{11}{figure.caption.31}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {24}{\ignorespaces Confusion matrix from the production model at the balanced operating threshold. High recall ensures most fraud is captured; false positives remain manageable within operational review capacity.}}{11}{figure.caption.32}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Model Design Rationale}{12}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Why Not Just Use a Simple Model?}{12}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Model Design Rationale}{11}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Why Not Just Use a Simple Model?}{11}{subsection.6.1}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Model-family selection rationale under class imbalance and feature complexity}}{12}{table.caption.33}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Imbalance Handling: The Core Equation}{12}{subsection.6.2}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {25}{\ignorespaces Precision-recall threshold trade-off from actual model evaluation. Raising the decision threshold improves precision but reduces recall — the operating regime is selected based on the business cost of missed fraud vs. false alarms.}}{12}{figure.caption.34}\protected@file@percent }
@@ -81,7 +81,7 @@
 \@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Core training hyperparameters and operational intent}}{13}{table.caption.37}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {8}Serving, APIs, and Operations}{13}{section.8}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {8.1}API Contract and Inference Surface}{13}{subsection.8.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Main API endpoints and purpose}}{14}{table.caption.38}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Main API endpoints and purpose}}{13}{table.caption.38}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {26}{\ignorespaces Prediction serving flow in practical order.}}{14}{figure.caption.39}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {8.2}How, Why, and When (Runbook)}{14}{subsection.8.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Operational runbook for teams}}{14}{table.caption.40}\protected@file@percent }
@@ -91,8 +91,10 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Continuous Integration and Developer Experience}{14}{subsection.9.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {9.2.1}Automated Smoke Testing}{14}{subsubsection.9.2.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {9.2.2}Local Developer Automation (Git Hooks)}{14}{subsubsection.9.2.2}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {28}{\ignorespaces Automated CI/CD workflow featuring cloud smoke testing and local Git hook triggers.}}{15}{figure.caption.42}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Prefect Orchestration}{15}{subsection.9.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {28}{\ignorespaces Automated CI/CD workflow featuring cloud smoke testing and local Git hook triggers.}}{14}{figure.caption.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Prefect Orchestration}{14}{subsection.9.3}\protected@file@percent }
+\bibcite{project_repo}{1}
+\bibcite{baseline_paper}{2}
 \@writefile{lof}{\contentsline {figure}{\numberline {29}{\ignorespaces Prefect orchestration flow for model training and validation.}}{15}{figure.caption.43}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {10}Operational Notes and Future Work}{15}{section.10}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {10.1}How a Full Run Happens}{15}{subsection.10.1}\protected@file@percent }
@@ -100,8 +102,6 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {10.2}Monitoring and Model Health}{15}{subsection.10.2}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces Project components and their operational roles}}{15}{table.caption.45}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {10.3}Future Work}{15}{subsection.10.3}\protected@file@percent }
-\bibcite{project_repo}{1}
-\bibcite{baseline_paper}{2}
-\@writefile{toc}{\contentsline {subsection}{\numberline {10.4}Final Observations and Future Work}{16}{subsection.10.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{16}{section*.46}\protected@file@percent }
-\gdef \@abspage@last{16}
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.4}Final Observations and Future Work}{15}{subsection.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{15}{section*.46}\protected@file@percent }
+\gdef \@abspage@last{15}
