@@ -69,6 +69,7 @@ def load_task():
         train_path = PROJECT_ROOT / 'data' / 'train_unbalanced.csv'
         test_path  = PROJECT_ROOT / 'data' / 'test.csv'
     return load_data(str(train_path), str(test_path))
+    
 
 
 @task(name="Train Model")
