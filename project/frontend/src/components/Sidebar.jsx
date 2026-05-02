@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers, Brain } from 'lucide-react';
 
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
+
 const Sidebar = () => {
   return (
     <div className="glass-card flex-col animate-in" style={{ width: '260px', height: 'calc(100vh - 40px)', margin: '20px', padding: '1.5rem', zIndex: 10 }}>
@@ -38,7 +40,7 @@ const Sidebar = () => {
 
       <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }} className="flex-col gap-2">
         <a 
-          href="/ml_report" 
+          href={`${API_BASE}/ml_report`} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="sidebar-link"

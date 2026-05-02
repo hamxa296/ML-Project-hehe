@@ -51,10 +51,10 @@ const RegressionSection = ({ data }) => {
         <div className="glass-card p-5" style={{ height: 280 }}>
           <h3 className="flex items-center gap-2 mb-4"><TrendingUp size={15} className="text-cyan" /> Actual vs Forecast (Test Set)</h3>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={forecast}>
+            <LineChart data={forecast} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-              <XAxis dataKey="window" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="window" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Time Window', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10 }} />
+              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Transactions', angle: -90, position: 'insideLeft', offset: 15, fill: 'var(--text-muted)', fontSize: 10 }} />
               <Tooltip contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: 8 }} />
               <Line type="monotone" dataKey="actual"    stroke="var(--cyan)"  strokeWidth={2} dot={false} name="Actual" />
               <Line type="monotone" dataKey="predicted" stroke="var(--rose)"  strokeWidth={2} dot={false} strokeDasharray="5 3" name="Predicted" />
@@ -92,10 +92,10 @@ const TimeSeriesSection = ({ data }) => {
         <div className="glass-card p-5" style={{ height: 280 }}>
           <h3 className="flex items-center gap-2 mb-4"><Clock size={15} className="text-emerald" /> Fraud Rate Over Time</h3>
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={ts}>
+            <LineChart data={ts} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-              <XAxis dataKey="window" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
+              <XAxis dataKey="window" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Time Window', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10 }} />
+              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Fraud Rate %', angle: -90, position: 'insideLeft', offset: 15, fill: 'var(--text-muted)', fontSize: 10 }} />
               <Tooltip contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: 8 }} />
               <Line type="monotone" dataKey="fraud_rate"  stroke="var(--cyan)"    strokeWidth={1.5} dot={false} name="Fraud Rate" />
               <Line type="monotone" dataKey="rolling_avg" stroke="var(--emerald)" strokeWidth={2.5} dot={false} name="Rolling Avg" />
@@ -142,10 +142,10 @@ const PCASection = ({ data }) => {
           <div className="glass-card p-5" style={{ height: 300 }}>
             <h3 className="flex items-center gap-2 mb-3"><Layers size={15} className="text-violet" /> 2D Scatter (Fraud vs Safe)</h3>
             <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart>
+              <ScatterChart margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" />
-                <XAxis dataKey="pc1" name="PC1" stroke="var(--text-muted)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
-                <YAxis dataKey="pc2" name="PC2" stroke="var(--text-muted)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
+                <XAxis dataKey="pc1" name="PC1" stroke="var(--text-muted)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} label={{ value: 'Principal Component 1', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10 }} />
+                <YAxis dataKey="pc2" name="PC2" stroke="var(--text-muted)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} label={{ value: 'Principal Component 2', angle: -90, position: 'insideLeft', offset: 15, fill: 'var(--text-muted)', fontSize: 10 }} />
                 <Tooltip cursor={{ strokeDasharray: '3 3' }} contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: 8 }} />
                 <Scatter name="Safe"  data={safe.slice(0, 800)}  fill="var(--cyan)"  fillOpacity={0.3} />
                 <Scatter name="Fraud" data={fraud.slice(0, 400)} fill="var(--rose)"  fillOpacity={0.7} />
@@ -157,10 +157,10 @@ const PCASection = ({ data }) => {
           <div className="glass-card p-5" style={{ height: 300 }}>
             <h3 className="flex items-center gap-2 mb-3"><BarChart2 size={15} className="text-amber" /> Variance Explained per PC</h3>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={varExp}>
+              <BarChart data={varExp} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-                <XAxis dataKey="pc" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} unit="%" />
+                <XAxis dataKey="pc" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Components', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10 }} />
+                <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} unit="%" label={{ value: 'Variance %', angle: -90, position: 'insideLeft', offset: 15, fill: 'var(--text-muted)', fontSize: 10 }} />
                 <Tooltip contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: 8 }} />
                 <Bar dataKey="variance" fill="var(--amber)" radius={[4, 4, 0, 0]} name="Variance %" />
               </BarChart>
@@ -191,10 +191,10 @@ const ClusteringSection = ({ data }) => {
         <div className="glass-card p-5" style={{ height: 280 }}>
           <h3 className="flex items-center gap-2 mb-4"><GitBranch size={15} className="text-violet" /> Fraud Rate by Cluster</h3>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
+            <BarChart data={chartData} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-              <XAxis dataKey="name" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} unit="%" />
+              <XAxis dataKey="name" stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} label={{ value: 'Clusters', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10 }} />
+              <YAxis stroke="var(--text-muted)" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} unit="%" label={{ value: 'Fraud Rate %', angle: -90, position: 'insideLeft', offset: 15, fill: 'var(--text-muted)', fontSize: 10 }} />
               <Tooltip contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: 8 }} />
               <Bar dataKey="fraud_rate" radius={[4, 4, 0, 0]} name="Fraud Rate %">
                 {chartData.map((entry, i) => (

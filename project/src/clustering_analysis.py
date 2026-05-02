@@ -62,7 +62,7 @@ def run_clustering_analysis(fitted_pipeline, X_train, y_train, artifacts_dir, gr
     print(f">>> [Clustering] Saved → {out_path} | {result['insight']}")
 
     # --- Bar chart: fraud rate per cluster
-    PALETTE = {'bg':'#0d1117','card':'#161b22','violet':'#8b5cf6','rose':'#fb7185',
+    PALETTE = {'bg':'#0d1117','card':'#161b22','violet':'#0ea5e9','rose':'#fb7185',
                'amber':'#f59e0b','muted':'#6b7280','border':'#30363d','text':'#e6edf3'}
     plt.style.use('dark_background')
     fig, ax = plt.subplots(figsize=(9, 5))
