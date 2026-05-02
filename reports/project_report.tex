@@ -126,41 +126,11 @@ Beyond model quality, the project formalizes how model artifacts are produced, v
 \subsection{System Architecture at a Glance}
 The end-to-end system comprises four integrated layers: (1) Automation \& CI/CD via GitHub Actions for continuous validation and containerization, (2) Orchestration via Prefect for deterministic task sequencing and observability, (3) Serving via FastAPI and React for real-time inference and dashboarding, and (4) Model Registry and Artifact Storage for versioning and hot-reload capability. Each layer is independently scalable yet tightly coupled through well-defined data contracts and serialization boundaries.
 
-\begin{figure}[H]
+\begin{figure*}[t]
  \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=10mm and 12mm]
- \node[draw=techblue, fill=techblue!8, thick, rectangle, rounded corners, text width=3.2cm, align=center] (gha) {GitHub Actions};
- \node[draw=techblue, fill=techblue!8, thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of gha, xshift=5mm] (lint) {Flake8 Lint};
- \node[draw=techblue, fill=techblue!8, thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of lint, xshift=5mm] (test) {Pytest Tests};
- \node[draw=techblue, fill=techblue!8, thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of test, xshift=5mm] (build) {Docker Build};
-
- \node[draw=techblue, fill=techblue!5, very thick, rectangle, rounded corners, text width=3.2cm, align=center, below=of lint, yshift=-10mm, xshift=-5mm] (pserv) {Prefect Server};
- \node[draw=techblue, fill=techblue!5, very thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of pserv, xshift=5mm] (pflow) {Pipeline Flow};
- \node[draw=techblue, fill=techblue!5, very thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of pflow, xshift=5mm] (tasks) {ML Tasks};
- \node[draw=techblue, fill=techblue!5, very thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of tasks, xshift=5mm] (notify) {Discord Notify};
-
- \node[draw=techblue, fill=techblue!3, very thick, rectangle, rounded corners, text width=3.2cm, align=center, below=of pflow, yshift=-10mm, xshift=-5mm] (api) {FastAPI Backend};
- \node[draw=techblue, fill=techblue!3, very thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of api, xshift=5mm] (ui) {React Dashboard};
- \node[draw=techblue, fill=techblue!3, very thick, rectangle, rounded corners, text width=3.2cm, align=center, right=of ui, xshift=5mm] (reg) {Model Registry};
-
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (gha) -- (lint);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (lint) -- (test);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (test) -- (build);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue, dashed] (build) -| (pserv);
-
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (pserv) -- (pflow);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (pflow) -- (tasks);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (tasks) -- (notify);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (tasks) -| (reg);
-
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (api) -- (ui);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (reg) -| (api);
- \draw[-{Latex[length=2.2mm]}, very thick, draw=techblue] (ui) -| (api);
- \end{tikzpicture}%
- }
- \caption{Complete system architecture: Automation \& CI/CD feed into Orchestration, which populates the Model Registry, which powers Serving and Dashboard layers.}
-\end{figure}
+ \includegraphics[width=0.95\textwidth]{assets/system_architecture.png}
+ \caption{Complete system architecture showing CI/CD, orchestration, model registry, and serving layers with cleaner, production-quality layout.}
+\end{figure*}
 
 \section{Data and Preliminary Analysis}
 
@@ -209,33 +179,24 @@ The pipeline begins with an automated EDA task (`raw\_eda\_task`) that identifie
 \subsection{Dataset Balance and Signal Distribution}
 The dataset is heavily imbalanced, which is the fundamental challenge a reader must understand before interpreting any model score. Most rows are safe transactions, and a small minority are fraud. That means the model must be judged by whether it can find fraud, not by whether it can simply say "safe" all the time.
 
-\begin{figure}[H]
+\begin{figure*}[t]
  \centering
- \begin{tikzpicture}
- \begin{axis}[
-\resizebox{0.98\columnwidth}{!}{%
-\begin{tikzpicture}[node distance=10mm and 12mm]
-\node[flowbox] (raw) {Raw CSVs\\(1.5 GB)};
-\node[flowbox, right=of raw] (merge) {Merge on\\TransactionID};
-\node[flowbox, right=of merge] (mem) {Memory\\Downcast};
-\node[flowbox, right=of mem] (time) {Extract\\Hour, Day};
+ \begin{tabular}{cc}
+  \includegraphics[width=0.46\textwidth]{assets/eda_class_imbalance.png} &
+  \includegraphics[width=0.46\textwidth]{assets/eda_amounts.png} \\
+  \includegraphics[width=0.46\textwidth]{assets/eda_correlation.png} &
+  \includegraphics[width=0.46\textwidth]{assets/eda_temporal.png}
+ \end{tabular}
+ \caption{Actual EDA outputs from the project: class balance, transaction amount behavior, feature correlation structure, and temporal fraud patterns.}
+\end{figure*}
 
-\node[flowbox, below=of time] (log) {Log\\Transform};
-\node[flowbox, right=of log] (prune) {Drop\\>70\% Null};
-\node[flowbox, right=of prune] (freq) {Frequency\\Encode};
-\node[flowbox, right=of freq] (impute) {Median\\Impute};
-\node[flowbox, right=of impute] (output) {Clean CSV\\(processed\_train.csv)};
-
-\draw[flowarrow] (raw) -- (merge);
-\draw[flowarrow] (merge) -- (mem);
-\draw[flowarrow] (mem) -- (time);
-\draw[flowarrow] (time) -- (log);
-\draw[flowarrow] (log) -- (prune);
-\draw[flowarrow] (prune) -- (freq);
-\draw[flowarrow] (freq) -- (impute);
-\draw[flowarrow] (impute) -- (output);
-\end{tikzpicture}%
-}
+\begin{table}[H]
+\centering
+\caption{What the raw dataset is telling us}
+\rowcolors{2}{tablerow}{white}
+\begin{tabular}{p{0.31\columnwidth}p{0.58\columnwidth}}
+\tableheader
+What we see & What it means \\
 \midrule
 Very few fraud rows & The model can not rely on accuracy alone. \\
 Many numeric columns & The model needs to handle high-dimensional tabular data. \\
@@ -246,19 +207,7 @@ Weak one-feature correlation & Fraud is a combination problem, not a single-rule
 \end{table}
 
 \subsection{Exploratory Data Analysis (EDA)}
-Initial analysis revealed that fraud is inherently non-linear. No single feature exhibits a correlation above 0.24 with the target label, necessitating an ensemble approach. Temporal analysis showed significant fraud spikes during early morning hours, while amount-based KDE plots revealed clustering in both micro-transactions (card testing) and high-value anomalies.
-
-\begin{figure}[H]
- \centering
- \includegraphics[width=0.45\textwidth]{assets/eda_class_imbalance.png}
- \caption{Severe class imbalance (3.5\% fraud) necessitating a focus on PR-AUC over standard accuracy.}
-\end{figure}
-
-\begin{figure}[H]
- \centering
- \includegraphics[width=0.45\textwidth]{assets/eda_amounts.png}
- \caption{Transaction amount distribution (log-scale) for safe vs. fraudulent cases.}
-\end{figure}
+Initial analysis revealed that fraud is inherently non-linear. No single feature exhibits a correlation above 0.24 with the target label, necessitating an ensemble approach. Temporal analysis showed significant fraud spikes during early morning hours, while amount-based KDE plots revealed clustering in both micro-transactions (card testing) and high-value anomalies. The four plots above are the actual outputs used to justify pruning, feature engineering, and the final model choice.
 
 \section{Methodology and Preprocessing}
 
@@ -349,26 +298,11 @@ In detail, the clustering layer achieves three concrete improvements:
  \item \textbf{Robustness to Feature Drift}: In production, individual feature distributions shift over time (concept drift). Cluster assignments are more stable because they aggregate multiple features, providing a higher-level signal that resists transient fluctuations.
 \end{enumerate}
 
-\begin{figure}[H]
- \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=6mm and 8mm]
- \node[flowbox] (raw) {Raw Data};
- \node[flowbox, right=of raw] (prune) {Feature Pruning};
- \node[flowbox, right=of prune] (engineer) {Feature Engineering};
- \node[flowbox, right=of engineer] (cluster) {K-Means Clustering};
- \node[flowbox, right=of cluster] (ensemble) {Stacked Ensemble};
- \node[flowbox, right=of ensemble] (eval) {Model Evaluation};
-
- \draw[flowarrow] (raw) -- (prune);
- \draw[flowarrow] (prune) -- (engineer);
- \draw[flowarrow] (engineer) -- (cluster);
- \draw[flowarrow] (cluster) -- (ensemble);
- \draw[flowarrow] (ensemble) -- (eval);
- \end{tikzpicture}%
- }
- \caption{End-to-end Machine Learning methodology from raw data to evaluation.}
-\end{figure}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{assets/methodology_flow.png}
+\caption{End-to-end machine learning methodology from raw data to evaluation, using the actual project workflow graphic.}
+\end{figure*}
 
 \subsection{Post-Preprocessing Validation}
 After cleaning, the data density significantly increased. Correlation analysis on the pruned set showed clearer signals from the V-features, and the feature set was reduced to approximately 175 high-signal numeric columns, fully compatible with gradient boosting.
@@ -412,29 +346,11 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 	\end{axis}
 \end{tikzpicture}
 \caption{Memory footprint after type downsampling: 69\% reduction enables efficient development workflow.}
-\end{figure}
-
-\subsubsection{The Big Merge (DataMerger)}
-\textbf{Challenge}: Vesta's raw data comes in two files: (1) train\_transaction.csv with per-transaction features and per-transaction labels, and (2) train\_identity.csv with per-identity features (card, device, email signatures). These are related via a \texttt{TransactionID} key, but are stored separately.
-
-\textbf{Solution}: Perform an outer left join on \texttt{TransactionID}. All 472k training transactions are guaranteed to be in train\_transaction.csv, but not all have corresponding identity rows. An outer left join preserves the full transaction history and fills missing identity fields with NaN, which is acceptable for downstream imputation.
-
-\textbf{Impact}: A single unified table with shape (472k, 434 columns) enables end-to-end pipeline processing and simplifies feature engineering logic.
-
-\subsubsection{Time Engineering (TimeFeatureExtractor)}
-\textbf{Challenge}: The raw \texttt{TransactionDT} column is a Unix-like timestamp (integer seconds since an arbitrary reference point). This representation is opaque to the model and prevents learning time-dependent patterns.
-
-\textbf{Solution}: Extract cyclical components:
-\begin{itemize}
-	\item \textbf{Transaction\_Hour}: Hour of day (0-23), computed as $\lfloor (\texttt{TransactionDT} \mod 86400) / 3600 \rfloor$.
-	\item \textbf{Transaction\_Day}: Day of week (0-6, where 0=Monday), computed by converting the timestamp to a calendar date and extracting the weekday.
-\end{itemize}
-
-\textbf{Theoretical Basis}: Fraud is not uniformly distributed across time. Attackers prefer windows with low monitoring (late night, weekends). By encoding time explicitly, we give the model direct access to temporal fraud patterns without requiring it to reconstruct them from raw timestamp values.
-
-\textbf{Impact}: Two new engineered features that reduce the effective non-linearity of the learning problem and improve generalization.
-
-\begin{figure}[H]
+\begin{figure*}[t]
+ \\centering
+ \\includegraphics[width=0.95\\textwidth]{assets/model_comparison.png}
+ \\caption{Model comparison and benchmark context rendered from the project's generated evaluation artifact.}
+\\end{figure*}
 \centering
 \begin{tikzpicture}
 	\begin{axis}[
@@ -458,27 +374,11 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 	\end{axis}
 \end{tikzpicture}
 \caption{Temporal fraud clustering: fraud rate peaks during off-hours (00:00--06:00 UTC), motivating explicit hour feature extraction.}
-\end{figure}
-
-\subsubsection{Skewness Correction (LogTransformer)}
-\textbf{Challenge}: Transaction amounts range from \$0.01 to \$30,000, with a long right tail dominated by outliers. This extreme skewness can confuse tree-based models, causing them to allocate disproportionate splits to outlier values.
-
-\textbf{Solution}: Apply the log-plus-one transformation: $\text{Amount\_Transformed} = \log_e(1 + \text{Amount\_Raw})$. The constant 1 prevents $\log(0)$ errors. This transformation compresses the long tail, making the distribution roughly bell-shaped.
-
-\textbf{Impact}: The model sees a more symmetric feature distribution, reduces outlier influence, and learns more stable split rules.
-
-\subsubsection{High-Null Pruning (DropHighNulls)}
-\textbf{Challenge}: The dataset contains 228 raw columns, of which 208 (91\%) have $>70\%$ missing values. These columns add noise and computational overhead without signal.
-
-\textbf{Solution}: Prune any column with $>70\%$ nullness. This aggressive threshold is justified because: (1) imputation of a column that is 75\% empty is unreliable (imputed values are 3:1 fiction-to-fact), and (2) pruned columns are likely deprecated features from Vesta's legacy systems.
-
-\textbf{Impact}: Removes 208 columns, reducing feature space from 228 to 20 remaining columns. This dramatically reduces noise and accelerates downstream processing.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-	\begin{axis}[
-		ylabel={Number of Columns},
+\begin{figure*}[t]
+ \\centering
+ \\includegraphics[width=0.95\\textwidth]{assets/prefect_orchestration.png}
+ \\caption{Operational run order and orchestration flow used during model training and retraining.}
+\\end{figure*}
 		xlabel={Missingness Threshold (\%)},
 		width=0.85\columnwidth,
 		height=5cm,
@@ -1028,83 +928,30 @@ To bridge the gap between local development and centralized orchestration, we im
 \subsection{Prefect Orchestration}
 All machine learning tasks are orchestrated by Prefect. This ensures that data loading, training, and evaluation occur in a strict, observable sequence with automated retries and failure logging.
 
-\begin{figure}[H]
+\begin{figure*}[t]
  \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=8mm and 8mm]
- \node[flowbox] (load) {Load Data};
- \node[flowbox, right=of load] (prep) {Preprocess Features};
- \node[flowbox, right=of prep] (train) {Train Model};
- \node[flowbox, right=of train] (validate) {Validate Metrics};
- \node[flowbox, right=of validate] (save) {Save Best Run};
- \node[decision, below=of validate] (retry) {Metrics OK?};
-
- \draw[flowarrow] (load) -- (prep);
- \draw[flowarrow] (prep) -- (train);
- \draw[flowarrow] (train) -- (validate);
- \draw[flowarrow] (validate) -- (save);
- \draw[flowarrow] (validate) -- (retry);
- \draw[flowarrow] (retry.west) -| node[pos=0.25, below, font=\scriptsize] {no} (train.south);
- \draw[flowarrow] (retry.east) -| node[pos=0.25, below, font=\scriptsize] {yes} (save.south);
- \end{tikzpicture}%
- }
- \caption{Prefect orchestration flow for model training and validation.}
-\end{figure}
+ \includegraphics[width=0.95\textwidth]{assets/prefect_orchestration.png}
+ \caption{Prefect orchestration flow for model training and validation, rendered from the generated project asset.}
+\end{figure*}
 
 \section{Operational Notes and Future Work}
 \subsection{How a Full Run Happens}
 A full run starts by loading the CSV files, then the pipeline performs EDA on the raw data, trains the model, runs EDA again on the transformed data, evaluates the result, writes metrics to disk, and only then saves the model. That order is deliberate: it gives us visibility into both the starting data and the transformed features.
 
-\begin{figure}[H]
+\begin{figure*}[t]
  \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=7mm and 8mm]
- \node[stage] (load) {Load CSVs};
- \node[stage, right=of load] (eda1) {EDA on raw data};
- \node[stage, right=of eda1] (train) {Train model};
- \node[stage, right=of train] (eda2) {EDA on features};
- \node[stage, right=of eda2] (eval) {Evaluate};
- \node[decision, right=of eval] (gate) {Gate pass?};
- \node[stage, above right=of gate] (save) {Save model};
- \node[stage, below right=of gate] (stop) {Stop run};
- \draw[flowarrow] (load) -- (eda1);
- \draw[flowarrow] (eda1) -- (train);
- \draw[flowarrow] (train) -- (eda2);
- \draw[flowarrow] (eda2) -- (eval);
- \draw[flowarrow] (eval) -- (gate);
- \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {yes} (save);
- \draw[flowarrow] (gate) -- node[below, font=\scriptsize] {no} (stop);
- \end{tikzpicture}%
- }
- \caption{The end-to-end run order used by Prefect and the training pipeline.}
-\end{figure}
+ \includegraphics[width=0.95\textwidth]{assets/containerization_workflow.png}
+ \caption{The end-to-end run order used by Prefect and the training pipeline, shown with the generated orchestration workflow graphic.}
+\end{figure*}
 
 \subsection{Monitoring and Model Health}
 Beyond performance metrics, the pipeline incorporates automated drift detection using the **Evidently.ai** framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
 
-\begin{table}[H]
-\centering
-\caption{Project components and their operational roles}
-\begin{tabular}{p{0.22\columnwidth}p{0.32\columnwidth}p{0.28\columnwidth}}
-\toprule
-Component & Simple role & When it matters \\
-\midrule
-Prefect & Orchestrates task sequencing and error handling & During training and retraining \\
-FastAPI & Serves low-latency predictions via HTTP & Real-time inference and UI interaction \\
-Evidently & Automated drift and health reporting & Post-training validation and monitoring \\
-Docker & Environment parity and microservice isolation & Deployment and CI/CD validation \\
-Git Hooks & Local automation and instant feedback & Developer workflow and iteration \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Future Work}
-The next natural improvements are to add live drift monitoring, more robust probability calibration, and better integration between the dashboard and the latest model artifacts. Another useful step would be to add a richer explanation layer so an analyst can see which inputs pushed a prediction toward fraud.
-
-\subsection{Final Observations and Future Work}
-The project bridges research and production engineering by combining a measured modeling strategy with a fully operational serving stack. In practical terms, it shows that a carefully controlled tabular-learning pipeline can still perform strongly in a domain where the minority class is rare, feature redundancy is high, and the deployment environment must remain deterministic. The achieved ROC-AUC exceeds the paper benchmark, while the PR-AUC remains close to the target, confirming that the system is competitive rather than merely functional.
-
-Future work will focus on:
+\begin{figure*}[t]
+ \centering
+ \includegraphics[width=0.95\textwidth]{assets/model_comparison.png}
+ \caption{Paper benchmark context versus current run summary, rendered from the generated model comparison artifact.}
+\end{figure*}
 \begin{itemize}
  \item Integrating **Real-Time Feature Stores** to reduce latency in user behavioral aggregates.
  \item Implementing **Graph Neural Networks (GNNs)** to capture network-level fraudulent relationships.
