@@ -86,7 +86,7 @@
 \linespread{1.03}
 \begin{document}
 
-\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Pipeline}}
+\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Pipeline} \\ [0.3em] \large Course: AI221 \quad Instructor: Dr. Ali Imran Sandhu}
 \author{%
 \begin{tabular}[t]{c@{\hspace{2.5em}}c@{\hspace{2.5em}}c@{\hspace{2.5em}}c}
 \textbf{Hassan Raza}   & \textbf{Hamza Arif}   & \textbf{Emaan Swati}  & \textbf{Rabia Ashraf} \\[2pt]
@@ -186,62 +186,42 @@ Max single-feature correlation & 0.24 \\
 
 This raw profile immediately informs critical design decisions: (1) the overwhelming imbalance necessitates \textbf{weighted loss functions} and \textbf{PR-AUC} as the primary metric, (2) the weak max correlation of 0.24 indicates that \textbf{fraud is inherently multi-feature and non-linear}, and (3) the prevalence of missing data justifies an aggressive \textbf{pruning-first approach}.
 
-\subsection{Exploratory Data Analysis (EDA) Insights}
-The pipeline begins with an automated EDA task (`raw\_eda\_task`) that identifies the fundamental characteristics of the dataset. The comprehensive findings reveal:
+\subsection{Exploratory Data Analysis (EDA) and Structural Insights}
+The pipeline begins with an automated EDA task that identifies the fundamental characteristics of the raw dataset. These findings directly drive the design of the preprocessing and modeling strategies.
 
 \begin{enumerate}
- \item \textbf{Extreme Class Imbalance}: The dataset exhibits a \textbf{27.6 : 1} ratio (96.5\% safe, 3.5\% fraud). This is the primary driver for choosing \textbf{AUC-PR} as the target metric rather than Accuracy or AUC-ROC. A naive "always predict safe" model would achieve 96.5\% accuracy while catching zero fraud - a result that is simultaneously correct and useless.
- 
- \item \textbf{Feature Complexity}: With 228 raw features (including 180 anonymized V-features), no single feature correlates with fraud above $r = 0.24$. This empirically confirms that fraud is a \textbf{non-linear, multi-feature interaction problem}. Linear models (e.g., Logistic Regression) fail because they cannot exploit these latent multi-feature relationships.
- 
- \item \textbf{Temporal Spikes}: Analysis of \texttt{TransactionDT} revealed specific night-time spikes in fraud activity, with elevated rates between 00:00--06:00 UTC. This temporal clustering justifies the extraction of \texttt{hour} and \texttt{day\_of\_week} features into the engineered feature set.
- 
- \item \textbf{Amount Distribution}: While mean amounts are similar between safe and fraudulent classes, fraud exhibits an \textbf{18\% higher standard deviation}, indicating heterogeneous fraud tactics: both micro-transactions (card testing: $<\$1$) and large outlier drains (checking limits).
- 
- \item \textbf{Geographic Clustering}: Fraud concentrates in specific country-device combinations, suggesting fraudsters operate in discrete rings or networks rather than uniformly across all transaction types.
+ \item \textbf{Extreme Class Imbalance}: The dataset exhibits a \textbf{27.6 : 1} ratio (96.5\% safe, 3.5\% fraud). This makes PR-AUC the only defensible primary success metric, as accuracy would be misleading.
+ \item \textbf{Temporal Non-Uniformity}: Fraud rates spike between 00:00--06:00 UTC, confirming that fraudsters exploit low-monitoring windows and justifying cyclical time engineering.
+ \item \textbf{Feature Sparsity}: Over 91\% of columns exceed 70\% missingness, necessitating an aggressive pruning-first foundation to prevent noise amplification.
+ \item \textbf{Non-Linearity}: With a maximum single-feature correlation of $r = 0.24$, fraud is clearly a multi-feature interaction problem requiring non-linear learners like gradient-boosted trees.
 \end{enumerate}
-
-\subsection{Dataset Balance and Signal Distribution}
-The dataset is heavily imbalanced. The class distribution plot below shows the 27.6:1 safe-to-fraud ratio that drives every design choice in this project — from choosing PR-AUC as the primary metric to using \texttt{scale\_pos\_weight} in XGBoost.
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\columnwidth]{assets/01_class_balance.png}
- \caption{Class balance: 96.5\% safe vs 3.5\% fraud. The 27.6:1 ratio makes accuracy useless as a metric — a model that predicts "safe" always achieves 96.5\% accuracy while catching zero fraud.}
-\end{figure}
-
-\begin{figure}[H]
- \centering
- \includegraphics[width=\columnwidth]{assets/02_amount_distribution.png}
- \caption{Transaction amount distributions by class. Fraud exhibits an 18\% higher standard deviation with bimodal behavior: micro-transactions (card testing $<$\$1) and large outlier drains. Log-scale applied to compress the right tail.}
+ \caption{Class balance: 96.5\% safe vs 3.5\% fraud. This skew drives our choice of PR-AUC and \texttt{scale\_pos\_weight}.}
 \end{figure}
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\columnwidth]{assets/03_temporal_patterns.png}
- \caption{Temporal fraud patterns by hour and day. Elevated fraud rates during 00:00--06:00 UTC indicate fraudsters exploit low-monitoring windows, directly motivating the extraction of \texttt{hour} and \texttt{day\_of\_week} features.}
-\end{figure}
-
-\begin{figure}[H]
- \centering
- \includegraphics[width=\columnwidth]{assets/04_missingness_correlation.png}
- \caption{Missingness heatmap across feature families. Over 91\% of columns exceed 70\% missingness (V-feature families are especially sparse), validating the aggressive null-pruning strategy applied in Stage 1.}
+ \caption{Temporal fraud patterns. Spikes during off-hours motivate cyclical feature extraction.}
 \end{figure}
 
 \begin{table}[H]
 \centering
-\caption{What the raw dataset is telling us}
+\caption{Raw data insights and their architectural consequences}
 \begin{tabular}{p{0.31\columnwidth}p{0.58\columnwidth}}
 \toprule
-\textbf{What we see} & \textbf{What it means} \\
+\textbf{Structural Finding} & \textbf{Architectural Response} \\
 \midrule
-Very few fraud rows & The model can not rely on accuracy alone. \\
+27.6:1 Class Ratio & PR-AUC focus; Weighted learning pressure. \\
 \midrule
-Many numeric columns & The model needs to handle high-dimensional tabular data. \\
+91\% Sparse Columns & Aggressive Null-Pruning (>70\% threshold). \\
 \midrule
-Many redundant signals & Feature pruning is useful before learning. \\
+Max $r=0.24$ with target & Non-linear ensembles (XGBoost) vs. linear models. \\
 \midrule
-Weak one-feature correlation & Fraud is a combination problem, not a single-rule problem. \\
+Off-hour fraud spikes & Cyclical hour/day feature enrichment. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -273,10 +253,10 @@ Beyond the class distribution, the raw EDA reveals key structural properties of 
  \caption{Missing value density across the 180 V-feature columns. The majority exceed 70\% missingness — imputing these would be three parts fiction to one part fact, making their removal the only defensible choice.}
 \end{figure}
 
-\section{Methodology and Preprocessing}
+\section{Technical Methodology and Implementation}
 
-\subsection{Methodology Flow and Stage Gates}
-The methodology follows a robust MLOps sequence: from raw ingestion and baseline comparison to advanced feature enrichment and ML health validation. Each stage has explicit quality criteria, and only stages that pass their quality gates proceed to the next phase.
+\subsection{Workflow Overview and Methodology Flow}
+The project follows a robust MLOps sequence designed to transform raw, high-cardinality data into a production-ready model. The process moves from ingestion and baseline comparison to advanced feature enrichment and validation, with explicit quality gates at each stage.
 
 \begin{figure}[H]
  \centering
@@ -299,81 +279,6 @@ The methodology follows a robust MLOps sequence: from raw ingestion and baseline
  \draw[flowarrow] (eval) -- (serve);
  \end{tikzpicture}%
  \caption{End-to-end methodology flow from data ingestion through model validation and deployment.}
-\end{figure}
-
-\subsection{Preprocessing Philosophy}
-Our methodology is built on a "Pruning-First" foundation. We found through extensive experimentation (documented in the `notebooks/` folder) that engineering features on raw, noisy data leads to significant performance degradation. When practitioners extract features from 431 raw columns without first filtering away high-missingness columns, they inadvertently teach the model to recognize noise patterns rather than true fraud signals. The process therefore follows a deliberate, sequential flow:
-
-\begin{tcolorbox}[colback=techblue!3,colframe=techblue,title=Why the order matters]
-We first cut away obvious noise, then add features that make sense to a human, then group similar behaviour together, and only then train the final model. If we do the steps in the wrong order, the model sees too much junk and wastes capacity learning unhelpful patterns.
-\end{tcolorbox}
-
-\begin{table}[H]
-\centering
-\caption{Preprocessing pipeline design and expected contribution of each stage}
-
-\begin{tabular}{p{0.22\columnwidth}p{0.34\columnwidth}p{0.28\columnwidth}}
-\toprule
-\textbf{Step} & \textbf{What it does} & \textbf{Why it helps} \\
-\midrule
-Pruning & Removes missing, flat, and duplicate-like columns & Shrinks noise before training \\
-\midrule
-Feature engineering & Adds time and behaviour signals & Gives the model easier clues \\
-\midrule
-Clustering & Groups similar transactions & Compresses patterns into one extra signal \\
-\midrule
-Stacking / XGBoost & Learns from many weak views at once & Improves fraud ranking quality \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{enumerate}
- \item \textbf{Pruning}: We apply a 4-stage filter to the 228 baseline features, removing columns with $>95\%$ missingness, zero-variance features, and highly redundant pairs (correlation $>0.98$). We then select the top 167 features via Mutual Information, reducing the feature space by 27\% while retaining 98\%+ of the predictive signal. Theoretically, this step reduces the curse of dimensionality: high-dimensional sparse spaces encourage overfitting and amplify noise.
- 
- \item \textbf{Feature Engineering}: We extract cyclical temporal features (\texttt{hour}, \texttt{day\_of\_week}) and user behavioral aggregates (\texttt{Amt\_to\_Median\_User}, interaction terms). The theoretical basis is \textbf{anomaly detection}: fraud is often characterized by a sudden departure from an established behavioral baseline. By encoding user velocity and temporal context, we give the model direct access to deviation signals without requiring it to learn these interactions from scratch.
- 
- \item \textbf{Unsupervised Clustering (K-Means)}: We fit a K-Means model with $k=5$ clusters on the pruned, engineered features, then add the cluster label as a new feature. The theoretical justification is \textbf{latent profile analysis}: fraud does not occur randomly but in behavioral archetypes (e.g., bot-like high-frequency micro-transactions, or sudden jumps in device usage). K-Means compresses complex multi-feature interactions into a single macro-feature, allowing XGBoost to "shortcut" its learning by grouping transactions into fraud-risk profiles. This reduces the effective dimensionality of the problem from 167 to roughly 5 main behavioral profiles, dramatically improving both generalization and interpretability.
-\end{enumerate}
-
-\subsection{Feature Engineering in Detail (Theoretical Backing)}
-The \texttt{FeatureEngineeringTransformer} and \texttt{ClusteringTransformer} in \texttt{src/features.py} add critical behavioral context. The design is driven by domain expertise in fraud operations and statistical signal theory:
-
-\begin{itemize}
- \item \textbf{User Velocity (Anomaly Detection Theory)}: By concatenating \texttt{card1} and \texttt{addr1}, we create a proxy "User ID". We then calculate \texttt{Amt\_to\_Median\_User} (current amount / user's median historical amount). \textbf{Theory}: Fraud is often characterized by a sudden departure from an established behavioral baseline. A user who typically spends \$50 per transaction but suddenly spends \$5,000 is anomalous. This engineered feature explicitly encodes deviation, which the tree-based ensemble can easily split on.
- 
- \item \textbf{Temporal Encoding}: We extract \texttt{hour} (from \texttt{TransactionDT}) and \texttt{day\_of\_week}. \textbf{Theory}: Behavioral patterns in finance are highly cyclic. Fraud often exploits low-monitoring windows (late night or weekends). By providing the model with direct temporal signals, we enable it to learn time-dependent fraud rates without constructing these interactions implicitly.
- 
- \item \textbf{KMeans Clustering (Latent Archetype Theory)}: We add a \texttt{cluster\_label} from K-Means with $n=5$ clusters. \textbf{Theory}: Fraud doesn't occur uniformly; it occurs in discrete behavioral archetypes. Some clusters may represent high-velocity bot-like traffic; others may represent sleeping-account takeovers. By grouping transactions into these archetypes, we compress the high-dimensional feature space into a low-dimensional behavioral summary, which dramatically reduces the learning burden on XGBoost and improves generalization.
-\end{itemize}
-
-\subsection{Why K-Means Clustering Improves XGBoost Performance}
-In detail, the clustering layer achieves three concrete improvements:
-
-\begin{enumerate}
- \item \textbf{Dimensionality Compression}: The original 167 engineered features represent a complex, high-dimensional manifold. K-Means projects this manifold onto 5 discrete points (cluster centers), reducing effective dimensionality and combating the curse of dimensionality.
- 
- \item \textbf{Interpretable Proxy for Interactions}: Rather than requiring XGBoost to discover high-order interactions among anonymized V-features (e.g., $V45 \times V86 > k$ AND $V120 < m$), K-Means pre-computes meaningful groupings. XGBoost can then simply learn which clusters are fraud-prone, vastly reducing the number of splits required.
- 
- \item \textbf{Robustness to Feature Drift}: In production, individual feature distributions shift over time (concept drift). Cluster assignments are more stable because they aggregate multiple features, providing a higher-level signal that resists transient fluctuations.
-\end{enumerate}
-
-\begin{figure}[H]
- \centering
- \begin{tikzpicture}[node distance=6mm and 8mm]
- \node[flowbox] (raw) {Raw Data};
- \node[flowbox, below=of raw] (prune) {Feature Pruning};
- \node[flowbox, below=of prune] (engineer) {Feature Engineering};
- \node[flowbox, below=of engineer] (cluster) {K-Means Clustering};
- \node[flowbox, below=of cluster] (ensemble) {Stacked Ensemble};
- \node[flowbox, below=of ensemble] (eval) {Model Evaluation};
-
- \draw[flowarrow] (raw) -- (prune);
- \draw[flowarrow] (prune) -- (engineer);
- \draw[flowarrow] (engineer) -- (cluster);
- \draw[flowarrow] (cluster) -- (ensemble);
- \draw[flowarrow] (ensemble) -- (eval);
- \end{tikzpicture}%
- \caption{End-to-end Machine Learning methodology from raw data to evaluation.}
 \end{figure}
 
 \subsection{Post-Preprocessing Validation}
@@ -409,12 +314,11 @@ After cleaning and engineering, the feature space is dramatically reduced and en
  \caption{Top feature distributions by class (fraud vs. safe) after preprocessing. Engineered features show notably stronger class separation than raw V-features, confirming the value of the preprocessing pipeline.}
 \end{figure}
 
-\section{The Data Transformation: Two-Stage Refinery Process}
+\subsection{Implementation Detail: The Two-Stage Refinery Process}
+The journey from raw files to production training data is managed across two critical stages. This section details the engineering decisions and operational impact of each transformation.
 
-The journey from raw Kaggle files to the production training dataset (data/train\_unbalanced.csv) spans two critical stages managed across Notebooks 01 and 03. This section details the engineering decisions, theoretical foundations, and operational impact of each transformation step.
-
-\subsection{Stage 1: The Refinery (Notebook 01  -  Preprocessing)}
-The raw dataset consists of two separately-collected CSV files (train\_transaction.csv and train\_identity.csv) containing 472k rows and over 1.5 GB of data. This stage converts this raw, heterogeneous, high-cardinality collection into a clean, numerically-homogeneous format that machine learning algorithms can consume.
+\subsection{Stage 1: Preprocessing and Engineering}
+The raw dataset consists of two separately-collected CSV files. This stage converts this raw collection into a clean, numerically-homogeneous format.
 
 \subsubsection{Memory Optimization (reduce\_mem\_usage)}
 \textbf{Challenge}: The raw data occupies approximately 1.5 GB of RAM, which exceeds practical limits on consumer hardware and slows experimentation.
@@ -514,7 +418,7 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 \caption{Notebook 01 refinery process: raw CSVs flow through a 7-stage pipeline (merge, memory optimization, time engineering, log transformation, null pruning, frequency encoding, imputation) to produce a clean, numeric dataset.}
 \end{figure}
 
-\subsection{Stage 2: The Partition (Notebook 03  -  Data Splitting and Balancing)}
+\subsection{Stage 2: The Partition}
 Now that the data is clean and numeric (processed\_train.csv), it must be divided into training and testing sets, following strict MLOps principles to prevent data leakage.
 
 \subsubsection{Stratified Train-Test Splitting}
@@ -608,237 +512,91 @@ The path from raw Kaggle files to production training data is intentionally mult
 \caption{Complete two-stage data refinery pipeline: Stage 1 (Notebooks 01) transforms raw files into clean numeric data; Stage 2 (Notebook 03) partitions for training and evaluation, producing the production training set.}
 \end{figure}
 
-\section{Model Development and Comparison}
-\subsection{Model Selection Spectrum}
-We evaluated a wide range of models across multiple experimental notebooks to benchmark performance and understand which architectural choices drive quality improvements. The comprehensive comparison validates our choice of XGBoost with KMeans clustering as the production model.
 
-\subsection{Detailed Comparative Model Analysis}
-The following table presents the full empirical comparison of all candidate models tested during the project, drawn from the experimental notebooks (Notebooks 04--15 in the `notebooks/` folder):
+\section{Model Development, Comparison, and Architecture}
+
+\subsection{Model Selection Spectrum}
+We evaluated a wide range of models across experimental notebooks to benchmark performance and validate our final architectural choice. The comparison confirms that simple linear learners underperform in high-dimensional, imbalanced fraud manifolds.
 
 \begin{table}[H]
 \centering
-\caption{Comprehensive model comparison: performance metrics and theoretical justification for selection}
-
+\caption{Comprehensive model comparison: performance metrics and theoretical justification}
 \begin{tabular}{p{0.18\columnwidth}S[table-format=1.4]S[table-format=1.4]p{0.36\columnwidth}}
 \toprule
-\textbf{Model} & \textbf{{ROC-AUC}} & \textbf{{PR-AUC}} & \textbf{\multicolumn{1}{p{0.36\columnwidth}}{Theoretical backing and why chosen or rejected}} \\
+\textbf{Model} & \textbf{{ROC-AUC}} & \textbf{{PR-AUC}} & \textbf{Theoretical Rationale} \\
 \midrule
-Logistic Regression (04) & 0.8409 & 0.3405 & Assumes linear separation; cannot exploit multi-feature interactions or imbalance. Fails to model the non-linear fraud manifold observed in EDA. \\
+Logistic Regression & 0.8409 & 0.3405 & Assumes linear separation; fails to exploit multi-feature interactions or native class weighting. \\
 \midrule
-KNN with PCA (09) & 0.8950 & 0.4220 & Distance-based learner with dimensionality reduction. Unable to discover non-Euclidean feature relationships; suffers in high-dimensional sparse spaces. \\
+KNN with PCA & 0.8950 & 0.4220 & Distance-based; struggles in sparse, high-dimensional spaces where Euclidean distance becomes less discriminative. \\
 \midrule
-Random Forest (07) & 0.9200 & 0.5500 & Strong ensemble baseline; learns non-linear splits but lacks native imbalance handling. Gradient boosting is superior for fine-tuning residuals. \\
+Random Forest & 0.9200 & 0.5500 & Strong ensemble baseline; learns non-linear splits but lacks the native residual refinement of gradient boosting. \\
 \midrule
-XGBoost Baseline (08) & 0.9466 & 0.6920 & Excellent non-linear learner with native \texttt{scale\_pos\_weight} support. Strong results, but does not exploit behavioral clustering. \\
+XGBoost Baseline & 0.9466 & 0.6920 & Excellent non-linear learner with native \texttt{scale\_pos\_weight} support for imbalanced learning. \\
 \midrule
-XGBoost + PCA (13) & 0.9540 & 0.6850 & PCA preserves global variance but loses local non-linear structure defining fraud. Dimensionality compression is too aggressive. \\
-\midrule
-\textbf{XGBoost + KMeans (Current)} & \textbf{0.9650} & \textbf{0.7930} & \textbf{Winner}: Combines gradient boosting with unsupervised behavioral profiling. KMeans preserves high-level archetype structure while XGBoost learns micro-level feature splits. Maximizes both ranking quality and minority-class recovery. \\
+\textbf{XGBoost + KMeans} & \textbf{0.9650} & \textbf{0.7930} & \textbf{Winner}: Combines gradient boosting with unsupervised behavioral profiling to maximize minority-class recovery. \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Why XGBoost with K-Means Clustering is Optimal}
+\begin{tcolorbox}[colback=techblue!3,colframe=techblue,title=Why Ensembles Outperform Linear Models]
+The gap between Logistic Regression's 0.8409 ROC-AUC and 0.3405 PR-AUC exemplifies the imbalanced-learning trap: good overall ranking but poor minority-class recall. Ensembles like XGBoost succeed because they learn non-linear splits and sequentially refine errors (residuals) specifically on the harder-to-classify fraud cases.
+\end{tcolorbox}
 
-The comparative analysis yields three key insights:
+\subsection{The Role of K-Means in Behavioral Profiling}
+Beyond individual features, the K-Means clustering layer (with $k=5$) serves as a latent feature-space compressor. This approach is rooted in \textbf{Latent Profile Analysis}: fraud occurs in discrete archetypes (e.g., high-velocity bot traffic vs. sleeping-account takeovers).
 
-\begin{enumerate}
- \item \textbf{Linear Models Fail Under Imbalance and Interaction}: Logistic Regression achieves only 0.3405 PR-AUC despite reasonable ROC-AUC. The problem is not that linear models are "weak" - it's that they cannot simultaneously handle (a) extreme class imbalance without auxiliary weighting, and (b) multi-feature non-linear interactions. The gap between its 0.8409 ROC-AUC and 0.3405 PR-AUC exemplifies the classic imbalanced-learning trap: good overall ranking, terrible minority-class recall.
- 
- \item \textbf{Ensemble Methods Outperform Distance-Based Learners}: Random Forest (0.92 ROC, 0.55 PR) beats KNN (0.895 ROC, 0.422 PR) because trees can directly learn discriminative feature splits in high dimensions, whereas KNN relies on distance metrics that become unreliable in sparse, high-dimensional spaces. XGBoost further improves over RF by sequentially refining weak learners on residuals.
- 
- \item \textbf{Unsupervised Clustering Unlocks Non-Linear Feature Interactions}: The final model combines XGBoost (0.965 ROC, 0.793 PR) with K-Means clustering, yielding the best results. The clustering layer pre-computes meaningful behavioral groupings, allowing XGBoost to discover high-order interactions without explicit feature engineering. This approach scales gracefully to high dimensions and resists feature drift, since cluster assignments are more stable than individual feature values.
-\end{enumerate}
+\begin{itemize}
+ \item \textbf{Dimensionality Compression}: K-Means projects the high-dimensional manifold onto 5 discrete behavioral points, reducing effective complexity and combating the curse of dimensionality.
+ \item \textbf{Interpretable Proxy for Interactions}: XGBoost can split on cluster membership as a shortcut for discovering high-order interactions that would otherwise require deep, prone-to-overfit trees.
+ \item \textbf{Robustness to Feature Drift}: Individual feature values fluctuate in production, but cluster assignments are more stable, providing a higher-level signal that resists transient distribution shifts.
+\end{itemize}
+
+\subsection{Hyperparameter Optimization and Imbalance Theory}
+The model is tuned to handle the extreme $27.6:1$ class imbalance through weighted learning.
+
+\begin{table}[H]
+\centering
+\caption{XGBoost hyperparameters: values and theoretical justifications}
+\begin{tabular}{p{0.24\columnwidth}p{0.18\columnwidth}p{0.48\columnwidth}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Theoretical and Empirical Justification} \\
+\midrule
+\texttt{scale\_pos\_weight} & 27.6 & Directly penalizes fraud misclassifications 27.6x more, preventing the model from defaulting to a "always safe" strategy. \\
+\midrule
+\texttt{n\_estimators} & 300--500 & Allows the model to refine predictions incrementally. Combined with low learning rate, this prevents memorization of training noise. \\
+\midrule
+\texttt{max\_depth} & 9--12 & Controls interaction complexity. Depth 9--12 captures multi-way feature interactions while remaining generalizable. \\
+\midrule
+\texttt{learning\_rate} & 0.02--0.03 & Ensures gradual convergence for better generalization to unseen fraud patterns. \\
+\midrule
+\texttt{subsample} & 0.8 & Fraction of rows per tree. Introduces randomness to prevent overfitting on individual transaction artifacts. \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Theoretical Conclusion}
-XGBoost with \texttt{scale\_pos\_weight=27.6} and K-Means behavioral clustering is theoretically and empirically superior because it specifically addresses the \textbf{three pillars of fraud data}: \textbf{(1) extreme class imbalance} through weighted loss, \textbf{(2) non-linear feature interactions} through gradient boosting, and \textbf{(3) behavioral heterogeneity} through unsupervised clustering. No simpler model can simultaneously satisfy all three constraints without significant performance degradation.
+XGBoost with weighted loss and K-Means clustering is superior because it addresses the three pillars of fraud data: (1) \textbf{Extreme Imbalance} via \texttt{scale\_pos\_weight}, (2) \textbf{Non-Linear Interactions} via gradient boosting, and (3) \textbf{Behavioral Heterogeneity} via unsupervised clustering.
 
-\subsection{Performance Benchmarking}
-The following tables and charts consolidate benchmark targets, validated production-run metrics, and operating-point diagnostics derived from the saved evaluation artifacts.
-
-\subsection{How to Read the Scores}
-For this project, PR-AUC is the primary success metric because it measures how effectively the system retrieves fraudulent cases without overwhelming operations with false positives. ROC-AUC remains important as a ranking-quality diagnostic, but in highly imbalanced settings it can appear strong even when minority-class recovery is insufficient. Accuracy is therefore treated as a supporting metric only, not a deployment gate.
-
-\begin{table}[H]
-\centering
-\caption{Metric interpretation framework used in model governance}
-
-\begin{tabular}{p{0.20\columnwidth}p{0.38\columnwidth}p{0.26\columnwidth}}
-\toprule
-\textbf{Metric} & \textbf{Interpretation} & \textbf{Desired behavior} \\
-\midrule
-PR-AUC & Minority-class retrieval quality under heavy imbalance & Maximize \\
-\midrule
-ROC-AUC & Global ranking discrimination across all classes & Maximize \\
-\midrule
-Precision & Share of predicted fraud that is truly fraudulent & Increase without recall collapse \\
-\midrule
-Recall & Share of total fraud events successfully captured & Increase within operational capacity \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Measured performance: benchmark targets vs latest validated run}
-
-\begin{tabular}{p{0.36\columnwidth}S[table-format=1.4]S[table-format=1.4]p{0.20\columnwidth}}
-\toprule
-\textbf{Metric / Reference} & \textbf{{Target}} & \textbf{{Observed}} & \textbf{Status} \\
-\midrule
-PR-AUC & 0.8340 & 0.7930 & Near-target \\
-\midrule
-ROC-AUC & 0.8870 & 0.9650 & Exceeded \\
-\midrule
-Quality gate (PR-AUC) & 0.6000 & 0.7930 & Passed \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\begin{table}[H]
-\centering
-\caption{Representative operating-point diagnostics from saved PR curve}
-
-\begin{tabular}{p{0.30\columnwidth}S[table-format=1.4]S[table-format=1.4]S[table-format=1.4]}
-\toprule
-\textbf{Operating Regime} & \textbf{{Precision}} & \textbf{{Recall}} & \textbf{{F1}} \\
-\midrule
-High-recall slice & 0.0438 & 0.9979 & 0.0839 \\
-\midrule
-Balanced slice & 0.0697 & 0.9840 & 0.1302 \\
-\midrule
-High-precision slice & 0.2253 & 0.9077 & 0.3610 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsection{Performance Benchmarking and Metrics}
+PR-AUC is our primary success metric as it measures retrieval quality under heavy imbalance without overwhelming operations with false positives.
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\columnwidth]{assets/01_roc_pr_curves.png}
- \caption{Validated ROC and PR curves from the production run. The ROC-AUC of 0.965 (exceeds the 0.887 benchmark) and PR-AUC of 0.793 (near the 0.834 target) confirm the model's strong ranking quality under heavy class imbalance.}
+ \caption{Validated ROC and PR curves. ROC-AUC (0.965) and PR-AUC (0.793) confirm strong ranking quality.}
 \end{figure}
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\columnwidth]{assets/04_confusion_matrix.png}
- \caption{Confusion matrix from the production model at the balanced operating threshold. High recall ensures most fraud is captured; false positives remain manageable within operational review capacity.}
+ \caption{Confusion matrix. High recall ensures fraud capture; false positives remain manageable.}
 \end{figure}
-
-\section{Model Design Rationale}
-\subsection{Why Not Just Use a Simple Model?}
-A simple model is easy to train and maintain, but it underfits the interaction complexity observed in this dataset. Fraud signals are sparse, weak in isolation, and often only separable when temporal behavior, transaction context, and latent cluster structure are considered jointly. The selected architecture therefore prioritizes ranking quality under imbalance rather than single-threshold accuracy.
-
-Concretely, the system combines pruning, feature engineering, clustering, and stacked gradient-boosted learners to improve minority-class separability while maintaining deployable inference behavior. This design reflects the empirical profile of the data: high-dimensional encoded features, measurable redundancy, and strong asymmetry between the cost of missed fraud and benign false alarms.
-
-\begin{table}[H]
-\centering
-\caption{Model-family selection rationale under class imbalance and feature complexity}
-
-\begin{tabular}{p{0.23\columnwidth}p{0.32\columnwidth}p{0.27\columnwidth}}
-\toprule
-\textbf{Option} & \textbf{Strength} & \textbf{Limitation on this dataset} \\
-\midrule
-Logistic Regression & Fast and interpretable & Misses complex non-linear fraud patterns \\
-\midrule
-Random Forest & Strong baseline & Can underperform on heavy class imbalance without careful tuning \\
-\midrule
-XGBoost + stacking & Best ranking quality and robustness & More complex to train and deploy \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Imbalance Handling: The Core Equation}
-The class ratio is approximately $27.6:1$ (safe:fraud), so the model uses weighted learning pressure:
-$$
-\texttt{scale\_pos\_weight} = \frac{N_{\text{safe}}}{N_{\text{fraud}}}
-$$
-Operationally, the model treats missed fraud as substantially more costly than missed safe cases.
 
 \begin{figure}[H]
  \centering
  \includegraphics[width=\columnwidth]{assets/02_threshold_tradeoff.png}
- \caption{Precision-recall threshold trade-off from actual model evaluation. Raising the decision threshold improves precision but reduces recall — the operating regime is selected based on the business cost of missed fraud vs. false alarms.}
+ \caption{Precision-recall threshold trade-off. The operating regime is selected based on business cost-benefit analysis.}
 \end{figure}
-
-\begin{table}[H]
-\centering
-\caption{When to choose each threshold style}
-\begin{tabular}{p{0.23\columnwidth}p{0.30\columnwidth}p{0.30\columnwidth}}
-\toprule
-\textbf{Goal} & \textbf{Threshold style} & \textbf{Business effect} \\
-\midrule
-Catch more fraud & Lower threshold & Higher recall, more alerts to review \\
-\midrule
-Reduce false alarms & Higher threshold & Higher precision, fewer blocked safe users \\
-\midrule
-Balanced operations & Mid threshold + manual review zone & Better compromise between loss and friction \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{Model Architecture and Hyperparameter Justification}
-
-\subsection{XGBoost as the Core Learner}
-The chosen model is an \textbf{XGBClassifier} integrated into a single \texttt{sklearn.Pipeline}. XGBoost is selected for three core reasons:
-
-\begin{enumerate}
- \item \textbf{Native Imbalance Handling via scale\_pos\_weight}: XGBoost implements a weighted loss function. By setting \texttt{scale\_pos\_weight = 27.6} (the imbalance ratio), we directly instruct the learner to give 27.6x more weight to misclassifying a minority-class (fraud) instance. This prevents the model from defaulting to a "predict safe" strategy.
- 
- \item \textbf{Non-Linear Decision Boundaries}: Tree-based ensembles naturally capture high-dimensional non-linear interactions without explicit feature engineering. Given that single-feature correlations with fraud are weak ($\max r < 0.24$), XGBoost's ability to discover multi-way interactions (e.g., $V45 \times V86 > k$ AND $\text{hour} \in [22, 06]$) is essential.
- 
- \item \textbf{Robustness to Feature Sparsity and Drift}: Trees can handle missing values through internal surrogate splits, and tree-based models are more resistant to feature distribution shift than distance-based or kernel-based methods.
-\end{enumerate}
-
-\subsection{Hyperparameter Selection and Theoretical Justification}
-
-\begin{table}[H]
-\centering
-\caption{XGBoost hyperparameters: values, ranges, and theoretical justifications}
-
-\begin{tabular}{p{0.24\columnwidth}p{0.18\columnwidth}p{0.48\columnwidth}}
-\toprule
-\textbf{Parameter} & \textbf{Value/Range} & \textbf{Theoretical and Empirical Justification} \\
-\midrule
-\textbf{scale\_pos\_weight} & 27.6 & Directly matches the class imbalance ratio. Each misclassification of fraud is penalized 27.6x more, forcing the model to learn true minority-class patterns rather than simply optimizing overall accuracy. Without this, the model would converge to a "always predict safe" solution that achieves 96.5\% accuracy while catching zero fraud. \\
-\midrule
-\textbf{n\_estimators} & 300--500 & Number of boosting rounds. Lower values (50--100) lead to underfitting; too high (>1000) risks overfitting on noise. We use 300--500 to allow the model to refine predictions incrementally without memorizing training data. Combined with low \texttt{learning\_rate}, this creates a slow, gradual learning process that generalizes better to unseen fraud patterns. \\
-\midrule
-\textbf{max\_depth} & 9--12 & Maximum tree depth controls interaction complexity. Shallow trees ($\leq 3$) cannot capture the multi-feature interactions we observe in fraud data. Deep trees ($>15$) risk overfitting by learning transaction-specific noise. Depth 9--12 allows the model to discover up to 9--12-way feature interactions while remaining generalizable. \\
-\midrule
-\textbf{learning\_rate} (eta) & 0.02--0.03 & Step size for gradient descent. Lower values (0.01--0.02) converge slowly but generalize better; higher values (0.1+) converge faster but risk overshooting the loss minimum. We use 0.02--0.03 as a compromise: slow enough for careful learning, fast enough for practical training time. \\
-\midrule
-\textbf{subsample} & 0.8 & Fraction of training rows used for each tree. Subsampling (0.8 = 80\%) introduces randomness, preventing the model from memorizing individual transactions and improving generalization. Without subsampling, high-depth trees can perfectly fit training data, leading to poor test performance. \\
-\midrule
-\textbf{colsample\_bytree} & 0.8 & Fraction of features used for each tree. Like row subsampling, this introduces randomness at the feature level, preventing the model from relying on any single engineered feature and encouraging diverse splits across the feature space. \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{The Role of K-Means in Feature Space Simplification}
-Beyond individual hyperparameters, the K-Means clustering layer (with $k=5$) serves as a feature-space compressor. The cluster label becomes an additional input feature that explicitly encodes high-level transaction archetypes. This achieves two practical benefits: (1) \textbf{Reduced Learning Complexity}: XGBoost can now learn a simpler decision boundary by first splitting on cluster membership, then fine-tuning with lower-level features. (2) \textbf{Increased Robustness to Drift}: Individual feature values drift in production, but cluster assignments are more stable because they aggregate multiple features, making the model more deployment-friendly.
-
-\begin{table}[H]
-\centering
-\caption{Core training hyperparameters and operational intent}
-
-\begin{tabular}{p{0.30\columnwidth}p{0.21\columnwidth}p{0.38\columnwidth}}
-\toprule
-\textbf{Parameter} & \textbf{Value} & \textbf{Operational justification} \\
-\midrule
-scale\_pos\_weight & 27.6 & Aligns loss pressure with class imbalance \\
-\midrule
-n\_estimators & 300--500 & Supports low learning-rate convergence \\
-\midrule
-max\_depth & 9--12 & Captures high-order feature interactions \\
-\midrule
-learning\_rate & 0.02--0.03 & Controls overfitting via gradual boosting \\
-\midrule
-KMeans clusters & 5 & Adds compact latent behavior signal \\
-\midrule
-Quality gate & PR-AUC at least 0.60 & Prevents underperforming deployments \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 \section{Serving, APIs, and Operations}
 \subsection{API Contract and Inference Surface}
@@ -1003,7 +761,7 @@ A full run starts by loading the CSV files, then the pipeline performs EDA on th
 \end{figure}
 
 \subsection{Monitoring and Model Health}
-Beyond performance metrics, the pipeline incorporates automated drift detection using the **Evidently.ai** framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
+Beyond performance metrics, the pipeline incorporates automated drift detection using the \textbf{Evidently.ai} framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
 
 \begin{table}[H]
 \centering
@@ -1025,17 +783,14 @@ Git Hooks & Local automation and instant feedback & Developer workflow and itera
 \end{tabular}
 \end{table}
 
-\subsection{Future Work}
-The next natural improvements are to add live drift monitoring, more robust probability calibration, and better integration between the dashboard and the latest model artifacts. Another useful step would be to add a richer explanation layer so an analyst can see which inputs pushed a prediction toward fraud.
 
-\subsection{Final Observations and Future Work}
-The project bridges research and production engineering by combining a measured modeling strategy with a fully operational serving stack. In practical terms, it shows that a carefully controlled tabular-learning pipeline can still perform strongly in a domain where the minority class is rare, feature redundancy is high, and the deployment environment must remain deterministic. The achieved ROC-AUC exceeds the paper benchmark, while the PR-AUC remains close to the target, confirming that the system is competitive rather than merely functional.
-
-Future work will focus on:
+\subsection{Conclusion and Future Roadmap}
+The project bridges research and production engineering by combining a measured modeling strategy with a fully operational serving stack. The system is competitive, with an ROC-AUC that exceeds paper benchmarks. Moving forward, we aim to enhance the platform through:
 \begin{itemize}
- \item Integrating **Real-Time Feature Stores** to reduce latency in user behavioral aggregates.
- \item Implementing **Graph Neural Networks (GNNs)** to capture network-level fraudulent relationships.
- \item Expanding the dashboard to include real-time drift monitoring and automated model retraining.
+ \item \textbf{Explainability Layer}: Integrating SHAP or LIME to provide per-prediction risk justifications for analysts.
+ \item \textbf{Real-Time Feature Stores}: Reducing inference latency for complex behavioral aggregates like user velocity.
+ \item \textbf{Graph Neural Networks (GNNs)}: Capturing network-level fraudulent relationships and community-based fraud rings.
+ \item \textbf{Drift Monitoring}: Implementing automated alerts for concept and feature drift in production.
 \end{itemize}
 
 \begin{thebibliography}{9}
