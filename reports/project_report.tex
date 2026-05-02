@@ -87,37 +87,27 @@ Reg.\ No.\ 2024229     & Reg.\ No.\ 2024206    & Reg.\ No.\ 2024156    & Reg.\ N
 
 
 
-\IEEEtitleabstractindextext{
+\maketitle
+
 \begin{abstract}
-The detection of fraudulent transactions within massive, high-dimensional datasets is a critical challenge in modern financial technology. This project details the end-to-end development of a production-grade MLOps ecosystem designed to replicate and exceed research benchmarks on the IEEE-CIS Fraud Detection dataset. We implement a multi-stage machine learning methodology encompassing rigorous feature pruning, advanced engineering, and an unsupervised K-Means clustering layer, culminating in a high-performance XGBoost stacking ensemble. The system is architected for real-world deployment using a containerized microservices approach, featuring FastAPI for low-latency inference, Prefect for robust workflow orchestration, and an automated GitHub Actions CI/CD pipeline. The latest validated production run achieves a PR-AUC of 0.7930 and an ROC-AUC of 0.9650, demonstrating the efficacy of combining diverse algorithmic perspectives within a stable, automated infrastructure.
+\textit{The detection of fraudulent transactions within massive, 
+high-dimensional datasets is a critical challenge in modern financial technology. 
+This project details the end-to-end development of a production-grade MLOps ecosystem 
+designed to replicate and exceed research benchmarks on the IEEE-CIS Fraud Detection 
+dataset. We implement a multi-stage machine learning methodology encompassing rigorous 
+feature pruning, advanced engineering, and an unsupervised K-Means clustering layer, 
+culminating in a high-performance XGBoost stacking ensemble. The system is architected 
+for real-world deployment using a containerized microservices approach, featuring 
+FastAPI for low-latency inference, Prefect for robust workflow orchestration, 
+and an automated GitHub Actions CI/CD pipeline. The latest validated production 
+run achieves a PR-AUC of 0.7930 and an ROC-AUC of 0.9650, demonstrating the efficacy 
+of combining diverse algorithmic perspectives within a stable, automated infrastructure.}
 \end{abstract}
 
 \begin{IEEEkeywords}
 Fraud Detection, MLOps, XGBoost, Stacking Ensemble, Prefect Orchestration, FastAPI, Docker, CI/CD.
-\end{IEEEkeywords}}
+\end{IEEEkeywords}
 
-\maketitle
-
-\section*{Executive Summary}
-\begin{tcolorbox}[colback=techblue!4,colframe=techblue,title=Executive Brief,boxrule=0.8pt,arc=1.5mm,left=1.5mm,right=1.5mm,top=1mm,bottom=1mm]
-This report explains a fraud-detection system operational terms. The problem is that most transactions are safe and only a small fraction are fraud, so a model can look good by guessing "safe" most of the time and still be useless. To avoid that trap, the project uses feature pruning, feature engineering, clustering, stacked machine learning, and production tooling so the model can learn the real fraud patterns and then be deployed safely.
-\end{tcolorbox}
-
-\begin{figure}[H]
- \centering
- \begin{tikzpicture}[node distance=7mm and 10mm]
- \node[flowbox] (data) {Data};
- \node[flowbox, below=of data] (clean) {Clean};
- \node[flowbox, below=of clean] (learn) {Learn};
- \node[flowbox, below=of learn] (score) {Score};
- \node[flowbox, below=of score] (serve) {Serve};
- \draw[flowarrow] (data) -- (clean);
- \draw[flowarrow] (clean) -- (learn);
- \draw[flowarrow] (learn) -- (score);
- \draw[flowarrow] (score) -- (serve);
- \end{tikzpicture}%
- \caption{The full project flow in one line: raw data is cleaned, the model learns patterns, results are measured, and the final system is served through an API.}
-\end{figure}
 
 \section{Introduction}
 \IEEEPARstart{T}{he} digital economy is under constant threat from increasingly sophisticated fraudulent activities. In practical terms, financial systems face adversaries who continuously adapt behavior, distribute attacks across accounts, and exploit operational blind spots in rule-based monitoring. Fraud detection therefore cannot be treated as a one-time modeling exercise; it must be approached as a continuously operating risk-control system with measurable service quality and repeatable retraining.
@@ -789,16 +779,6 @@ Balanced operations & Mid threshold + manual review zone & Better compromise bet
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsection{Benchmark Context}
-The project targets paper-style performance behavior. A simple benchmark view is shown below.
-
-\begin{figure}[H]
- \centering
- \includegraphics[width=\columnwidth]{assets/03_metric_summary.png}
- \caption{Metric summary from the production run against paper benchmark targets. ROC-AUC exceeds the benchmark; PR-AUC is near-target, confirming the model is competitive for real-world fraud retrieval.}
-\end{figure}
-
 
 
 \section{Model Architecture and Hyperparameter Justification}
