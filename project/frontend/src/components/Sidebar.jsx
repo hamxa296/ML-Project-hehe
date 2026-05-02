@@ -36,7 +36,16 @@ const Sidebar = () => {
         </NavLink>
       </nav>
 
-      <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+      <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }} className="flex-col gap-2">
+        <a 
+          href="/ml_report" 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="sidebar-link"
+          style={{ textDecoration: 'none' }}
+        >
+          <Activity size={18} className="text-emerald" /> ML Health Report
+        </a>
         <div className="sidebar-link" style={{ cursor: 'not-allowed', opacity: 0.5 }}>
           <Settings size={18} /> Settings
         </div>

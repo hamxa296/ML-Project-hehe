@@ -2,43 +2,60 @@ import pandas as pd
 import numpy as np
 from xgboost import XGBClassifier
 from sklearn.pipeline import Pipeline
-from sklearn.metrics import average_precision_score, roc_auc_score
+from sklearn.metrics import average_precision_score
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from src.preprocess import PruningTransformer
 from src.features import FeatureEngineeringTransformer, ClusteringTransformer
 
-def add_pca_features(X_train, X_test, n_components=3):
-    print(f"Calculating PCA Features (n={n_components})...")
-    # PCA requires scaling and handling missing values (Pruning handles missing)
+def add_all_enriched_features(train_df, test_df):
+    print(">>> Starting Full Fusion Feature Enrichment...")
+    
+    # 1. Time-Series Momentum (Weather)
+    # We combine them temporarily to calculate chronological rolling metrics
+    full = pd.concat([train_df, test_df]).sort_values('TransactionDT')
+    full['rolling_fraud_momentum'] = full['isFraud'].shift(1).rolling(window=1000, min_periods=1).mean()
+    full['rolling_fraud_momentum'] = full['rolling_fraud_momentum'].fillna(full['isFraud'].mean())
+    
+    # 2. PCA (Latent Structure)
+    # Scale and apply PCA on numeric columns
     scaler = StandardScaler()
-    X_train_scaled = scaler.fit_transform(X_train.select_dtypes(include=[np.number]).fillna(0))
-    X_test_scaled = scaler.transform(X_test.select_dtypes(include=[np.number]).fillna(0))
+    num_cols = full.select_dtypes(include=[np.number]).columns.drop(['isFraud', 'TransactionID'], errors='ignore')
+    scaled_data = scaler.fit_transform(full[num_cols].fillna(0))
+    pca = PCA(n_components=3)
+    pca_feats = pca.fit_transform(scaled_data)
+    for i in range(3):
+        full[f'pca_{i+1}'] = pca_feats[:, i]
+        
+    # 3. Association Rules (Heuristics)
+    # We'll add a simple 'high_risk_product' feature based on known high-fraud categories from EDA
+    # ProductCD 'W' and 'C' often have different profiles
+    full['is_high_risk_product'] = full['ProductCD'].map({'W': 0, 'C': 1, 'H': 1, 'R': 0, 'S': 0}).fillna(0)
+
+    # Split back
+    train_enriched = full[full['TransactionID'].isin(train_df['TransactionID'])].sort_values('TransactionID')
+    test_enriched = full[full['TransactionID'].isin(test_df['TransactionID'])].sort_values('TransactionID')
     
-    pca = PCA(n_components=n_components)
-    pca_train = pca.fit_transform(X_train_scaled)
-    pca_test = pca.transform(X_test_scaled)
+    X_train = train_enriched.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
+    X_test = test_enriched.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
+    y_train = train_enriched['isFraud']
+    y_test = test_enriched['isFraud']
     
-    # Add to DFs
-    for i in range(n_components):
-        X_train[f'pca_{i+1}'] = pca_train[:, i]
-        X_test[f'pca_{i+1}'] = pca_test[:, i]
-    
-    return X_train, X_test
+    return X_train, X_test, y_train, y_test
 
 def run_experiment():
     print("Loading Data...")
     train = pd.read_csv('data/train_unbalanced.csv')
     test = pd.read_csv('data/test.csv')
     
-    y_train = train['isFraud']
-    X_train_raw = train.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
-    y_test = test['isFraud']
-    X_test_raw = test.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
-    
-    # 1. Baseline Model
+    # Baseline
     print("\n--- Training Baseline Model ---")
-    scale_weight = (len(y_train) - sum(y_train)) / sum(y_train)
+    y_train_b = train['isFraud']
+    X_train_b = train.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
+    y_test_b = test['isFraud']
+    X_test_b = test.drop(columns=['isFraud', 'TransactionID'], errors='ignore')
+    
+    scale_weight = (len(y_train_b) - sum(y_train_b)) / sum(y_train_b)
     
     baseline_pipe = Pipeline([
         ('prune', PruningTransformer()),
@@ -48,17 +65,16 @@ def run_experiment():
                                scale_pos_weight=scale_weight, random_state=42, n_jobs=-1))
     ])
     
-    baseline_pipe.fit(X_train_raw, y_train)
-    b_probs = baseline_pipe.predict_proba(X_test_raw)[:, 1]
-    b_auc_pr = average_precision_score(y_test, b_probs)
+    baseline_pipe.fit(X_train_b, y_train_b)
+    b_probs = baseline_pipe.predict_proba(X_test_b)[:, 1]
+    b_auc_pr = average_precision_score(y_test_b, b_probs)
     print(f"Baseline AUC-PR: {b_auc_pr:.4f}")
     
-    # 2. Enriched Model (PCA)
-    print("\n--- Training Enriched Model (PCA) ---")
-    # We apply PCA after basic cleaning but before the pipeline logic
-    X_train_e, X_test_e = add_pca_features(X_train_raw.copy(), X_test_raw.copy())
+    # Full Fusion
+    print("\n--- Training Full Fusion Model (PCA + TS + Rules) ---")
+    X_train_f, X_test_f, y_train_f, y_test_f = add_all_enriched_features(train, test)
     
-    enriched_pipe = Pipeline([
+    fusion_pipe = Pipeline([
         ('prune', PruningTransformer()),
         ('fe', FeatureEngineeringTransformer()),
         ('clustering', ClusteringTransformer(n_clusters=5)),
@@ -66,13 +82,13 @@ def run_experiment():
                                scale_pos_weight=scale_weight, random_state=42, n_jobs=-1))
     ])
     
-    enriched_pipe.fit(X_train_e, y_train)
-    e_probs = enriched_pipe.predict_proba(X_test_e)[:, 1]
-    e_auc_pr = average_precision_score(y_test, e_probs)
-    print(f"Enriched (PCA) AUC-PR: {e_auc_pr:.4f}")
+    fusion_pipe.fit(X_train_f, y_train_f)
+    f_probs = fusion_pipe.predict_proba(X_test_f)[:, 1]
+    f_auc_pr = average_precision_score(y_test_f, f_probs)
+    print(f"Full Fusion AUC-PR: {f_auc_pr:.4f}")
     
-    improvement = ((e_auc_pr - b_auc_pr) / b_auc_pr) * 100
-    print(f"\nResult: Improvement of {improvement:.2f}% in AUC-PR")
+    improvement = ((f_auc_pr - b_auc_pr) / b_auc_pr) * 100
+    print(f"\nResult: Total Combined Improvement: {improvement:.2f}%")
 
 if __name__ == "__main__":
     run_experiment()

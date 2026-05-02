@@ -18,6 +18,7 @@ from src.features import FeatureEngineeringTransformer, ClusteringTransformer
 from src.train import train_model
 from src.predict import predict
 from src.evaluate import evaluate_model
+from src.train_baseline import train_baseline_model, evaluate_baseline
 from sklearn.metrics import precision_score, recall_score, roc_auc_score, average_precision_score
 from sklearn.pipeline import Pipeline
 
@@ -171,6 +172,58 @@ def association_task(train_df: pd.DataFrame):
     return run_association(train_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
 
 
+@task(name="Baseline Experiment")
+def train_baseline_task(X_train, X_test, y_train, y_test, version):
+    """Trains a simple baseline to compare against the main champion model."""
+    pipeline = train_baseline_model(X_train, y_train)
+    metrics = evaluate_baseline(pipeline, X_test, y_test)
+    
+    results_path = ARTIFACTS_DIR / 'results.csv'
+    res_df = pd.DataFrame([{
+        "timestamp":       datetime.now(timezone.utc).isoformat(),
+        "version":         version,
+        "model_type":      "LogisticRegression (Baseline)",
+        "hyperparameters": "{}",
+        "precision":       0.0,
+        "recall":          0.0,
+        "auc_roc":         metrics['auc_roc'],
+        "auc_pr":          metrics['auc_pr'],
+    }])
+    if results_path.exists():
+        res_df.to_csv(results_path, mode='a', header=False, index=False)
+    else:
+        res_df.to_csv(results_path, index=False)
+        
+    print(f">>> Baseline evaluation complete. AUC-PR: {metrics['auc_pr']:.4f}")
+    return metrics
+
+
+@task(name="Evidently ML Health Report")
+def evidently_report_task(X_train, X_test, y_train, y_test, pipeline):
+    """Generates a deep ML health report using Evidently."""
+    from evidently.report import Report
+    from evidently.metric_preset import DataDriftPreset, ClassificationPreset
+    
+    # We use a sample of data for the report to keep it lightweight
+    ref_data = X_train.copy().sample(min(1000, len(X_train)))
+    ref_data['target'] = y_train.loc[ref_data.index]
+    ref_data['prediction'] = pipeline.predict_proba(ref_data.drop(columns='target'))[:, 1]
+    
+    curr_data = X_test.copy().sample(min(1000, len(X_test)))
+    curr_data['target'] = y_test.loc[curr_data.index]
+    curr_data['prediction'] = pipeline.predict_proba(curr_data.drop(columns='target'))[:, 1]
+    
+    report = Report(metrics=[
+        DataDriftPreset(),
+        ClassificationPreset()
+    ])
+    
+    report.run(reference_data=ref_data, current_data=curr_data)
+    report_path = ARTIFACTS_DIR / 'evidently_report.html'
+    report.save_html(str(report_path))
+    print(f">>> Evidently report generated at {report_path}")
+
+
 # ── Main Flow ─────────────────────────────────────────────────────────────────
 
 from pipeline.notify import send_discord
@@ -195,11 +248,17 @@ def training_pipeline(config: dict = {"min_auc_pr": 0.6}):
     # Step 2: Raw EDA
     raw_eda_task(train_path_str)
 
-    # Step 3: Train the full sklearn pipeline
+    # Step 2.5: Baseline Experiment (Roadmap Phase 4)
+    train_baseline_task(X_train, X_test, y_train, y_test, version)
+
+    # Step 3: Train the full sklearn pipeline (Champion Model)
     pipeline = train_pipeline_task(X_train, y_train)
 
     # Step 4: Processed EDA
     processed_eda_task(pipeline, X_train, y_train)
+
+    # Step 4.5: Evidently ML Health Report (Roadmap Phase 2)
+    evidently_report_task(X_train, X_test, y_train, y_test, pipeline)
 
     # Step 5: Evaluate + quality gate
     auc_pr = evaluate_and_log_task(pipeline, X_test, y_test, version)

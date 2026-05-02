@@ -4,6 +4,58 @@ This document details the entire lifecycle of the project, from initial data exp
 
 ---
 
+### 🏛️ System Architecture Diagram
+The following diagram illustrates the interaction between the orchestration layer (Prefect), the serving layer (FastAPI/React), and the automation layer (CI/CD).
+
+```mermaid
+graph TD
+    subgraph "Automation & CI/CD (GitHub Actions)"
+        GHA[GitHub Actions] --> Lint[Flake8 Linting]
+        Lint --> Test[Pytest Unit Tests]
+        Test --> Build[Docker Build & Stage]
+    end
+
+    subgraph "Orchestration Layer (Prefect)"
+        P_Server[Prefect Server] --> P_Flow[Unified Pipeline Flow]
+        P_Flow --> Tasks[ML Tasks: Train, Eval, PCA, etc.]
+        P_Flow --> Disc[Discord Notifications]
+    end
+
+    subgraph "Serving Layer (FastAPI & React)"
+        API[FastAPI Backend] --> UI[React Dashboard]
+        API --> Reg[Model Registry]
+        UI --> API
+    end
+
+    Build -.-> P_Server
+    Tasks --> Reg
+    Reg --> API
+```
+
+---
+
+### 🔄 Methodology Flow Diagram
+The methodology follows a robust MLOps sequence: from raw ingestion and baseline comparison to advanced feature enrichment and ML health validation.
+
+```mermaid
+flowchart LR
+    A[Data Ingestion] --> B[Raw EDA]
+    B --> C[Baseline Training]
+    C --> D[Preprocessing & Pruning]
+    D --> E[Feature Engineering]
+    E --> F[KMeans Clustering]
+    F --> G[XGBoost Training]
+    G --> H[Evidently ML Health]
+    H --> I{Quality Gate}
+    I -- Fail --> J[Abort & Notify]
+    I -- Pass --> K[Model Saving]
+    K --> L[Analytical Tasks]
+    L --> M[PCA/TimeSeries/Association]
+    M --> N[Deployment & Monitoring]
+```
+
+---
+
 ### 1. Exploratory Data Analysis (EDA) Insights
 The pipeline begins with an automated EDA task (`raw_eda_task`) that identifies the fundamental characteristics of the dataset:
 *   **Extreme Class Imbalance**: The dataset exhibits a **27.6 : 1** ratio (96.5% safe, 3.5% fraud). This is the primary driver for choosing **AUC-PR** as the target metric rather than Accuracy or AUC-ROC.
