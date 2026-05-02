@@ -993,27 +993,14 @@ The system is built as a microservices architecture. The React Frontend provides
  \caption{Integrated system architecture showing frontend, backend, and shared volumes.}
 \end{figure}
 
-\subsection{Containerization and CI/CD}
-We utilize a multi-stage Docker build to ensure environment parity. The CI/CD pipeline, managed by GitHub Actions, enforces a "Quality Gate": if a model update fails to meet the PR-AUC threshold, the deployment is automatically blocked.
+\subsection{Continuous Integration and Developer Experience}
+We utilize a multi-stage Docker build to ensure environment parity across developer machines and production runners. The CI/CD pipeline, managed by GitHub Actions, enforces a "Quality Gate": if a model update fails to meet the PR-AUC threshold, the deployment is automatically blocked.
 
-\begin{figure}[H]
- \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=8mm and 8mm]
- \node[flowbox] (src) {Source Code};
- \node[flowbox, right=of src] (deps) {Install Dependencies};
- \node[flowbox, right=of deps] (image) {Build Docker Image};
- \node[flowbox, right=of image] (run) {Run Container};
- \node[flowbox, below=of image] (ship) {Ship to Runtime};
+\subsubsection{Automated Smoke Testing}
+To ensure the pipeline remains functional across versions, we implemented an automated "Smoke Test" in GitHub Actions. When code is pushed, the runner executes a lightweight version of the full Prefect pipeline using a sampled subset of the \texttt{dev.csv} dataset. This validates the end-to-end integration of data loading, transformation, and training without the computational overhead of the full dataset. Generated plots and models are preserved as GitHub artifacts for immediate inspection.
 
- \draw[flowarrow] (src) -- (deps);
- \draw[flowarrow] (deps) -- (image);
- \draw[flowarrow] (image) -- (run);
- \draw[flowarrow] (run) -- (ship);
- \end{tikzpicture}%
- }
- \caption{Multi-stage Docker build process for unified deployment.}
-\end{figure}
+\subsubsection{Local Developer Automation (Git Hooks)}
+To bridge the gap between local development and centralized orchestration, we implemented a \texttt{post-commit} Git Hook. This local script automatically triggers the Prefect pipeline on the developer's machine immediately after a commit is finalized. By setting the \texttt{PREFECT\_API\_URL} to the local Dockerized server, we ensure that every code change is instantly reflected in the dashboard, providing immediate feedback on model performance impacts.
 
 \begin{figure}[H]
  \centering
@@ -1021,8 +1008,8 @@ We utilize a multi-stage Docker build to ensure environment parity. The CI/CD pi
  \begin{tikzpicture}[node distance=8mm and 8mm]
  \node[stage] (push) {Code Push};
  \node[stage, right=of push] (actions) {GitHub Actions};
- \node[stage, right=of actions] (tests) {Lint and Tests};
- \node[stage, right=of tests] (build) {Build Artifact};
+ \node[stage, right=of actions] (tests) {Tests \& Smoke Test};
+ \node[stage, right=of tests] (build) {Docker Build};
  \node[decision, right=of build] (gate) {Quality Gate};
  \node[stage, above right=of gate] (deploy) {Deploy};
  \node[stage, below right=of gate] (block) {Block Release};
@@ -1033,10 +1020,9 @@ We utilize a multi-stage Docker build to ensure environment parity. The CI/CD pi
  \draw[flowarrow] (build) -- (gate);
  \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {pass} (deploy);
  \draw[flowarrow] (gate) -- node[below, font=\scriptsize] {fail} (block);
- \draw[flowarrow] (block.west) |- (tests.south);
  \end{tikzpicture}%
  }
- \caption{Automated CI/CD workflow from code push to deployment.}
+ \caption{Automated CI/CD workflow featuring cloud smoke testing and local Git hook triggers.}
 \end{figure}
 
 \subsection{Prefect Orchestration}
@@ -1093,18 +1079,21 @@ A full run starts by loading the CSV files, then the pipeline performs EDA on th
  \caption{The end-to-end run order used by Prefect and the training pipeline.}
 \end{figure}
 
-\subsection{What Each Tool Does}
+\subsection{Monitoring and Model Health}
+Beyond performance metrics, the pipeline incorporates automated drift detection using the **Evidently.ai** framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
+
 \begin{table}[H]
 \centering
-\caption{Project components in clear interpretation}
+\caption{Project components and their operational roles}
 \begin{tabular}{p{0.22\columnwidth}p{0.32\columnwidth}p{0.28\columnwidth}}
 \toprule
 Component & Simple role & When it matters \\
 \midrule
-Prefect & Runs tasks in order and records failures & During training and retraining \\
-FastAPI & Serves predictions through HTTP & During inference and dashboard use \\
-Docker & Packages the whole system the same way everywhere & During deployment and CI \\
-Artifacts folder & Stores metrics and run history & After every successful run \\
+Prefect & Orchestrates task sequencing and error handling & During training and retraining \\
+FastAPI & Serves low-latency predictions via HTTP & Real-time inference and UI interaction \\
+Evidently & Automated drift and health reporting & Post-training validation and monitoring \\
+Docker & Environment parity and microservice isolation & Deployment and CI/CD validation \\
+Git Hooks & Local automation and instant feedback & Developer workflow and iteration \\
 \bottomrule
 \end{tabular}
 \end{table}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  2 MAY 2026 20:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  2 MAY 2026 23:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2084,10 +2084,13 @@ and I'll forget about whatever was undefined.
 
 
 
-/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1102: Undefined control sequence.
+
+
+[11]
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1090: Undefined control sequence.
 \@BTswitch ->{\CT@arc@ 
                        \hrule \@height \@thisrulewidth }\futurenonspacelet \...
-l.1102 C
+l.1090 C
         omponent & Simple role & When it matters \\
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2095,11 +2098,11 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1104: Undefined control sequence.
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1092: Undefined control sequence.
 \@BTswitch ->{\CT@arc@ 
                        \hrule \@height \@thisrulewidth }\futurenonspacelet \...
-l.1104 P
-        refect & Runs tasks in order and records failures & During training ...
+l.1092 P
+        refect & Orchestrates task sequencing and error handling & During tr...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -2107,24 +2110,44 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1105--1105
-[]|\T1/ppl/m/n/8.03 (+20) Serves pre-dic-tions
+Underfull \hbox (badness 1466) in paragraph at lines 1092--1092
+[]|\T1/ppl/m/n/8.03 (+20) Orchestrates task se-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1105--1106
-[]|\T1/ppl/m/n/8.03 (+20) During in-fer-ence
+Underfull \hbox (badness 5274) in paragraph at lines 1092--1092
+\T1/ppl/m/n/8.03 (+20) quenc-ing and er-ror
  []
 
 
-Underfull \hbox (badness 2951) in paragraph at lines 1106--1106
-[]|\T1/ppl/m/n/8.03 (+20) Packages the whole
+Underfull \hbox (badness 10000) in paragraph at lines 1095--1095
+[]|\T1/ppl/m/n/8.03 (+20) Environment par-ity
  []
 
-/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1109: Undefined control sequence.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1095--1095
+\T1/ppl/m/n/8.03 (+20) and mi-croser-vice
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1095--1096
+[]|\T1/ppl/m/n/8.03 (+20) Deployment and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1096--1097
+[]|\T1/ppl/m/n/8.03 (+20) Developer
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1096--1097
+\T1/ppl/m/n/8.03 (+20) work-flow and
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1098: Undefined control sequence.
 \@BTswitch ->{\CT@arc@ 
                        \hrule \@height \@thisrulewidth }\futurenonspacelet \...
-l.1109 \end
+l.1098 \end
            {tabular}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -2133,8 +2156,6 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-
-[11]
 
 
 
@@ -2153,21 +2174,21 @@ Package rerunfilecheck Warning: File `project_report.out' has changed.
 
 Package rerunfilecheck Info: Checksums for `project_report.out':
 (rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  13BB0917615D5A83766A6E42196E4472;12294.
+(rerunfilecheck)             After:  BA6B59DBCE8B2B04189809ED54E78737;12910.
  ) 
 Here is how much of TeX's memory you used:
- 43014 strings out of 473190
- 1025039 string characters out of 5715800
- 1522915 words of memory out of 5000000
- 65069 multiletter control sequences out of 15000+600000
- 692417 words of font info for 511 fonts, out of 8000000 for 9000
+ 42975 strings out of 473190
+ 1024486 string characters out of 5715800
+ 1511584 words of memory out of 5000000
+ 65032 multiletter control sequences out of 15000+600000
+ 692258 words of font info for 509 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,19n,87p,1105b,2407s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on project_report.pdf (12 pages, 481717 bytes).
+Output written on project_report.pdf (12 pages, 483393 bytes).
 PDF statistics:
- 290 PDF objects out of 1000 (max. 8388607)
- 233 compressed objects within 3 object streams
- 119 named destinations out of 1000 (max. 500000)
+ 291 PDF objects out of 1000 (max. 8388607)
+ 234 compressed objects within 3 object streams
+ 120 named destinations out of 1000 (max. 500000)
  97815 words of extra memory for PDF output out of 106986 (max. 10000000)
 
