@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  3 MAY 2026 02:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  3 MAY 2026 03:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -975,7 +975,7 @@ shapes.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))
 Package translations Info: No language package found. I am going to use `englis
-h' as default language. on input line 75.
+h' as default language. on input line 78.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
@@ -985,24 +985,24 @@ File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 (./project_report.aux)
 \openout1 = `project_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 75.
-LaTeX Font Info:    ... okay on input line 75.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 78.
+LaTeX Font Info:    ... okay on input line 78.
 
 -- Lines per column: 59 (approximate, difference = 3.01309pt).
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -1027,7 +1027,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 75.
+Package hyperref Info: Link coloring OFF on input line 78.
 
 (./project_report.out) (./project_report.out)
 \@outlinefile=\write4
@@ -1044,23 +1044,23 @@ File: translations-basic-dictionary-english.trsl (english translation file `tra
 nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
-or `english'. on input line 75.
+or `english'. on input line 78.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Info: Redefining \microtypecontext on input line 75.
-Package microtype Info: Applying patch `item' on input line 75.
-Package microtype Info: Applying patch `toc' on input line 75.
-Package microtype Info: Applying patch `eqnum' on input line 75.
-Package microtype Info: Applying patch `footnote' on input line 75.
-Package microtype Info: Applying patch `verbatim' on input line 75.
-LaTeX Info: Redefining \microtypesetup on input line 75.
+LaTeX Info: Redefining \microtypecontext on input line 78.
+Package microtype Info: Applying patch `item' on input line 78.
+Package microtype Info: Applying patch `toc' on input line 78.
+Package microtype Info: Applying patch `eqnum' on input line 78.
+Package microtype Info: Applying patch `footnote' on input line 78.
+Package microtype Info: Applying patch `verbatim' on input line 78.
+LaTeX Info: Redefining \microtypesetup on input line 78.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 75.
+LaTeX Info: Redefining \showhyphens on input line 78.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1069,7 +1069,7 @@ Package microtype Info: No adjustment of character kerning.
 File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
 )
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 10
-5.
+0.
 
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
@@ -1078,22 +1078,12 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12.045> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 105.
-
-** WARNING: \and is valid only when in conference or peerreviewca
-modes (line 105).
 LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 10
-5.
+0.
+
 (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
-)
-LaTeX Font Info:    Trying to load font information for U+pzd on input line 105
-.
-
-(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upzd.fd
-File: upzd.fd 2001/06/04 font definitions for U/pzd.
 )
 
 
@@ -1103,9 +1093,9 @@ ocal/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 165.
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 160.
 
-Underfull \hbox (badness 10000) in paragraph at lines 177--177
+Underfull \hbox (badness 10000) in paragraph at lines 172--172
 []|\T1/ppl/m/n/8.03 (+20) Imbalance ra-tio
  []
 
@@ -1115,14 +1105,14 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-Underfull \hbox (badness 3128) in paragraph at lines 199--200
+Underfull \hbox (badness 3128) in paragraph at lines 194--195
 \T1/ppl/m/n/9.53561 (+20) The pipeline be-gins with an au-to-mated EDA task
  []
 
-LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 204
+LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 199
 .
 LaTeX Font Info:    Trying to load font information for T1+pcr on input line 20
-6.
+1.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
@@ -1133,51 +1123,51 @@ Package microtype Info: Loading generic protrusion settings for font family
 
 
 [2]
-<assets/01_class_balance.png, id=258, 472.7115pt x 331.4565pt>
+<assets/01_class_balance.png, id=256, 472.7115pt x 331.4565pt>
 File: assets/01_class_balance.png Graphic file (type png)
 <use assets/01_class_balance.png>
-Package pdftex.def Info: assets/01_class_balance.png  used on input line 218.
+Package pdftex.def Info: assets/01_class_balance.png  used on input line 213.
 (pdftex.def)             Requested size: 252.94499pt x 177.36035pt.
-<assets/02_amount_distribution.png, id=260, 812.709pt x 345.2535pt>
+<assets/02_amount_distribution.png, id=258, 812.709pt x 345.2535pt>
 File: assets/02_amount_distribution.png Graphic file (type png)
 <use assets/02_amount_distribution.png>
 Package pdftex.def Info: assets/02_amount_distribution.png  used on input line 
-224.
+219.
 (pdftex.def)             Requested size: 252.94499pt x 107.4542pt.
-LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 225
+LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 220
 .
-<assets/03_temporal_patterns.png, id=261, 798.5835pt x 345.2535pt>
+<assets/03_temporal_patterns.png, id=259, 798.5835pt x 345.2535pt>
 File: assets/03_temporal_patterns.png Graphic file (type png)
 <use assets/03_temporal_patterns.png>
-Package pdftex.def Info: assets/03_temporal_patterns.png  used on input line 23
-0.
+Package pdftex.def Info: assets/03_temporal_patterns.png  used on input line 22
+5.
 (pdftex.def)             Requested size: 252.94499pt x 109.35599pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-<assets/04_missingness_correlation.png, id=262, 806.4675pt x 403.0695pt>
+<assets/04_missingness_correlation.png, id=260, 806.4675pt x 403.0695pt>
 File: assets/04_missingness_correlation.png Graphic file (type png)
 <use assets/04_missingness_correlation.png>
 Package pdftex.def Info: assets/04_missingness_correlation.png  used on input l
-ine 236.
+ine 231.
 (pdftex.def)             Requested size: 252.94499pt x 126.42018pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--249
+Underfull \hbox (badness 10000) in paragraph at lines 244--244
 []|\T1/ppl/m/n/8.03 (+20) Many nu-meric
  []
 
 
-Underfull \hbox (badness 4779) in paragraph at lines 249--250
+Underfull \hbox (badness 4779) in paragraph at lines 244--245
 []|\T1/ppl/m/n/8.03 (+20) The model needs to han-dle high-
  []
 
-<assets/10_category_fraud_rates.png, id=263, 1293.07707pt x 424.72523pt>
+<assets/10_category_fraud_rates.png, id=261, 1293.07707pt x 424.72523pt>
 File: assets/10_category_fraud_rates.png Graphic file (type png)
 <use assets/10_category_fraud_rates.png>
 Package pdftex.def Info: assets/10_category_fraud_rates.png  used on input line
- 263.
+ 258.
 (pdftex.def)             Requested size: 252.94499pt x 83.07707pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1186,23 +1176,23 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [3 <./assets/01_class_balance.png> <./assets/02_amount_distribution.png> <./ass
 ets/03_temporal_patterns.png> <./assets/04_missingness_correlation.png>]
-<assets/09_correlation_matrix.png, id=279, 915.6053pt x 860.013pt>
+<assets/09_correlation_matrix.png, id=277, 915.6053pt x 860.013pt>
 File: assets/09_correlation_matrix.png Graphic file (type png)
 <use assets/09_correlation_matrix.png>
 Package pdftex.def Info: assets/09_correlation_matrix.png  used on input line 2
-69.
+64.
 (pdftex.def)             Requested size: 252.94499pt x 237.58693pt.
-<assets/11_outlier_analysis.png, id=280, 714.91708pt x 352.45523pt>
+<assets/11_outlier_analysis.png, id=278, 714.91708pt x 352.45523pt>
 File: assets/11_outlier_analysis.png Graphic file (type png)
 <use assets/11_outlier_analysis.png>
-Package pdftex.def Info: assets/11_outlier_analysis.png  used on input line 275
+Package pdftex.def Info: assets/11_outlier_analysis.png  used on input line 270
 .
 (pdftex.def)             Requested size: 252.94499pt x 124.7003pt.
-<assets/08_v_features_missing.png, id=281, 1003.99707pt x 352.45523pt>
+<assets/08_v_features_missing.png, id=279, 1003.99707pt x 352.45523pt>
 File: assets/08_v_features_missing.png Graphic file (type png)
 <use assets/08_v_features_missing.png>
 Package pdftex.def Info: assets/08_v_features_missing.png  used on input line 2
-81.
+76.
 (pdftex.def)             Requested size: 252.94499pt x 88.79659pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1210,12 +1200,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-Overfull \hbox (12.65022pt too wide) in paragraph at lines 293--293
+Overfull \hbox (12.65022pt too wide) in paragraph at lines 288--288
  []\T1/ppl/m/n/9.03374 (-20) (train_transaction.csv 
  []
 
 
-Overfull \hbox (2.41212pt too wide) in paragraph at lines 298--298
+Overfull \hbox (2.41212pt too wide) in paragraph at lines 293--293
  []\T1/ppl/m/n/9.03374 (-20) (scale_pos_weight) 
  []
 
@@ -1223,51 +1213,51 @@ Overfull \hbox (2.41212pt too wide) in paragraph at lines 298--298
 
 [4 <./assets/10_category_fraud_rates.png> <./assets/09_correlation_matrix.png> 
 <./assets/11_outlier_analysis.png> <./assets/08_v_features_missing.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 328--328
+Underfull \hbox (badness 10000) in paragraph at lines 323--323
 \T1/ppl/m/n/8.03 (+20) and duplicate-like
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 330--330
+Underfull \hbox (badness 10000) in paragraph at lines 325--325
 []|\T1/ppl/m/n/8.03 (+20) Feature
  []
 
 
-Underfull \hbox (badness 7685) in paragraph at lines 330--330
+Underfull \hbox (badness 7685) in paragraph at lines 325--325
 []|\T1/ppl/m/n/8.03 (+20) Adds time and be-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--333
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
 []|\T1/ppl/m/n/8.03 (+20) Compresses
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 332--333
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
 \T1/ppl/m/n/8.03 (+20) pat-terns into
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 334--335
+Underfull \hbox (badness 10000) in paragraph at lines 329--330
 []|\T1/ppl/m/n/8.03 (+20) Improves fraud
  []
 
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 343--344
 \T1/ppl/m/n/9.53561 (+20) The \T1/pcr/m/n/9.53561 FeatureEngineeringTransformer
  \T1/ppl/m/n/9.53561 (+20) and
  []
 
 
-Underfull \hbox (badness 1609) in paragraph at lines 348--349
+Underfull \hbox (badness 1609) in paragraph at lines 343--344
 \T1/pcr/m/n/9.53561 ClusteringTransformer \T1/ppl/m/n/9.53561 (+20) in \T1/pcr/
 m/n/9.53561 src/features.py \T1/ppl/m/n/9.53561 (+20) add
  []
 
 
-Underfull \hbox (badness 4713) in paragraph at lines 353--354
+Underfull \hbox (badness 4713) in paragraph at lines 348--349
 []\T1/ppl/b/n/9.53561 (+20) Temporal En-cod-ing\T1/ppl/m/n/9.53561 (+20) : We e
 x-tract \T1/pcr/m/n/9.53561 hour \T1/ppl/m/n/9.53561 (+20) (from
  []
@@ -1275,38 +1265,38 @@ x-tract \T1/pcr/m/n/9.53561 hour \T1/ppl/m/n/9.53561 (+20) (from
 
 
 [5]
-<assets/p01_engineered_features.png, id=308, 1437.06116pt x 710.4697pt>
+<assets/p01_engineered_features.png, id=306, 1437.06116pt x 710.4697pt>
 File: assets/p01_engineered_features.png Graphic file (type png)
 <use assets/p01_engineered_features.png>
 Package pdftex.def Info: assets/p01_engineered_features.png  used on input line
- 393.
+ 388.
 (pdftex.def)             Requested size: 252.94499pt x 125.04955pt.
-<assets/p02_cluster_analysis.png, id=309, 1293.07707pt x 426.94893pt>
+<assets/p02_cluster_analysis.png, id=307, 1293.07707pt x 426.94893pt>
 File: assets/p02_cluster_analysis.png Graphic file (type png)
 <use assets/p02_cluster_analysis.png>
 Package pdftex.def Info: assets/p02_cluster_analysis.png  used on input line 39
-9.
+4.
 (pdftex.def)             Requested size: 252.94499pt x 83.51202pt.
 
 
-<assets/p04_pca_visualisation.png, id=310, 1148.53708pt x 496.99522pt>
+<assets/p04_pca_visualisation.png, id=308, 1148.53708pt x 496.99522pt>
 File: assets/p04_pca_visualisation.png Graphic file (type png)
 <use assets/p04_pca_visualisation.png>
 Package pdftex.def Info: assets/p04_pca_visualisation.png  used on input line 4
-05.
+00.
 (pdftex.def)             Requested size: 252.94499pt x 109.45303pt.
-<assets/p07_mutual_information.png, id=311, 714.91708pt x 641.53523pt>
+<assets/p07_mutual_information.png, id=309, 714.91708pt x 641.53523pt>
 File: assets/p07_mutual_information.png Graphic file (type png)
 <use assets/p07_mutual_information.png>
 Package pdftex.def Info: assets/p07_mutual_information.png  used on input line 
-411.
+406.
 (pdftex.def)             Requested size: 252.94499pt x 226.97815pt.
-<assets/p05_top_feature_distributions.png, id=312, 1436.50523pt x 1135.75084pt>
+<assets/p05_top_feature_distributions.png, id=310, 1436.50523pt x 1135.75084pt>
 
 File: assets/p05_top_feature_distributions.png Graphic file (type png)
 <use assets/p05_top_feature_distributions.png>
 Package pdftex.def Info: assets/p05_top_feature_distributions.png  used on inpu
-t line 417.
+t line 412.
 (pdftex.def)             Requested size: 252.94499pt x 199.97249pt.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1316,15 +1306,15 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [6 <./assets/p01_engineered_features.png> <./assets/p02_cluster_analysis.png> <
 ./assets/p04_pca_visualisation.png> <./assets/p07_mutual_information.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9.53561> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 429.
-<assets/03_transaction_amount.png, id=327, 1002.88522pt x 732.1507pt>
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 424.
+<assets/03_transaction_amount.png, id=325, 1002.88522pt x 732.1507pt>
 File: assets/03_transaction_amount.png Graphic file (type png)
 <use assets/03_transaction_amount.png>
 Package pdftex.def Info: assets/03_transaction_amount.png  used on input line 4
-39.
+34.
 (pdftex.def)             Requested size: 252.94499pt x 184.65712pt.
 
-Underfull \hbox (badness 2837) in paragraph at lines 440--440
+Underfull \hbox (badness 2837) in paragraph at lines 435--435
 []\T1/ppl/b/n/9.03374 (+20) Fig. 18: |\T1/ppl/m/n/9.03374 (+20) Trans-ac-tion a
 mount dis-tri-bu-tion (raw vs log-
  []
@@ -1332,29 +1322,29 @@ mount dis-tri-bu-tion (raw vs log-
 
 
 
-Underfull \hbox (badness 1540) in paragraph at lines 445--446
+Underfull \hbox (badness 1540) in paragraph at lines 440--441
 \T1/ppl/b/n/9.53561 (+20) Challenge\T1/ppl/m/n/9.53561 (+20) : Vesta's raw data
  comes in two files: (1)
  []
 
-<assets/04_time_analysis.png, id=328, 1003.99707pt x 710.4697pt>
+<assets/04_time_analysis.png, id=326, 1003.99707pt x 710.4697pt>
 File: assets/04_time_analysis.png Graphic file (type png)
 <use assets/04_time_analysis.png>
-Package pdftex.def Info: assets/04_time_analysis.png  used on input line 467.
+Package pdftex.def Info: assets/04_time_analysis.png  used on input line 462.
 (pdftex.def)             Requested size: 252.94499pt x 178.99377pt.
 
 
 [7 <./assets/p05_top_feature_distributions.png> <./assets/03_transaction_amount
 .png>]
-Underfull \hbox (badness 4686) in paragraph at lines 475--476
+Underfull \hbox (badness 4686) in paragraph at lines 470--471
 []\T1/ppl/b/n/9.53561 (+20) Solution\T1/ppl/m/n/9.53561 (+20) : Ap-ply the log-
 plus-one trans-for-ma-tion:
  []
 
-<assets/07_v_features_corr.png, id=338, 711.58154pt x 569.26523pt>
+<assets/07_v_features_corr.png, id=337, 711.58154pt x 569.26523pt>
 File: assets/07_v_features_corr.png Graphic file (type png)
 <use assets/07_v_features_corr.png>
-Package pdftex.def Info: assets/07_v_features_corr.png  used on input line 489.
+Package pdftex.def Info: assets/07_v_features_corr.png  used on input line 484.
 
 (pdftex.def)             Requested size: 252.94499pt x 202.3555pt.
 
@@ -1363,19 +1353,19 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 506--507
+Underfull \hbox (badness 10000) in paragraph at lines 501--502
 []\T1/ppl/b/n/9.53561 (+20) Output of Note-book 1\T1/ppl/m/n/9.53561 (+20) : A 
 clean CSV file,
  []
 
 
-Underfull \hbox (badness 4132) in paragraph at lines 506--507
+Underfull \hbox (badness 4132) in paragraph at lines 501--502
 \T1/pcr/m/n/9.53561 data/processed_train.csv\T1/ppl/m/n/9.53561 (+20) , with 47
 2k rows and
  []
 
 
-Overfull \hbox (10.24377pt too wide) in paragraph at lines 519--519
+Overfull \hbox (10.24377pt too wide) in paragraph at lines 514--514
  []\T1/ppl/m/n/9.03374 (-20) (processed_train.csv) 
  []
 
@@ -1390,132 +1380,132 @@ Underfull \vbox (badness 1199) has occurred while \output is active []
 
 
 
-Underfull \hbox (badness 2221) in paragraph at lines 573--573
+Underfull \hbox (badness 2221) in paragraph at lines 568--568
 []|\T1/ppl/m/n/8.03 (+20) Two raw Kag-gle
  []
 
 
-Overfull \hbox (26.5893pt too wide) in paragraph at lines 573--573
+Overfull \hbox (26.5893pt too wide) in paragraph at lines 568--568
 []|\T1/ppl/m/n/8.03 (-20) train_transaction.csv
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 573--573
+Underfull \hbox (badness 10000) in paragraph at lines 568--568
 \T1/ppl/m/n/8.03 (+20) +
  []
 
 
-Overfull \hbox (14.48071pt too wide) in paragraph at lines 573--573
+Overfull \hbox (14.48071pt too wide) in paragraph at lines 568--568
 \T1/ppl/m/n/8.03 (-20) train_identity.csv| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 575--575
+Underfull \hbox (badness 10000) in paragraph at lines 570--570
 []|\T1/ppl/m/n/8.03 (+20) Reduced
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 575--575
+Underfull \hbox (badness 10000) in paragraph at lines 570--570
 \T1/ppl/m/n/8.03 (+20) RAM (1.5
  []
 
 
-Underfull \hbox (badness 1769) in paragraph at lines 575--575
+Underfull \hbox (badness 1769) in paragraph at lines 570--570
 \T1/ppl/m/n/8.03 (+20) GB -> 0.47
  []
 
 
-Underfull \hbox (badness 5022) in paragraph at lines 575--576
+Underfull \hbox (badness 5022) in paragraph at lines 570--571
 []|\T1/ppl/m/n/8.03 (+20) Enable de-vel-op-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 579--579
+Underfull \hbox (badness 10000) in paragraph at lines 574--574
 []|\T1/ppl/m/n/8.03 (+20) Add hour,
  []
 
 
-Overfull \hbox (0.62877pt too wide) in paragraph at lines 579--579
+Overfull \hbox (0.62877pt too wide) in paragraph at lines 574--574
 \T1/ppl/m/n/8.03 (-20) day_of_week
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 581--581
+Underfull \hbox (badness 10000) in paragraph at lines 576--576
 []|\T1/ppl/m/n/8.03 (+20) Compress
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 581--581
+Underfull \hbox (badness 10000) in paragraph at lines 576--576
 \T1/ppl/m/n/8.03 (+20) amount
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 583--583
+Underfull \hbox (badness 10000) in paragraph at lines 578--578
 []|\T1/ppl/m/n/8.03 (+20) Null prun-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 583--583
+Underfull \hbox (badness 10000) in paragraph at lines 578--578
 []|\T1/ppl/m/n/8.03 (+20) Drop 208
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 583--583
+Underfull \hbox (badness 10000) in paragraph at lines 578--578
 \T1/ppl/m/n/8.03 (+20) columns,
  []
 
 
-Underfull \hbox (badness 3260) in paragraph at lines 585--585
+Underfull \hbox (badness 3260) in paragraph at lines 580--580
 []|\T1/ppl/m/n/8.03 (+20) Frequency en-cod-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 585--585
+Underfull \hbox (badness 10000) in paragraph at lines 580--580
 []|\T1/ppl/m/n/8.03 (+20) Convert
  []
 
 
-Underfull \hbox (badness 2894) in paragraph at lines 587--587
+Underfull \hbox (badness 2894) in paragraph at lines 582--582
 []|\T1/ppl/m/n/8.03 (+20) Fill re-main-
  []
 
 
-Underfull \hbox (badness 5741) in paragraph at lines 589--589
+Underfull \hbox (badness 5741) in paragraph at lines 584--584
 []|\T1/ppl/m/n/8.03 (+20) 472k x 20
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 589--589
+Underfull \hbox (badness 10000) in paragraph at lines 584--584
 \T1/ppl/m/n/8.03 (+20) nu-meric
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 591--591
+Underfull \hbox (badness 10000) in paragraph at lines 586--586
 []|\T1/ppl/m/n/8.03 (+20) Stratified 80/20
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 591--591
+Underfull \hbox (badness 10000) in paragraph at lines 586--586
 []|\T1/ppl/m/n/8.03 (+20) Separate
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 591--591
+Underfull \hbox (badness 10000) in paragraph at lines 586--586
 \T1/ppl/m/n/8.03 (+20) train/test
  []
 
 
-Overfull \hbox (5.84831pt too wide) in paragraph at lines 593--593
+Overfull \hbox (5.84831pt too wide) in paragraph at lines 588--588
 []|\T1/ppl/m/n/8.03 (-20) train_unbalanced.csv| 
  []
 
 
-Underfull \hbox (badness 3657) in paragraph at lines 593--593
+Underfull \hbox (badness 3657) in paragraph at lines 588--588
 \T1/ppl/m/n/8.03 (+20) (377k rows,
  []
 
 
-Overfull \hbox (2.05591pt too wide) in paragraph at lines 569--596
+Overfull \hbox (2.05591pt too wide) in paragraph at lines 564--591
  [][] 
  []
 
@@ -1525,12 +1515,12 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [9]
-Overfull \hbox (10.24377pt too wide) in paragraph at lines 609--609
+Overfull \hbox (10.24377pt too wide) in paragraph at lines 604--604
  []\T1/ppl/m/n/9.03374 (-20) (processed_train.csv) 
  []
 
 
-Overfull \hbox (16.9752pt too wide) in paragraph at lines 611--611
+Overfull \hbox (16.9752pt too wide) in paragraph at lines 606--606
  []\T1/ppl/m/n/9.03374 (-20) (train_unbalanced.csv) 
  []
 
@@ -1542,113 +1532,113 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ! Misplaced \omit.
 \multispan ->\omit 
                    \@multispan 
-l.640 ...ical backing and why chosen or rejected}}
+l.635 ...ical backing and why chosen or rejected}}
                                                    \\
 I expect to see \omit only after tab marks or the \cr of
 an alignment. Proceed, and I'll ignore this case.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 640--641
+Underfull \hbox (badness 10000) in paragraph at lines 635--636
 []||
  []
 
 
-Underfull \hbox (badness 1681) in paragraph at lines 642--642
+Underfull \hbox (badness 1681) in paragraph at lines 637--637
 []|\T1/ppl/m/n/8.03 (+20) Logistic Re-
  []
 
 
-Underfull \hbox (badness 1635) in paragraph at lines 642--643
+Underfull \hbox (badness 1635) in paragraph at lines 637--638
 []|\T1/ppl/m/n/8.03 (+20) Assumes lin-ear sep-a-ra-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--644
+Underfull \hbox (badness 10000) in paragraph at lines 639--639
 []|\T1/ppl/m/n/8.03 (+20) KNN with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 []|\T1/ppl/m/n/8.03 (+20) Distance-based learner
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) with di-men-sion-al-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) re-duc-tion. Un-able
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) to dis-cover non-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) Euclidean fea-ture
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) re-la-tion-ships; suf-fers
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 644--645
+Underfull \hbox (badness 10000) in paragraph at lines 639--640
 \T1/ppl/m/n/8.03 (+20) in high-dimensional
  []
 
 
-Underfull \hbox (badness 1708) in paragraph at lines 646--647
+Underfull \hbox (badness 1708) in paragraph at lines 641--642
 \T1/ppl/m/n/8.03 (+20) learns non-linear splits
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 648--648
+Underfull \hbox (badness 10000) in paragraph at lines 643--643
 []|\T1/ppl/m/n/8.03 (+20) XGBoost
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 648--649
+Underfull \hbox (badness 10000) in paragraph at lines 643--644
 []|\T1/ppl/m/n/8.03 (+20) Excellent non-linear
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 648--649
+Underfull \hbox (badness 10000) in paragraph at lines 643--644
 \T1/ppl/m/n/8.03 (+20) learner with na-tive
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 648--649
+Underfull \hbox (badness 10000) in paragraph at lines 643--644
 \T1/pcr/m/n/8.03 scale_pos_weight
  []
 
 
-Underfull \hbox (badness 6493) in paragraph at lines 648--649
+Underfull \hbox (badness 6493) in paragraph at lines 643--644
 \T1/ppl/m/n/8.03 (+20) but does not ex-ploit
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 650--650
+Underfull \hbox (badness 10000) in paragraph at lines 645--645
 []|\T1/ppl/m/n/8.03 (+20) XGBoost +
  []
 
 
-Underfull \hbox (badness 6758) in paragraph at lines 650--651
+Underfull \hbox (badness 6758) in paragraph at lines 645--646
 []|\T1/ppl/m/n/8.03 (+20) PCA pre-serves global
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 652--652
+Underfull \hbox (badness 10000) in paragraph at lines 647--647
 []|\T1/ppl/b/n/8.03 (+20) XGBoost
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 652--652
+Underfull \hbox (badness 10000) in paragraph at lines 647--647
 \T1/ppl/b/n/8.03 (+20) + KMeans
  []
 
@@ -1657,89 +1647,89 @@ Underfull \hbox (badness 10000) in paragraph at lines 652--652
 [10]
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 686--686
+Underfull \hbox (badness 10000) in paragraph at lines 681--681
 []|\T1/ppl/m/n/8.03 (+20) Minority-class re-trieval
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 686--686
+Underfull \hbox (badness 10000) in paragraph at lines 681--681
 \T1/ppl/m/n/8.03 (+20) qual-ity un-der heavy
  []
 
 
-Underfull \hbox (badness 3758) in paragraph at lines 690--691
+Underfull \hbox (badness 3758) in paragraph at lines 685--686
 []|\T1/ppl/m/n/8.03 (+20) Increase with-out
  []
 
 
 
 [11]
-<assets/01_roc_pr_curves.png, id=372, 801.54pt x 402.741pt>
+<assets/01_roc_pr_curves.png, id=371, 801.54pt x 402.741pt>
 File: assets/01_roc_pr_curves.png Graphic file (type png)
 <use assets/01_roc_pr_curves.png>
-Package pdftex.def Info: assets/01_roc_pr_curves.png  used on input line 733.
+Package pdftex.def Info: assets/01_roc_pr_curves.png  used on input line 728.
 (pdftex.def)             Requested size: 252.94499pt x 127.09146pt.
-<assets/04_confusion_matrix.png, id=373, 413.91pt x 348.21pt>
+<assets/04_confusion_matrix.png, id=372, 413.91pt x 348.21pt>
 File: assets/04_confusion_matrix.png Graphic file (type png)
 <use assets/04_confusion_matrix.png>
-Package pdftex.def Info: assets/04_confusion_matrix.png  used on input line 739
+Package pdftex.def Info: assets/04_confusion_matrix.png  used on input line 734
 .
 (pdftex.def)             Requested size: 252.94499pt x 212.79565pt.
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 759--760
+Underfull \hbox (badness 10000) in paragraph at lines 754--755
 []|\T1/ppl/m/n/8.03 (+20) Misses com-plex
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 759--760
+Underfull \hbox (badness 10000) in paragraph at lines 754--755
 \T1/ppl/m/n/8.03 (+20) non-linear fraud
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 761--762
+Underfull \hbox (badness 10000) in paragraph at lines 756--757
 \T1/ppl/m/n/8.03 (+20) on heavy class
  []
 
 
-Underfull \hbox (badness 1616) in paragraph at lines 763--763
+Underfull \hbox (badness 1616) in paragraph at lines 758--758
 []|\T1/ppl/m/n/8.03 (+20) Best rank-ing qual-ity
  []
 
-<assets/02_threshold_tradeoff.png, id=374, 577.503pt x 361.6785pt>
+<assets/02_threshold_tradeoff.png, id=373, 577.503pt x 361.6785pt>
 File: assets/02_threshold_tradeoff.png Graphic file (type png)
 <use assets/02_threshold_tradeoff.png>
 Package pdftex.def Info: assets/02_threshold_tradeoff.png  used on input line 7
-77.
+72.
 (pdftex.def)             Requested size: 252.94499pt x 158.41054pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 789--789
+Underfull \hbox (badness 10000) in paragraph at lines 784--784
 []|\T1/ppl/m/n/8.03 (+20) Catch more
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 791--791
+Underfull \hbox (badness 10000) in paragraph at lines 786--786
 []|\T1/ppl/m/n/8.03 (+20) Reduce false
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 791--792
+Underfull \hbox (badness 10000) in paragraph at lines 786--787
 []|\T1/ppl/m/n/8.03 (+20) Higher pre-ci-sion,
  []
 
 
-Underfull \hbox (badness 1817) in paragraph at lines 791--792
+Underfull \hbox (badness 1817) in paragraph at lines 786--787
 \T1/ppl/m/n/8.03 (+20) fewer blocked safe
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 793--794
+Underfull \hbox (badness 10000) in paragraph at lines 788--789
 []|\T1/ppl/m/n/8.03 (+20) Better com-pro-mise
  []
 
 
-Underfull \hbox (badness 8000) in paragraph at lines 793--794
+Underfull \hbox (badness 8000) in paragraph at lines 788--789
 \T1/ppl/m/n/8.03 (+20) be-tween loss and
  []
 
@@ -1747,40 +1737,40 @@ Underfull \hbox (badness 8000) in paragraph at lines 793--794
 
 [12 <./assets/01_roc_pr_curves.png> <./assets/04_confusion_matrix.png> <./asset
 s/02_threshold_tradeoff.png>]
-<assets/03_metric_summary.png, id=388, 541.368pt x 365.6205pt>
+<assets/03_metric_summary.png, id=387, 541.368pt x 365.6205pt>
 File: assets/03_metric_summary.png Graphic file (type png)
 <use assets/03_metric_summary.png>
-Package pdftex.def Info: assets/03_metric_summary.png  used on input line 803.
+Package pdftex.def Info: assets/03_metric_summary.png  used on input line 798.
 (pdftex.def)             Requested size: 252.94499pt x 170.83186pt.
 
 
 
-Overfull \hbox (2.23077pt too wide) in paragraph at lines 832--832
+Overfull \hbox (2.23077pt too wide) in paragraph at lines 827--827
 []|\T1/ppl/b/n/8.03 (-20) scale_pos_weight| 
  []
 
 
-Underfull \hbox (badness 7238) in paragraph at lines 834--835
+Underfull \hbox (badness 7238) in paragraph at lines 829--830
 []|\T1/ppl/m/n/8.03 (+20) Number of boost-ing rounds.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 838--838
+Underfull \hbox (badness 10000) in paragraph at lines 833--833
 []|\T1/ppl/b/n/8.03 (+20) learning_rate
  []
 
 
-Underfull \hbox (badness 3713) in paragraph at lines 838--839
+Underfull \hbox (badness 3713) in paragraph at lines 833--834
 \T1/ppl/m/n/8.03 (+20) Lower val-ues (0.01--0.02) con-
  []
 
 
-Overfull \hbox (2.23856pt too wide) in paragraph at lines 842--842
+Overfull \hbox (2.23856pt too wide) in paragraph at lines 837--837
 []|\T1/ppl/b/n/8.03 (-20) colsample_bytree| 
  []
 
 
-Overfull \hbox (4.70393pt too wide) in paragraph at lines 828--845
+Overfull \hbox (4.70393pt too wide) in paragraph at lines 823--840
  [][] 
  []
 
@@ -1795,32 +1785,32 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-Underfull \hbox (badness 1565) in paragraph at lines 862--863
+Underfull \hbox (badness 1565) in paragraph at lines 857--858
 []|\T1/ppl/m/n/8.03 (+20) Captures high-order fea-
  []
 
 
-Underfull \hbox (badness 4832) in paragraph at lines 864--865
+Underfull \hbox (badness 4832) in paragraph at lines 859--860
 []|\T1/ppl/m/n/8.03 (+20) Controls over-fit-ting via
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 868--868
+Underfull \hbox (badness 10000) in paragraph at lines 863--863
 []|\T1/ppl/m/n/8.03 (+20) PR-AUC at
  []
 
 
-Overfull \hbox (2.17973pt too wide) in paragraph at lines 854--871
+Overfull \hbox (2.17973pt too wide) in paragraph at lines 849--866
  [][] 
  []
 
 
-Overfull \hbox (7.7684pt too wide) in paragraph at lines 893--893
+Overfull \hbox (7.7684pt too wide) in paragraph at lines 888--888
 []|\T1/ppl/m/n/8.03 (-20) /model_evaluations| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 895--896
+Underfull \hbox (badness 10000) in paragraph at lines 890--891
 []|\T1/ppl/m/n/8.03 (+20) Returns lat-est ROC/PR
  []
 
@@ -1830,47 +1820,47 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 [14]
-Underfull \hbox (badness 10000) in paragraph at lines 928--928
+Underfull \hbox (badness 10000) in paragraph at lines 923--923
 []|\T1/ppl/m/n/8.03 (+20) Re-run Pre-fect
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 925--925
 []|\T1/ppl/m/n/8.03 (+20) Metrics
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 925--925
 []|\T1/ppl/m/n/8.03 (+20) Check PR-AUC,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 930--930
+Underfull \hbox (badness 10000) in paragraph at lines 925--925
 \T1/ppl/m/n/8.03 (+20) drift, con-fu-sion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 932--932
+Underfull \hbox (badness 10000) in paragraph at lines 927--927
 []|\T1/ppl/m/n/8.03 (+20) Deployment
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 932--932
+Underfull \hbox (badness 10000) in paragraph at lines 927--927
 \T1/ppl/m/n/8.03 (+20) can-di-date
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 934--934
+Underfull \hbox (badness 10000) in paragraph at lines 929--929
 []|\T1/ppl/m/n/8.03 (+20) Call reload
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 934--935
+Underfull \hbox (badness 10000) in paragraph at lines 929--930
 []|\T1/ppl/m/n/8.03 (+20) Activates lat-est
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 934--935
+Underfull \hbox (badness 10000) in paragraph at lines 929--930
 \T1/ppl/m/n/8.03 (+20) model with-out
  []
 
@@ -1884,37 +1874,37 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [15]
 
 
-Underfull \hbox (badness 1466) in paragraph at lines 1045--1045
+Underfull \hbox (badness 1466) in paragraph at lines 1040--1040
 []|\T1/ppl/m/n/8.03 (+20) Orchestrates task se-
  []
 
 
-Underfull \hbox (badness 5274) in paragraph at lines 1045--1045
+Underfull \hbox (badness 5274) in paragraph at lines 1040--1040
 \T1/ppl/m/n/8.03 (+20) quenc-ing and er-ror
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1051--1051
+Underfull \hbox (badness 10000) in paragraph at lines 1046--1046
 []|\T1/ppl/m/n/8.03 (+20) Environment par-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1051--1051
+Underfull \hbox (badness 10000) in paragraph at lines 1046--1046
 \T1/ppl/m/n/8.03 (+20) and mi-croser-vice
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1051--1052
+Underfull \hbox (badness 10000) in paragraph at lines 1046--1047
 []|\T1/ppl/m/n/8.03 (+20) Deployment and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1054
+Underfull \hbox (badness 10000) in paragraph at lines 1048--1049
 []|\T1/ppl/m/n/8.03 (+20) Developer
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1053--1054
+Underfull \hbox (badness 10000) in paragraph at lines 1048--1049
 \T1/ppl/m/n/8.03 (+20) work-flow and
  []
 
@@ -1935,11 +1925,11 @@ Package rerunfilecheck Info: File `project_report.out' has not changed.
 (rerunfilecheck)             Checksum: A3F47AB30555CE44DDA8E892C10FFD54;13088.
  ) 
 Here is how much of TeX's memory you used:
- 42552 strings out of 473190
- 1013710 string characters out of 5715800
- 1484163 words of memory out of 5000000
- 64517 multiletter control sequences out of 15000+600000
- 695970 words of font info for 553 fonts, out of 8000000 for 9000
+ 42518 strings out of 473190
+ 1013203 string characters out of 5715800
+ 1483973 words of memory out of 5000000
+ 64500 multiletter control sequences out of 15000+600000
+ 690232 words of font info for 543 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,12n,87p,1011b,1158s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
@@ -1958,12 +1948,11 @@ st/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/font
 s/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type
 1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/p
 alatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino
-/uplri8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/zapfding/uzdr.
-pfb>
-Output written on project_report.pdf (17 pages, 2686397 bytes).
+/uplri8a.pfb>
+Output written on project_report.pdf (17 pages, 2683751 bytes).
 PDF statistics:
- 542 PDF objects out of 1000 (max. 8388607)
- 442 compressed objects within 5 object streams
+ 537 PDF objects out of 1000 (max. 8388607)
+ 439 compressed objects within 5 object streams
  141 named destinations out of 1000 (max. 500000)
- 102961 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 96817 words of extra memory for PDF output out of 106986 (max. 10000000)
 

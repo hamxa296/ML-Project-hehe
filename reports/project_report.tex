@@ -34,6 +34,9 @@
 \captionsetup[table]{font=small,labelfont=bf}
 \captionsetup[figure]{font=small,labelfont=bf}
 
+% Remove the compsoc diamond separator line under the abstract
+\renewcommand{\IEEEcompsocdiamondline}{}
+
 \tikzset{
  flowbox/.style={
  rectangle,
@@ -74,20 +77,12 @@
 \linespread{1.03}
 \begin{document}
 
-\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Ecosystem:}\\ \large \textit{A Comprehensive MLOps Framework for the IEEE-CIS Dataset}}
-
+\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Pipeline}}
 \author{%
-\IEEEauthorblockN{Hassan Raza}
-\IEEEauthorblockA{Reg.\ No.\ 2024229}
-\and
-\IEEEauthorblockN{Hamza Arif}
-\IEEEauthorblockA{Reg.\ No.\ 2024206}
-\and
-\IEEEauthorblockN{Emaan Swati}
-\IEEEauthorblockA{Reg.\ No.\ 2024156}
-\and
-\IEEEauthorblockN{Rabia Ashraf}
-\IEEEauthorblockA{Reg.\ No.\ 2024527}%
+\begin{tabular}[t]{c@{\hspace{2.5em}}c@{\hspace{2.5em}}c@{\hspace{2.5em}}c}
+\textbf{Hassan Raza}   & \textbf{Hamza Arif}   & \textbf{Emaan Swati}  & \textbf{Rabia Ashraf} \\[2pt]
+Reg.\ No.\ 2024229     & Reg.\ No.\ 2024206    & Reg.\ No.\ 2024156    & Reg.\ No.\ 2024527
+\end{tabular}%
 }
 
 
