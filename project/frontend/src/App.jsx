@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
+import PipelineBanner from './components/PipelineBanner';
 import Dashboard from './pages/Dashboard';
 import Landing from './pages/Landing';
 import PipelineLog from './pages/PipelineLog';
@@ -23,6 +24,7 @@ function App() {
             <div className="flex-row w-full" style={{ height: '100%' }}>
               <Sidebar />
               <main className="flex-1" style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
+                <PipelineBanner />
                 <Routes>
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/pipeline" element={<PipelineLog />} />

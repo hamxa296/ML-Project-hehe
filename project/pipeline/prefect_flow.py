@@ -61,8 +61,13 @@ def processed_eda_task(pipeline, X_train, y_train):
 
 @task(retries=2, name="Load Data")
 def load_task():
-    train_path = PROJECT_ROOT / 'data' / 'train_unbalanced.csv'
-    test_path  = PROJECT_ROOT / 'data' / 'test.csv'
+    if os.getenv("CI"):
+        # In CI, use the smaller dev dataset that is checked into Git
+        train_path = PROJECT_ROOT / 'data' / 'dev.csv'
+        test_path  = PROJECT_ROOT / 'data' / 'dev.csv'
+    else:
+        train_path = PROJECT_ROOT / 'data' / 'train_unbalanced.csv'
+        test_path  = PROJECT_ROOT / 'data' / 'test.csv'
     return load_data(str(train_path), str(test_path))
 
 
@@ -241,8 +246,19 @@ def training_pipeline(config: dict = {"min_auc_pr": 0.6}):
     # Step 1: Load raw data
     X_train, X_test, y_train, y_test = load_task()
 
+    # If running in CI (GitHub Actions), we sample the data to avoid OOM/Timeouts
+    if os.getenv("CI"):
+        print(">>> CI Environment detected: Sampling 5% of data for smoke test...")
+        X_train = X_train.sample(frac=0.05, random_state=42)
+        y_train = y_train.loc[X_train.index]
+        X_test = X_test.sample(frac=0.05, random_state=42)
+        y_test = y_test.loc[X_test.index]
+
     # Full raw train DataFrame needed by analytical tasks (they need isFraud column)
-    train_path_str = str(PROJECT_ROOT / 'data' / 'train_unbalanced.csv')
+    if os.getenv("CI"):
+        train_path_str = str(PROJECT_ROOT / 'data' / 'dev.csv')
+    else:
+        train_path_str = str(PROJECT_ROOT / 'data' / 'train_unbalanced.csv')
     train_df_raw   = pd.read_csv(train_path_str)
 
     # Step 2: Raw EDA

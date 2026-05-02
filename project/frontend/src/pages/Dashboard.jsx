@@ -123,44 +123,6 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* ── Pipeline Status Banner ── */}
-      {pipelineStatus.status === 'RUNNING' && (
-        <div className="glass-card flex-row items-center gap-5 p-5 animate-in" 
-             style={{ 
-               background: 'rgba(245, 158, 11, 0.04)', 
-               borderColor: 'rgba(245, 158, 11, 0.2)', 
-               borderLeft: '4px solid var(--amber)',
-               marginBottom: '-1rem' 
-             }}>
-          <div className="flex-col items-center justify-center" style={{ 
-            width: 40, height: 40, borderRadius: '50%', background: 'rgba(245, 158, 11, 0.1)' 
-          }}>
-            <RefreshCw size={20} className="text-amber" style={{ animation: 'spin 2s linear infinite' }} />
-          </div>
-          <div className="flex-col gap-1 flex-1">
-            <div className="flex-row items-center gap-2">
-              <span className="label text-amber">Active Pipeline Run</span>
-              <span className="text-xs text-muted" style={{ fontWeight: 400 }}>• Started {new Date(pipelineStatus.start_time).toLocaleTimeString()}</span>
-            </div>
-            <h4 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-primary)' }}>
-              {pipelineStatus.state}: <span style={{ fontWeight: 400 }}>{pipelineStatus.name}</span>
-            </h4>
-          </div>
-          <div className="flex-row gap-3">
-             <button 
-               className="btn btn-ghost btn-sm" 
-               onClick={() => handleCancel(pipelineStatus.id)}
-               style={{ borderColor: 'rgba(244, 63, 94, 0.2)', color: 'var(--rose)' }}
-             >
-               <XCircle size={14} /> Cancel Build
-             </button>
-             <div className="badge badge-amber" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--amber)' }}>
-               Live Training
-             </div>
-          </div>
-        </div>
-      )}
-
       {/* Model Performance KPIs */}
       <div className="grid-4 animate-in delay-2">
         {(() => {
