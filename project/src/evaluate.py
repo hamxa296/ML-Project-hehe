@@ -67,7 +67,7 @@ def evaluate_model(y_test, probs, preds, project_root: Path = None, version: str
         'bg':      '#0d1117',
         'card':    '#161b22',
         'cyan':    '#00d4ff',
-        'violet':  '#8b5cf6',
+        'violet':  '#0ea5e9',
         'rose':    '#fb7185',
         'emerald': '#10b981',
         'amber':   '#f59e0b',

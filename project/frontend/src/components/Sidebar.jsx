@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers } from 'lucide-react';
+import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers, Brain } from 'lucide-react';
+
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
 
 const Sidebar = () => {
   return (
@@ -31,9 +33,21 @@ const Sidebar = () => {
         <NavLink to="/models" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
           <Layers size={18} /> Model Registry
         </NavLink>
+        <NavLink to="/ml-tasks" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+          <Brain size={18} /> ML Tasks
+        </NavLink>
       </nav>
 
-      <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }}>
+      <div style={{ paddingTop: '1.5rem', borderTop: '1px solid var(--border-subtle)' }} className="flex-col gap-2">
+        <a 
+          href={`${API_BASE}/ml_report`} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="sidebar-link"
+          style={{ textDecoration: 'none' }}
+        >
+          <Activity size={18} className="text-emerald" /> ML Health Report
+        </a>
         <div className="sidebar-link" style={{ cursor: 'not-allowed', opacity: 0.5 }}>
           <Settings size={18} /> Settings
         </div>

@@ -6,8 +6,12 @@ pandas
 numpy
 scikit-learn
 xgboost
+evidently<0.5.0
+flake8
 prefect<3.0.0
 pytest
 joblib
 matplotlib
 seaborn
+mlxtend
+requests

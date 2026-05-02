@@ -1,0 +1,80 @@
+{
+  "task": "Association Rule Mining (FPGrowth)",
+  "sample_size": 80000,
+  "min_support": 0.01,
+  "min_confidence": 0.05,
+  "n_itemsets": 733,
+  "n_fraud_rules": 6,
+  "top_rules": [
+    {
+      "antecedents": [
+        "ProductCD=0.1160277034578521"
+      ],
+      "consequents": [
+        "isFraud=Yes"
+      ],
+      "support": 0.01317,
+      "confidence": 0.113,
+      "lift": 3.2777
+    },
+    {
+      "antecedents": [
+        "ProductCD=0.1160277034578521",
+        "Amt=Low"
+      ],
+      "consequents": [
+        "isFraud=Yes"
+      ],
+      "support": 0.01317,
+      "confidence": 0.113,
+      "lift": 3.2777
+    },
+    {
+      "antecedents": [
+        "ProductCD=0.1160277034578521"
+      ],
+      "consequents": [
+        "isFraud=Yes",
+        "Amt=Low"
+      ],
+      "support": 0.01317,
+      "confidence": 0.113,
+      "lift": 3.2777
+    },
+    {
+      "antecedents": [
+        "card6=0.2522877366478138"
+      ],
+      "consequents": [
+        "isFraud=Yes"
+      ],
+      "support": 0.01682,
+      "confidence": 0.0669,
+      "lift": 1.9403
+    },
+    {
+      "antecedents": [
+        "card6=0.2522877366478138",
+        "Amt=Low"
+      ],
+      "consequents": [
+        "isFraud=Yes"
+      ],
+      "support": 0.01682,
+      "confidence": 0.0669,
+      "lift": 1.9403
+    },
+    {
+      "antecedents": [
+        "card6=0.2522877366478138"
+      ],
+      "consequents": [
+        "isFraud=Yes",
+        "Amt=Low"
+      ],
+      "support": 0.01682,
+      "confidence": 0.0669,
+      "lift": 1.9403
+    }
+  ]
+}

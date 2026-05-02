@@ -1,0 +1,78 @@
+{
+  "task": "Cluster Behaviour Profiling (KMeans)",
+  "n_clusters": 5,
+  "overall_fraud_rate": 0.03499,
+  "profiles": [
+    {
+      "cluster": 0,
+      "size": 124422,
+      "fraud_count": 3347,
+      "fraud_rate": 0.0269,
+      "pct_of_data": 26.34,
+      "feature_means": {
+        "TransactionAmt": 4.3769,
+        "hour": 13.7778,
+        "dow": 2.9043,
+        "user_count": 617.3492,
+        "Amt_to_Median_User": 1.0116
+      }
+    },
+    {
+      "cluster": 1,
+      "size": 84343,
+      "fraud_count": 3327,
+      "fraud_rate": 0.03945,
+      "pct_of_data": 17.85,
+      "feature_means": {
+        "TransactionAmt": 4.3701,
+        "hour": 13.9339,
+        "dow": 3.0347,
+        "user_count": 659.5632,
+        "Amt_to_Median_User": 1.0224
+      }
+    },
+    {
+      "cluster": 2,
+      "size": 89486,
+      "fraud_count": 3269,
+      "fraud_rate": 0.03653,
+      "pct_of_data": 18.94,
+      "feature_means": {
+        "TransactionAmt": 4.4103,
+        "hour": 13.7085,
+        "dow": 2.9004,
+        "user_count": 645.0766,
+        "Amt_to_Median_User": 1.0296
+      }
+    },
+    {
+      "cluster": 3,
+      "size": 88071,
+      "fraud_count": 2970,
+      "fraud_rate": 0.03372,
+      "pct_of_data": 18.64,
+      "feature_means": {
+        "TransactionAmt": 4.3868,
+        "hour": 14.0621,
+        "dow": 3.065,
+        "user_count": 643.6228,
+        "Amt_to_Median_User": 1.0179
+      }
+    },
+    {
+      "cluster": 4,
+      "size": 86110,
+      "fraud_count": 3617,
+      "fraud_rate": 0.042,
+      "pct_of_data": 18.23,
+      "feature_means": {
+        "TransactionAmt": 4.3701,
+        "hour": 13.8596,
+        "dow": 2.9145,
+        "user_count": 622.588,
+        "Amt_to_Median_User": 1.0172
+      }
+    }
+  ],
+  "insight": "Cluster 4 has highest fraud rate: 4.20%"
+}

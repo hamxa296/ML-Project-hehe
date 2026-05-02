@@ -12,7 +12,8 @@ WORKDIR /app
 
 # Install Python dependencies
 COPY requirements.txt .
-RUN pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && \
+    pip install --default-timeout=5000 --retries 20 -r requirements.txt
 
 # Copy the built frontend dist from stage 1
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist

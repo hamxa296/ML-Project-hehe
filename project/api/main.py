@@ -154,6 +154,14 @@ def get_model_evaluations():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading results: {str(e)}")
 
+@app.get("/ml_report")
+def get_ml_report():
+    """Serves the Evidently ML testing HTML report."""
+    report_path = ARTIFACTS_DIR / "evidently_report.html"
+    if not report_path.exists():
+        raise HTTPException(status_code=404, detail="ML testing report not found. Run tests first.")
+    return FileResponse(str(report_path), media_type="text/html")
+
 @app.get("/latest_metrics")
 def get_latest_metrics():
     if not METRICS_PATH.exists():
@@ -163,6 +171,7 @@ def get_latest_metrics():
             return json.load(f)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading metrics: {str(e)}")
+
 
 @app.get("/graph_list")
 def get_graph_list():
@@ -243,6 +252,75 @@ def get_processed_eda_stats():
             return json.load(f)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading processed EDA data: {str(e)}")
+
+
+# ── Phase 1: Analytical ML Task Endpoints ────────────────────────────────────
+
+REGRESSION_PATH  = ARTIFACTS_DIR / "regression_metrics.json"
+TIMESERIES_PATH  = ARTIFACTS_DIR / "timeseries_fraud_rate.json"
+PCA_PATH         = ARTIFACTS_DIR / "pca_results.json"
+CLUSTER_PATH     = ARTIFACTS_DIR / "cluster_profiles.json"
+ASSOCIATION_PATH = ARTIFACTS_DIR / "association_rules.json"
+
+
+@app.get("/regression_results")
+def get_regression_results():
+    """Returns Ridge regression metrics + forecast data for Transaction Velocity Forecasting."""
+    if not REGRESSION_PATH.exists():
+        return {"available": False, "message": "Run the pipeline first."}
+    try:
+        with open(REGRESSION_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/timeseries_results")
+def get_timeseries_results():
+    """Returns fraud rate time series data: rolling averages, anomalies, heatmap."""
+    if not TIMESERIES_PATH.exists():
+        return {"available": False, "message": "Run the pipeline first."}
+    try:
+        with open(TIMESERIES_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/pca_results")
+def get_pca_results():
+    """Returns PCA dimensionality reduction results: scatter coords + variance explained."""
+    if not PCA_PATH.exists():
+        return {"available": False, "message": "Run the pipeline first."}
+    try:
+        with open(PCA_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/cluster_profiles")
+def get_cluster_profiles():
+    """Returns KMeans cluster profiles: size, fraud rate, feature means per cluster."""
+    if not CLUSTER_PATH.exists():
+        return {"available": False, "message": "Run the pipeline first."}
+    try:
+        with open(CLUSTER_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/association_rules")
+def get_association_rules():
+    """Returns top fraud-consequent association rules sorted by lift."""
+    if not ASSOCIATION_PATH.exists():
+        return {"available": False, "message": "Run the pipeline first."}
+    try:
+        with open(ASSOCIATION_PATH, "r") as f:
+            return json.load(f)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/reload_model")
 def reload_model():

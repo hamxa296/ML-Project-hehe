@@ -47,6 +47,21 @@ jobs:
           # exit-zero treats all errors as warnings.
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
+      - name: Automated ML Pipeline Smoke Test
+        run: |
+          # Runs the full pipeline using the sampled dev.csv dataset
+          python pipeline/prefect_flow.py
+
+      - name: Upload Pipeline Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mlops-pipeline-results
+          path: |
+            project/artifacts/
+            project/results/graphs/
+            project/models/
+
   build-and-push:
     name: Containerize & Stage
     needs: quality-gate

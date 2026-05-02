@@ -123,62 +123,58 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {/* ── Pipeline Status Banner ── */}
-      {pipelineStatus.status === 'RUNNING' && (
-        <div className="glass-card flex-row items-center gap-5 p-5 animate-in" 
-             style={{ 
-               background: 'rgba(245, 158, 11, 0.04)', 
-               borderColor: 'rgba(245, 158, 11, 0.2)', 
-               borderLeft: '4px solid var(--amber)',
-               marginBottom: '-1rem' 
-             }}>
-          <div className="flex-col items-center justify-center" style={{ 
-            width: 40, height: 40, borderRadius: '50%', background: 'rgba(245, 158, 11, 0.1)' 
-          }}>
-            <RefreshCw size={20} className="text-amber" style={{ animation: 'spin 2s linear infinite' }} />
-          </div>
-          <div className="flex-col gap-1 flex-1">
-            <div className="flex-row items-center gap-2">
-              <span className="label text-amber">Active Pipeline Run</span>
-              <span className="text-xs text-muted" style={{ fontWeight: 400 }}>• Started {new Date(pipelineStatus.start_time).toLocaleTimeString()}</span>
-            </div>
-            <h4 style={{ margin: 0, fontSize: '1rem', color: 'var(--text-primary)' }}>
-              {pipelineStatus.state}: <span style={{ fontWeight: 400 }}>{pipelineStatus.name}</span>
-            </h4>
-          </div>
-          <div className="flex-row gap-3">
-             <button 
-               className="btn btn-ghost btn-sm" 
-               onClick={() => handleCancel(pipelineStatus.id)}
-               style={{ borderColor: 'rgba(244, 63, 94, 0.2)', color: 'var(--rose)' }}
-             >
-               <XCircle size={14} /> Cancel Build
-             </button>
-             <div className="badge badge-amber" style={{ background: 'rgba(245, 158, 11, 0.1)', color: 'var(--amber)' }}>
-               Live Training
-             </div>
-          </div>
-        </div>
-      )}
-
-      {/* KPI Section */}
+      {/* Model Performance KPIs */}
       <div className="grid-4 animate-in delay-2">
-        {[
-          { label: 'Total Predictions', val: stats.total.toString(),    icon: <Activity size={20}/>,  color: 'var(--cyan)' },
-          { label: 'Fraud Detected',    val: stats.fraud.toString(),     icon: <Play size={20}/>,      color: 'var(--rose)' },
-          { label: 'Safe Transactions', val: stats.safe.toString(),      icon: <Database size={20}/>,  color: 'var(--emerald)' },
-          { label: 'Avg Fraud Prob',    val: `${stats.avgProb}%`,        icon: <GitCommit size={20}/>, color: 'var(--amber)' },
-        ].map((kpi, i) => (
-          <div key={i} className="glass-card p-6 flex-col gap-4">
-            <div className="flex-row items-center gap-3">
-              <div style={{ color: kpi.color, padding: '0.5rem', background: `color-mix(in srgb, ${kpi.color} 10%, transparent)`, borderRadius: '8px' }}>
-                {kpi.icon}
+        {(() => {
+          // Find the latest XGBoost model run (ignoring baselines for these specific KPIs)
+          const latestModel = evaluations.find(e => e.model_type.includes('XGB'));
+          
+          const kpis = [
+            { 
+              label: 'Model Precision', 
+              val: latestModel ? `${(latestModel.precision * 100).toFixed(1)}%` : '0%', 
+              icon: <Activity size={20}/>, 
+              color: 'var(--cyan)',
+              desc: 'Accuracy of fraud flags'
+            },
+            { 
+              label: 'Fraud Recall', 
+              val: latestModel ? `${(latestModel.recall * 100).toFixed(1)}%` : '0%', 
+              icon: <Play size={20}/>, 
+              color: 'var(--rose)',
+              desc: 'Detection coverage rate'
+            },
+            { 
+              label: 'AUC-PR Score', 
+              val: latestModel ? `${(latestModel.auc_pr * 100).toFixed(1)}%` : '0%', 
+              icon: <Database size={20}/>, 
+              color: 'var(--emerald)',
+              desc: 'Overall model quality'
+            },
+            { 
+              label: 'ROC-AUC', 
+              val: latestModel ? `${(latestModel.auc_roc * 100).toFixed(1)}%` : '0%', 
+              icon: <GitCommit size={20}/>, 
+              color: 'var(--amber)',
+              desc: 'Separation capability'
+            },
+          ];
+
+          return kpis.map((kpi, i) => (
+            <div key={i} className="glass-card p-6 flex-col gap-4">
+              <div className="flex-row items-center gap-3">
+                <div style={{ color: kpi.color, padding: '0.5rem', background: `color-mix(in srgb, ${kpi.color} 10%, transparent)`, borderRadius: '8px' }}>
+                  {kpi.icon}
+                </div>
+                <div className="flex-col">
+                  <span className="label" style={{ color: 'var(--text-secondary)', fontSize: '0.65rem' }}>{kpi.label}</span>
+                  <span className="text-xs text-muted" style={{ fontWeight: 400 }}>{kpi.desc}</span>
+                </div>
               </div>
-              <span className="label" style={{ color: 'var(--text-secondary)' }}>{kpi.label}</span>
+              <div className="stat-number" style={{ color: 'var(--text-primary)' }}>{kpi.val}</div>
             </div>
-            <div className="stat-number">{kpi.val}</div>
-          </div>
-        ))}
+          ));
+        })()}
       </div>
 
       {/* Interactive Recharts */}
@@ -193,10 +189,28 @@ const Dashboard = () => {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={curveData.pr_curve}>
+                <LineChart data={curveData.pr_curve} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-                  <XAxis dataKey="recall"    type="number" domain={[0, 1]} stroke="var(--text-muted)" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
-                  <YAxis dataKey="precision" type="number" domain={[0, 1]} stroke="var(--text-muted)" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
+                  <XAxis 
+                    dataKey="recall"    
+                    type="number" 
+                    domain={[0, 1]} 
+                    stroke="var(--text-muted)" 
+                    tick={{fontSize: 10}} 
+                    axisLine={false} 
+                    tickLine={false}
+                    label={{ value: 'Recall', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}
+                  />
+                  <YAxis 
+                    dataKey="precision" 
+                    type="number" 
+                    domain={[0, 1]} 
+                    stroke="var(--text-muted)" 
+                    tick={{fontSize: 10}} 
+                    axisLine={false} 
+                    tickLine={false}
+                    label={{ value: 'Precision', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}
+                  />
                   <Tooltip contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px' }} itemStyle={{ color: 'var(--text-primary)' }} />
                   <Line type="monotone" dataKey="precision" stroke="var(--cyan)" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
                 </LineChart>
@@ -215,10 +229,28 @@ const Dashboard = () => {
               </div>
             ) : (
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={curveData.roc_curve}>
+                <LineChart data={curveData.roc_curve} margin={{ top: 5, right: 20, left: 25, bottom: 25 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="var(--border-subtle)" vertical={false} />
-                  <XAxis dataKey="fpr" type="number" domain={[0, 1]} stroke="var(--text-muted)" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
-                  <YAxis dataKey="tpr" type="number" domain={[0, 1]} stroke="var(--text-muted)" tick={{fontSize: 12}} axisLine={false} tickLine={false} />
+                  <XAxis 
+                    dataKey="fpr" 
+                    type="number" 
+                    domain={[0, 1]} 
+                    stroke="var(--text-muted)" 
+                    tick={{fontSize: 10}} 
+                    axisLine={false} 
+                    tickLine={false}
+                    label={{ value: 'False Positive Rate', position: 'insideBottom', offset: -5, fill: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}
+                  />
+                  <YAxis 
+                    dataKey="tpr" 
+                    type="number" 
+                    domain={[0, 1]} 
+                    stroke="var(--text-muted)" 
+                    tick={{fontSize: 10}} 
+                    axisLine={false} 
+                    tickLine={false}
+                    label={{ value: 'True Positive Rate', angle: -90, position: 'insideLeft', offset: 10, fill: 'var(--text-muted)', fontSize: 10, fontWeight: 600 }}
+                  />
                   <Tooltip cursor={{ stroke: 'rgba(255,255,255,0.1)' }} contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)', borderRadius: '8px' }} />
                   <Line type="monotone" dataKey="tpr" stroke="var(--violet)" strokeWidth={3} dot={false} activeDot={{ r: 6 }} />
                 </LineChart>
@@ -242,16 +274,15 @@ const Dashboard = () => {
                 key={g}
                 id={`graph-tab-${g.replace('.', '-')}`}
                 onClick={() => setActiveGraph(g)}
+                className="btn"
                 style={{
                   padding: '0.4rem 1rem',
-                  borderRadius: '6px',
-                  border: '1px solid var(--border-default)',
+                  borderRadius: '8px',
                   background: activeGraph === g ? 'var(--violet)' : 'var(--bg-elevated)',
-                  color: activeGraph === g ? '#fff' : 'var(--text-secondary)',
-                  cursor: 'pointer',
+                  color: activeGraph === g ? '#ffffff' : 'var(--text-secondary)',
+                  border: `1px solid ${activeGraph === g ? 'transparent' : 'var(--border-default)'}`,
                   fontSize: '0.85rem',
                   fontWeight: activeGraph === g ? '600' : '400',
-                  transition: 'all 0.2s ease',
                 }}
               >
                 {GRAPH_LABELS[g] || g}

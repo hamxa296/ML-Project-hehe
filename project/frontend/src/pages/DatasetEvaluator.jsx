@@ -46,14 +46,15 @@ const DatasetEvaluator = () => {
             />
             <label 
               htmlFor="dataset-upload" 
+              className="btn btn-primary"
               style={{
-                background: 'var(--violet)', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '8px', 
-                cursor: loading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem',
-                opacity: loading ? 0.7 : 1
+                cursor: loading ? 'not-allowed' : 'pointer',
+                opacity: loading ? 0.7 : 1,
+                padding: '0.75rem 1.5rem'
               }}
             >
               {loading ? <Loader2 size={18} className="animate-spin" /> : <UploadCloud size={18} />}
-              Upload CSV
+              {loading ? 'Processing...' : 'Upload Dataset CSV'}
             </label>
           </div>
         </div>
@@ -90,11 +91,19 @@ const DatasetEvaluator = () => {
               <button 
                 key={mode}
                 onClick={() => setFilterMode(mode)}
-                className={`btn ${filterMode === mode ? 'btn-primary' : 'btn-outline'}`}
+                className="btn"
                 style={{ 
                   textTransform: 'capitalize', 
-                  borderColor: filterMode === mode ? (mode === 'fraud' ? 'var(--rose)' : mode === 'safe' ? 'var(--emerald)' : mode.includes('false') ? 'var(--amber)' : 'var(--border-bright)') : 'var(--border-default)',
-                  color: filterMode === mode ? (mode === 'fraud' ? 'var(--rose)' : mode === 'safe' ? 'var(--emerald)' : mode.includes('false') ? 'var(--amber)' : 'var(--text-primary)') : 'var(--text-secondary)'
+                  background: filterMode === mode ? (
+                    mode === 'fraud' ? 'var(--rose)' : 
+                    mode === 'safe' ? 'var(--emerald)' : 
+                    mode.includes('false') ? 'var(--amber)' : 
+                    'var(--violet)'
+                  ) : 'var(--bg-elevated)',
+                  color: filterMode === mode ? '#ffffff' : 'var(--text-secondary)',
+                  border: `1px solid ${filterMode === mode ? 'transparent' : 'var(--border-default)'}`,
+                  padding: '0.5rem 1rem',
+                  fontSize: '0.85rem'
                 }}
               >
                 {mode.replace('-', ' ')}
