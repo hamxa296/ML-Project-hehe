@@ -70,13 +70,8 @@ def train_pipeline_task(X_train, y_train):
     return train_model(X_train, y_train)
 
 
-@task(name="Train Baseline Model")
-def train_baseline_task(X_train, y_train, X_test, y_test, version):
-    from src.train_baseline import train_baseline
-    return train_baseline(X_train, y_train, X_test, y_test, version, ARTIFACTS_DIR)
-
 @task(name="Evaluate and Log")
-def evaluate_and_log_task(pipeline, X_test, y_test, version, baseline_metrics=None):
+def evaluate_and_log_task(pipeline, X_test, y_test, version):
     probs, preds = predict(pipeline, X_test)
     auc_pr  = average_precision_score(y_test, probs)
     auc_roc = roc_auc_score(y_test, probs)
@@ -104,20 +99,7 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version, baseline_metrics=No
     else:
         res_df.to_csv(results_path, index=False)
         
-    if baseline_metrics:
-        comparison_path = ARTIFACTS_DIR / 'experiment_comparison.json'
-        comparison_data = {
-            "baseline": baseline_metrics,
-            "best_model": {
-                "precision": prec,
-                "recall": rec,
-                "auc_roc": auc_roc,
-                "auc_pr": auc_pr
-            }
-        }
-        with open(comparison_path, "w") as f:
-            json.dump(comparison_data, f, indent=4)
-            
+
     evaluate_model(y_test, probs, preds,
                    project_root=PROJECT_ROOT,
                    version=version,
@@ -213,9 +195,6 @@ def training_pipeline(config: dict = {"min_auc_pr": 0.6}):
     # Step 2: Raw EDA
     raw_eda_task(train_path_str)
 
-    # ── Phase 4: Baseline Experiment ──
-    baseline_metrics = train_baseline_task(X_train, y_train, X_test, y_test, version)
-
     # Step 3: Train the full sklearn pipeline
     pipeline = train_pipeline_task(X_train, y_train)
 
@@ -223,7 +202,7 @@ def training_pipeline(config: dict = {"min_auc_pr": 0.6}):
     processed_eda_task(pipeline, X_train, y_train)
 
     # Step 5: Evaluate + quality gate
-    auc_pr = evaluate_and_log_task(pipeline, X_test, y_test, version, baseline_metrics=baseline_metrics)
+    auc_pr = evaluate_and_log_task(pipeline, X_test, y_test, version)
 
     if auc_pr < config.get("min_auc_pr", 0.6):
         raise ValueError(f"Quality gate failed: AUC-PR {auc_pr:.4f} < {config['min_auc_pr']}")
