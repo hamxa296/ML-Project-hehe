@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  1 MAY 2026 20:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  2 MAY 2026 20:39
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -600,185 +600,1574 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box79
 \@float@everytoks=\toks49
 \@floatcapt=\box80
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+\TX@col@width=\dimen316
+\TX@old@table=\dimen317
+\TX@old@col=\dimen318
+\TX@target=\dimen319
+\TX@delta=\dimen320
+\TX@cols=\count337
+\TX@ftn=\toks50
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2024/07/06 v1.0i Color table columns (DPC)
+\everycr=\toks51
+\minrowclearance=\skip58
+\rownum=\count338
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/siunitx/siunitx.sty
+Package: siunitx 2025-02-27 v3.4.6 A comprehensive (SI) units package
+\l__siunitx_number_uncert_offset_int=\count339
+\l__siunitx_number_exponent_fixed_int=\count340
+\l__siunitx_number_min_decimal_int=\count341
+\l__siunitx_number_min_integer_int=\count342
+\l__siunitx_number_round_precision_int=\count343
+\l__siunitx_number_lower_threshold_int=\count344
+\l__siunitx_number_upper_threshold_int=\count345
+\l__siunitx_number_group_first_int=\count346
+\l__siunitx_number_group_size_int=\count347
+\l__siunitx_number_group_minimum_int=\count348
+\l__siunitx_angle_tmp_dim=\dimen321
+\l__siunitx_angle_marker_box=\box81
+\l__siunitx_angle_unit_box=\box82
+\l__siunitx_compound_count_int=\count349
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/translations/translations.sty
+Package: translations 2022/02/05 v1.12 internationalization of LaTeX2e packages (CN)
+)
+\l__siunitx_table_tmp_box=\box83
+\l__siunitx_table_tmp_dim=\dimen322
+\l__siunitx_table_column_width_dim=\dimen323
+\l__siunitx_table_integer_box=\box84
+\l__siunitx_table_decimal_box=\box85
+\l__siunitx_table_uncert_box=\box86
+\l__siunitx_table_before_box=\box87
+\l__siunitx_table_after_box=\box88
+\l__siunitx_table_before_dim=\dimen324
+\l__siunitx_table_carry_dim=\dimen325
+\l__siunitx_unit_tmp_int=\count350
+\l__siunitx_unit_position_int=\count351
+\l__siunitx_unit_total_int=\count352
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2023/08/05 v3.6o Customizing captions (AR)
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
+\caption@tempdima=\dimen326
+\captionmargin=\dimen327
+\caption@leftmargin=\dimen328
+\caption@rightmargin=\dimen329
+\caption@width=\dimen330
+\caption@indent=\dimen331
+\caption@parindent=\dimen332
+\caption@hangindent=\dimen333
+Package caption Info: Unknown document class (or package),
+(caption)             standard defaults will be used.
+Package caption Info: \@makecaption = \long macro:#1#2->\ifx \@captype \@IEEEtablestring \footnotesize \bgroup \par \centering \@IEEEtabletopskipstrut {\normalfont \sffamily \footnotesize #1}\\{\normalfont \sffamily \footnotesize #2}\par \addvspace {0.5\baselineskip }\egroup \@IEEEtablecaptionsepspace \else \@IEEEfigurecaptionsepspace \setbox \@tempboxa \hbox {\normalfont \sffamily \footnotesize {#1.}\nobreakspace #2}\ifdim \wd \@tempboxa >\hsize \setbox \@tempboxa \hbox {\normalfont \sffamily \footnotesize {#1.}\nobreakspace }\parbox [t]{\hsize }{\normalfont \sffamily \footnotesize \noindent \unhbox \@tempboxa #2}\else \hbox to\hsize {\normalfont \sffamily \footnotesize \box \@tempboxa \hfil }\fi \fi  on input line 1175.
+)
+
+Package caption Warning: Unknown document class (or package),
+(caption)                standard defaults will be used.
+See the caption package documentation for explanation.
+
+\c@caption@flags=\count353
+\c@continuedfloat=\count354
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+) (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2025/02/11 v3.2a Micro-typographical refinements (RS)
+\MT@toks=\toks52
+\MT@tempbox=\box89
+\MT@count=\count355
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1087.
+LaTeX Info: Redefining \leftprotrusion on input line 1088.
+\MT@prot@toks=\toks53
+LaTeX Info: Redefining \rightprotrusion on input line 1107.
+LaTeX Info: Redefining \textls on input line 1449.
+\MT@outer@kern=\dimen334
+LaTeX Info: Redefining \microtypecontext on input line 2053.
+LaTeX Info: Redefining \textmicrotypecontext on input line 2070.
+\MT@listname@count=\count356
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2025/02/11 v3.2a Definitions specific to pdftex (RS)
+LaTeX Info: Redefining \lsstyle on input line 944.
+LaTeX Info: Redefining \lslig on input line 944.
+\MT@outer@space=\skip59
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2025/02/11 v3.2a microtype main configuration file (RS)
+)
+LaTeX Info: Redefining \microtypesetup on input line 3065.
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/pgflibraryarrows.meta.code.tex
 File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
-\pgfarrowinset=\dimen316
-\pgfarrowlength=\dimen317
-\pgfarrowwidth=\dimen318
-\pgfarrowlinewidth=\dimen319
+\pgfarrowinset=\dimen335
+\pgfarrowlength=\dimen336
+\pgfarrowwidth=\dimen337
+\pgfarrowlinewidth=\dimen338
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ) (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibraryshapes.geometric.code.tex
 File: tikzlibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
  (/usr/local/texlive/2025/texmf-dist/tex/generic/pgf/libraries/shapes/pgflibraryshapes.geometric.code.tex
 File: pgflibraryshapes.geometric.code.tex 2023-01-15 v3.1.10 (3.1.10)
-)) (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+))
+Package translations Info: No language package found. I am going to use `english' as default language. on input line 76.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count337
-\l__pdf_internal_box=\box81
-) (./project_report.aux)
+\l__color_backend_stack_int=\count357
+\l__pdf_internal_box=\box90
+)
+No file project_report.aux.
 \openout1 = `project_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 60.
-LaTeX Font Info:    ... okay on input line 60.
-
--- Lines per column: 61 (exact).
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 76.
+LaTeX Font Info:    ... okay on input line 76.
+-- Lines per column: 59 (approximate, difference = 3.01309pt).
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count338
-\scratchdimen=\dimen320
-\scratchbox=\box82
-\nofMPsegments=\count339
-\nofMParguments=\count340
-\everyMPshowfont=\toks50
-\MPscratchCnt=\count341
-\MPscratchDim=\dimen321
-\MPnumerator=\count342
-\makeMPintoPDFobject=\count343
-\everyMPtoPDFconversion=\toks51
+\scratchcounter=\count358
+\scratchdimen=\dimen339
+\scratchbox=\box91
+\nofMPsegments=\count359
+\nofMParguments=\count360
+\everyMPshowfont=\toks54
+\MPscratchCnt=\count361
+\MPscratchDim=\dimen340
+\MPnumerator=\count362
+\makeMPintoPDFobject=\count363
+\everyMPtoPDFconversion=\toks55
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 60.
- (./project_report.out) (./project_report.out)
+Package hyperref Info: Link coloring OFF on input line 76.
 \@outlinefile=\write4
 \openout4 = `project_report.out'.
 
 
 Package pgfplots notification 'compat/show suggested version=true': document has been generated with the most recent feature set (\pgfplotsset{compat=1.18}).
 
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 79.
-(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1phv.fd
+(/usr/local/texlive/2025/texmf-dist/tex/latex/translations/translations-basic-dictionary-english.trsl
+File: translations-basic-dictionary-english.trsl (english translation file `translations-basic-dictionary')
+)
+Package translations Info: loading dictionary `translations-basic-dictionary' for `english'. on input line 76.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Info: Redefining \microtypecontext on input line 76.
+Package microtype Info: Applying patch `item' on input line 76.
+Package microtype Info: Applying patch `toc' on input line 76.
+Package microtype Info: Applying patch `eqnum' on input line 76.
+Package microtype Info: Applying patch `footnote' on input line 76.
+Package microtype Info: Applying patch `verbatim' on input line 76.
+LaTeX Info: Redefining \microtypesetup on input line 76.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using default protrusion set `alltext'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+LaTeX Info: Redefining \showhyphens on input line 76.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-ppl.cfg
+File: mt-ppl.cfg 2005/11/16 v1.6 microtype config. file: Palatino (RS)
+)
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 95.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 )
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `phv' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <12.045> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 79.
-LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 79.
-LaTeX Font Info:    Trying to load font information for U+pzd on input line 79.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 95.
+LaTeX Font Info:    Calculating math sizes for size <11.04124> on input line 95.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+pzd on input line 95.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/upzd.fd
 File: upzd.fd 2001/06/04 font definitions for U/pzd.
 )
-<assets/eda_class_imbalance.png, id=67, 348.3414pt x 365.6862pt>
-File: assets/eda_class_imbalance.png Graphic file (type png)
-<use assets/eda_class_imbalance.png>
-Package pdftex.def Info: assets/eda_class_imbalance.png  used on input line 93.
-(pdftex.def)             Requested size: 233.06917pt x 244.67926pt.
 
 
-<assets/eda_amounts.png, id=69, 624.4128pt x 397.0032pt>
-File: assets/eda_amounts.png Graphic file (type png)
-<use assets/eda_amounts.png>
-Package pdftex.def Info: assets/eda_amounts.png  used on input line 99.
-(pdftex.def)             Requested size: 233.06917pt x 148.18524pt.
+Package pgf Warning: Returning node center instead of a point on node border. Did you specify a point identical to the center of node ``api''? on input line 161.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Package pgf Warning: Returning node center instead of a point on node border. Did you specify a point identical to the center of node ``api''? on input line 161.
 
 
 
 [1{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
+]
+LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 174.
 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.102 
-       <./assets/eda_class_imbalance.png>]
-LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 109.
-
-
-LaTeX Font Info:    Calculating math sizes for size <8.03> on input line 155.
-Package pgfplots info on input line 189: Using 'lua backend=false' for axis: x coord trafo unsupported.
-LaTeX Font Info:    Calculating math sizes for size <7.02625> on input line 193.
-
-Underfull \vbox (badness 3557) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 181--181
+[]|\T1/ppl/m/n/8.03 (+20) Imbalance ra-tio
+ []
 
 
+Underfull \hbox (badness 3128) in paragraph at lines 195--196
+\T1/ppl/m/n/9.53561 (+20) The pipeline be-gins with an au-to-mated EDA task
+ []
 
-[2
-pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.221 
+LaTeX Font Info:    Calculating math sizes for size <9.53561> on input line 200.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 202.
+(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `pcr' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+
+Runaway argument?
+ \resizebox {0.98\columnwidth }{!}{\begin {tikzpicture}[node distance\ETC.
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:222: Paragraph ended before \pgfplots@@environment@axis was complete.
+<to be read again> 
+                   \par 
+l.222 
       
-pdfTeX warning (ext4): destination with the same identifier (name{figure.3}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.221 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{table.1}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.221 
-      
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.221 
-       <./assets/eda_amounts.png>]
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:223: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.223 \node[flowbox, below=of time]
+                                    (log) {Log\\Transform};
+This error message was generated by an \errmessage
+command, so I can't give any explicit help.
+Pretend that you're Hercule Poirot: Examine all clues,
+and deduce the truth by order and method.
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:223: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.223 ...x, below=of time] (log) {Log\\Transform};
+                                                  
+(That was another \errmessage.)
+
+
+Overfull \hbox (10.24377pt too wide) in paragraph at lines 227--227
+ []\T1/ppl/m/n/9.03374 (-20) (processed_train.csv) 
+ []
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:229: Package pgf Error: No shape named `raw' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 \draw[flowarrow] (raw)
+                             -- (merge);
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:229: Package pgf Error: No shape named `merge' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 \draw[flowarrow] (raw) -- (merge)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:229: Package pgf Error: No shape named `merge' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 \draw[flowarrow] (raw) -- (merge)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:229: Package pgf Error: No shape named `raw' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.229 \draw[flowarrow] (raw) -- (merge)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:230: Package pgf Error: No shape named `merge' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.230 \draw[flowarrow] (merge)
+                               -- (mem);
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:230: Package pgf Error: No shape named `mem' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.230 \draw[flowarrow] (merge) -- (mem)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:230: Package pgf Error: No shape named `mem' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.230 \draw[flowarrow] (merge) -- (mem)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:230: Package pgf Error: No shape named `merge' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.230 \draw[flowarrow] (merge) -- (mem)
+                                       ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:231: Package pgf Error: No shape named `mem' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.231 \draw[flowarrow] (mem)
+                             -- (time);
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:231: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.231 \draw[flowarrow] (mem) -- (time)
+                                      ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:231: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.231 \draw[flowarrow] (mem) -- (time)
+                                      ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:231: Package pgf Error: No shape named `mem' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.231 \draw[flowarrow] (mem) -- (time)
+                                      ;
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:232: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.232 \draw[flowarrow] (time)
+                              -- (log);
+(That was another \errmessage.)
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:232: Package pgf Error: No shape named `time' is known.
+
+See the pgf package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.232 \draw[flowarrow] (time) -- (log)
+                                      ;
+(That was another \errmessage.)
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:237: Extra }, or forgotten \endgroup.
+\endpgfpicture ...globally \endgroup \hss \egroup 
+                                                  \pgf@restore@layerlist@fro...
+l.237 \end{tikzpicture}
+                       %
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:237: Missing } inserted.
+<inserted text> 
+                }
+l.237 \end{tikzpicture}
+                       %
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:237: Extra }, or forgotten \endgroup.
+\endpgfpicture ...dpicture \endgroup \hss \egroup 
+                                                  \pgfsys@typesetpicturebox ...
+l.237 \end{tikzpicture}
+                       %
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:237: Missing } inserted.
+<inserted text> 
+                }
+l.237 \end{tikzpicture}
+                       %
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:238: Extra }, or forgotten \endgroup.
+l.238 }
+       
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:239: Misplaced \noalign.
+\midrule ->\noalign 
+                    {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global \@...
+l.239 \midrule
+              
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:240: Misplaced alignment tab character &.
+l.240 Very few fraud rows &
+                            The model can not rely on accuracy alone. \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:241: Misplaced alignment tab character &.
+l.241 Many numeric columns &
+                             The model needs to handle high-dimensional tabu...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:242: Misplaced alignment tab character &.
+l.242 Many redundant signals &
+                               Feature pruning is useful before learning. \\
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:243: Misplaced alignment tab character &.
+l.243 Weak one-feature correlation &
+                                     Fraud is a combination problem, not a s...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:244: Misplaced \noalign.
+\bottomrule ->\noalign 
+                       {\ifnum 0=`}\fi \@aboverulesep =\aboverulesep \global...
+l.244 \bottomrule
+                 
+I expect to see \noalign only after the \cr of
+an alignment. Proceed, and I'll ignore this case.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: Misplaced \crcr.
+\tbl_crcr:n ...l_count_missing_cells:n {#1}}\crcr 
+                                                  
+l.245 \end{tabular}
+                   
+I can't figure out why you would want to use a tab mark
+or \cr or \span just now. If something like a right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: Extra }, or forgotten \endgroup.
+\endarray ->\tbl_crcr:n {endarray}\egroup 
+                                          \UseTaggingSocket {tbl/finalize}\t...
+l.245 \end{tabular}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: Extra }, or forgotten \endgroup.
+\endarray ...tbl_restore_outer_cell_data: \egroup 
+                                                  \@arrayright \gdef \@pream...
+l.245 \end{tabular}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: Extra }, or forgotten $.
+<recently read> \egroup 
+                        
+l.245 \end{tabular}
+                   
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: LaTeX Error: \begin{tikzpicture} on input line 214 ended by \end{tabular}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.245 \end{tabular}
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:245: Missing $ inserted.
+<inserted text> 
+                $
+l.245 \end{tabular}
+                   
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:246: LaTeX Error: \begin{figure} on input line 212 ended by \end{table}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.246 \end{table}
+                 
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+<assets/eda_class_imbalance.png, id=25, 348.3414pt x 365.6862pt>
+File: assets/eda_class_imbalance.png Graphic file (type png)
+<use assets/eda_class_imbalance.png>
+Package pdftex.def Info: assets/eda_class_imbalance.png  used on input line 253.
+(pdftex.def)             Requested size: 233.06917pt x 244.67926pt.
+<assets/eda_amounts.png, id=27, 624.4128pt x 397.0032pt>
+File: assets/eda_amounts.png Graphic file (type png)
+<use assets/eda_amounts.png>
+Package pdftex.def Info: assets/eda_amounts.png  used on input line 259.
+(pdftex.def)             Requested size: 233.06917pt x 148.18524pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[3
-pdfTeX warning (ext4): destination with the same identifier (name{figure.5}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.304 \end{document}
-                    
-pdfTeX warning (ext4): destination with the same identifier (name{figure.6}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.304 \end{document}
-                    
-pdfTeX warning (ext4): destination with the same identifier (name{figure.7}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.304 \end{document}
-                    
-pdfTeX warning (ext4): destination with the same identifier (name{figure.8}) has been already used, duplicate ignored
-<argument> ...shipout:D \box_use:N \l_shipout_box 
-                                                  \__shipout_drop_firstpage_...
-l.304 \end{document}
-                    ] (./project_report.aux)
+[2 <./assets/eda_class_imbalance.png>]
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:314: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.314 P
+       runing & Removes missing, flat, and duplicate-like columns & Shrinks ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 314--314
+\T1/ppl/m/n/8.03 (+20) and duplicate-like
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 315--315
+[]|\T1/ppl/m/n/8.03 (+20) Feature
+ []
+
+
+Underfull \hbox (badness 7685) in paragraph at lines 315--315
+[]|\T1/ppl/m/n/8.03 (+20) Adds time and be-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--317
+[]|\T1/ppl/m/n/8.03 (+20) Compresses
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 316--317
+\T1/ppl/m/n/8.03 (+20) pat-terns into
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 317--318
+[]|\T1/ppl/m/n/8.03 (+20) Improves fraud
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:319: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.319 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
+\T1/ppl/m/n/9.53561 (+20) The \T1/pcr/m/n/9.53561 FeatureEngineeringTransformer \T1/ppl/m/n/9.53561 (+20) and
+ []
+
+
+Underfull \hbox (badness 1609) in paragraph at lines 331--332
+\T1/pcr/m/n/9.53561 ClusteringTransformer \T1/ppl/m/n/9.53561 (+20) in \T1/pcr/m/n/9.53561 src/features.py \T1/ppl/m/n/9.53561 (+20) add
+ []
+
+
+
+[3 <./assets/eda_amounts.png>]
+Underfull \hbox (badness 4713) in paragraph at lines 336--337
+[]\T1/ppl/b/n/9.53561 (+20) Temporal En-cod-ing\T1/ppl/m/n/9.53561 (+20) : We ex-tract \T1/pcr/m/n/9.53561 hour \T1/ppl/m/n/9.53561 (+20) (from
+ []
+
+
+
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9.53561> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 384.
+Package pgfplots info on input line 410: Using 'lua backend=false' for axis: x coord trafo unsupported.
+LaTeX Font Info:    Calculating math sizes for size <9.03374> on input line 412.
+
+Underfull \hbox (badness 1540) in paragraph at lines 418--419
+\T1/ppl/b/n/9.53561 (+20) Challenge\T1/ppl/m/n/9.53561 (+20) : Vesta's raw data comes in two files: (1)
+ []
+
+
+
+[4]
+Underfull \hbox (badness 4686) in paragraph at lines 466--467
+[]\T1/ppl/b/n/9.53561 (+20) Solution\T1/ppl/m/n/9.53561 (+20) : Ap-ply the log-plus-one trans-for-ma-tion:
+ []
+
+
+
+Missing character: There is no ; in font nullfont!
+
+Underfull \hbox (badness 10000) in paragraph at lines 515--516
+[]\T1/ppl/b/n/9.53561 (+20) Output of Note-book 1\T1/ppl/m/n/9.53561 (+20) : A clean CSV file,
+ []
+
+
+Underfull \hbox (badness 4132) in paragraph at lines 515--516
+\T1/pcr/m/n/9.53561 data/processed_train.csv\T1/ppl/m/n/9.53561 (+20) , with 472k rows and
+ []
+
+
+Overfull \hbox (10.24377pt too wide) in paragraph at lines 545--545
+ []\T1/ppl/m/n/9.03374 (-20) (processed_train.csv) 
+ []
+
+
+Underfull \vbox (badness 1325) has occurred while \output is active []
+
+
+
+[5]
+Overfull \hbox (136.41292pt too wide) in paragraph at lines 570--571
+ [][] 
+ []
+
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:592: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.592 0
+        & Two raw Kaggle CSVs & train\_transaction.csv + train\_identity.csv...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 2221) in paragraph at lines 592--592
+[]|\T1/ppl/m/n/8.03 (+20) Two raw Kag-gle
+ []
+
+
+Overfull \hbox (26.5893pt too wide) in paragraph at lines 592--592
+[]|\T1/ppl/m/n/8.03 (-20) train_transaction.csv
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 592--592
+\T1/ppl/m/n/8.03 (+20) +
+ []
+
+
+Overfull \hbox (14.48071pt too wide) in paragraph at lines 592--592
+\T1/ppl/m/n/8.03 (-20) train_identity.csv| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 593--593
+[]|\T1/ppl/m/n/8.03 (+20) Reduced
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 593--593
+\T1/ppl/m/n/8.03 (+20) RAM (1.5
+ []
+
+
+Underfull \hbox (badness 1769) in paragraph at lines 593--593
+\T1/ppl/m/n/8.03 (+20) GB -> 0.47
+ []
+
+
+Underfull \hbox (badness 5022) in paragraph at lines 593--594
+[]|\T1/ppl/m/n/8.03 (+20) Enable de-vel-op-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 595--595
+[]|\T1/ppl/m/n/8.03 (+20) Add hour,
+ []
+
+
+Overfull \hbox (0.62877pt too wide) in paragraph at lines 595--595
+\T1/ppl/m/n/8.03 (-20) day_of_week
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
+[]|\T1/ppl/m/n/8.03 (+20) Compress
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 596--596
+\T1/ppl/m/n/8.03 (+20) amount
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--597
+[]|\T1/ppl/m/n/8.03 (+20) Null prun-ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--597
+[]|\T1/ppl/m/n/8.03 (+20) Drop 208
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 597--597
+\T1/ppl/m/n/8.03 (+20) columns,
+ []
+
+
+Underfull \hbox (badness 3260) in paragraph at lines 598--598
+[]|\T1/ppl/m/n/8.03 (+20) Frequency en-cod-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 598--598
+[]|\T1/ppl/m/n/8.03 (+20) Convert
+ []
+
+
+Underfull \hbox (badness 2894) in paragraph at lines 599--599
+[]|\T1/ppl/m/n/8.03 (+20) Fill re-main-
+ []
+
+
+Underfull \hbox (badness 5741) in paragraph at lines 600--600
+[]|\T1/ppl/m/n/8.03 (+20) 472k x 20
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 600--600
+\T1/ppl/m/n/8.03 (+20) nu-meric
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:602: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.602 2
+       a & Stratified 80/20 split & Separate train/test folders & Prevent di...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 602--602
+[]|\T1/ppl/m/n/8.03 (+20) Stratified 80/20
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 602--602
+[]|\T1/ppl/m/n/8.03 (+20) Separate
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 602--602
+\T1/ppl/m/n/8.03 (+20) train/test
+ []
+
+
+Overfull \hbox (5.84831pt too wide) in paragraph at lines 603--603
+[]|\T1/ppl/m/n/8.03 (-20) train_unbalanced.csv| 
+ []
+
+
+Underfull \hbox (badness 3657) in paragraph at lines 603--603
+\T1/ppl/m/n/8.03 (+20) (377k rows,
+ []
+
+
+Overfull \hbox (2.05591pt too wide) in paragraph at lines 588--605
+ [][] 
+ []
+
+
+Overfull \hbox (10.24377pt too wide) in paragraph at lines 642--642
+ []\T1/ppl/m/n/9.03374 (-20) (processed_train.csv) 
+ []
+
+
+Overfull \hbox (16.9752pt too wide) in paragraph at lines 642--642
+ []\T1/ppl/m/n/9.03374 (-20) (train_unbalanced.csv) 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[6]
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:661: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.661 L
+       ogistic Regression (04) & 0.8409 & 0.3405 & Assumes linear separation...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 1681) in paragraph at lines 661--661
+[]|\T1/ppl/m/n/8.03 (+20) Logistic Re-
+ []
+
+
+Underfull \hbox (badness 1635) in paragraph at lines 661--662
+[]|\T1/ppl/m/n/8.03 (+20) Assumes lin-ear sep-a-ra-
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:663: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.663 K
+       NN with PCA (09) & 0.8950 & 0.4220 & Distance-based learner with dime...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--663
+[]|\T1/ppl/m/n/8.03 (+20) KNN with
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+[]|\T1/ppl/m/n/8.03 (+20) Distance-based learner
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) with di-men-sion-al-ity
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) re-duc-tion. Un-able
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) to dis-cover non-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) Euclidean fea-ture
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) re-la-tion-ships; suf-fers
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 663--664
+\T1/ppl/m/n/8.03 (+20) in high-dimensional
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:665: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.665 R
+       andom Forest (07) & 0.9200 & 0.5500 & Strong ensemble baseline; learn...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 1708) in paragraph at lines 665--666
+\T1/ppl/m/n/8.03 (+20) learns non-linear splits
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:667: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.667 X
+       GBoost Baseline (08) & 0.9466 & 0.6920 & Excellent non-linear learner...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--667
+[]|\T1/ppl/m/n/8.03 (+20) XGBoost
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--668
+[]|\T1/ppl/m/n/8.03 (+20) Excellent non-linear
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--668
+\T1/ppl/m/n/8.03 (+20) learner with na-tive
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 667--668
+\T1/pcr/m/n/8.03 scale_pos_weight
+ []
+
+
+Underfull \hbox (badness 6493) in paragraph at lines 667--668
+\T1/ppl/m/n/8.03 (+20) but does not ex-ploit
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:669: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.669 X
+       GBoost + PCA (13) & 0.9540 & 0.6850 & PCA preserves global variance b...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 669--669
+[]|\T1/ppl/m/n/8.03 (+20) XGBoost +
+ []
+
+
+Underfull \hbox (badness 6758) in paragraph at lines 669--670
+[]|\T1/ppl/m/n/8.03 (+20) PCA pre-serves global
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:671: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.671 \textbf
+             {XGBoost + KMeans (Current)} & \textbf{0.9650} & \textbf{0.7930...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 671--671
+[]|\T1/ppl/b/n/8.03 (+20) XGBoost
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 671--671
+\T1/ppl/b/n/8.03 (+20) + KMeans
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+
+
+[7]
+Underfull \hbox (badness 10000) in paragraph at lines 703--703
+[]|\T1/ppl/m/n/8.03 (+20) Minority-class re-trieval
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 703--703
+\T1/ppl/m/n/8.03 (+20) qual-ity un-der heavy
+ []
+
+
+Underfull \hbox (badness 3758) in paragraph at lines 705--706
+[]|\T1/ppl/m/n/8.03 (+20) Increase with-out
+ []
+
+
+
+Package pgfplots info on input line 755: Using 'lua backend=false' for axis: x coord trafo unsupported.
+LaTeX Font Info:    Calculating math sizes for size <7.02625> on input line 757.
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:777: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.777 L
+       ogistic Regression & Fast and interpretable & Misses complex non-line...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 777--778
+[]|\T1/ppl/m/n/8.03 (+20) Misses com-plex
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 777--778
+\T1/ppl/m/n/8.03 (+20) non-linear fraud
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 778--779
+\T1/ppl/m/n/8.03 (+20) on heavy class
+ []
+
+
+Underfull \hbox (badness 1616) in paragraph at lines 779--779
+[]|\T1/ppl/m/n/8.03 (+20) Best rank-ing qual-ity
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:781: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.781 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+
+[8]
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:818: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.818 G
+       oal & Threshold style & Business effect \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:820: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.820 C
+       atch more fraud & Lower threshold & Higher recall, more alerts to rev...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
+[]|\T1/ppl/m/n/8.03 (+20) Catch more
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 821--821
+[]|\T1/ppl/m/n/8.03 (+20) Reduce false
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 821--822
+[]|\T1/ppl/m/n/8.03 (+20) Higher pre-ci-sion,
+ []
+
+
+Underfull \hbox (badness 1817) in paragraph at lines 821--822
+\T1/ppl/m/n/8.03 (+20) fewer blocked safe
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 822--823
+[]|\T1/ppl/m/n/8.03 (+20) Better com-pro-mise
+ []
+
+
+Underfull \hbox (badness 8000) in paragraph at lines 822--823
+\T1/ppl/m/n/8.03 (+20) be-tween loss and
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:824: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.824 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Package pgfplots info on input line 847: Using 'lua backend=false' for axis: x coord trafo unsupported.
+
+
+
+Overfull \hbox (0.8387pt too wide) in paragraph at lines 876--876
+[]|\T1/ppl/m/n/8.03 (-20) Value/Range| 
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:878: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.878 \textbf
+             {scale\_pos\_weight} & 27.6 & Directly matches the class imbala...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (2.23077pt too wide) in paragraph at lines 878--878
+[]|\T1/ppl/b/n/8.03 (-20) scale_pos_weight| 
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:880: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.880 \textbf
+             {n\_estimators} & 300--500 & Number of boosting rounds. Lower v...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 7238) in paragraph at lines 880--881
+[]|\T1/ppl/m/n/8.03 (+20) Number of boost-ing rounds.
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:882: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.882 \textbf
+             {max\_depth} & 9--12 & Maximum tree depth controls interaction ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:884: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.884 \textbf
+             {learning\_rate} (eta) & 0.02--0.03 & Step size for gradient de...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 884--884
+[]|\T1/ppl/b/n/8.03 (+20) learning_rate
+ []
+
+
+Underfull \hbox (badness 3713) in paragraph at lines 884--885
+\T1/ppl/m/n/8.03 (+20) Lower val-ues (0.01--0.02) con-
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:886: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.886 \textbf
+             {subsample} & 0.8 & Fraction of training rows used for each tre...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:888: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.888 \textbf
+             {colsample\_bytree} & 0.8 & Fraction of features used for each ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (2.23856pt too wide) in paragraph at lines 888--888
+[]|\T1/ppl/b/n/8.03 (-20) colsample_bytree| 
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:890: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.890 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (4.70393pt too wide) in paragraph at lines 874--891
+ [][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+
+[9]
+
+
+Underfull \hbox (badness 1565) in paragraph at lines 905--906
+[]|\T1/ppl/m/n/8.03 (+20) Captures high-order fea-
+ []
+
+
+Underfull \hbox (badness 4832) in paragraph at lines 906--907
+[]|\T1/ppl/m/n/8.03 (+20) Controls over-fit-ting via
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 908--908
+[]|\T1/ppl/m/n/8.03 (+20) PR-AUC at
+ []
+
+
+Overfull \hbox (2.17973pt too wide) in paragraph at lines 900--910
+ [][] 
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:926: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.926 /
+       health & GET & Confirms API and model readiness \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (7.7684pt too wide) in paragraph at lines 929--929
+[]|\T1/ppl/m/n/8.03 (-20) /model_evaluations| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 930--931
+[]|\T1/ppl/m/n/8.03 (+20) Returns lat-est ROC/PR
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:933: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.933 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (6.47986pt too wide) in paragraph at lines 951--951
+ [][]\T1/ppl/m/n/9.03374 (-20) latest_metrics.json 
+ []
+
+
+Underfull \vbox (badness 2486) has occurred while \output is active []
+
+
+
+[10]
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:964: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.964 N
+       ew data arrives & Re-run Prefect pipeline & Refreshes model on latest...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 964--964
+[]|\T1/ppl/m/n/8.03 (+20) Re-run Pre-fect
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 965--965
+[]|\T1/ppl/m/n/8.03 (+20) Metrics
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 965--965
+[]|\T1/ppl/m/n/8.03 (+20) Check PR-AUC,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 965--965
+\T1/ppl/m/n/8.03 (+20) drift, con-fu-sion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 966--966
+[]|\T1/ppl/m/n/8.03 (+20) Deployment
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 966--966
+\T1/ppl/m/n/8.03 (+20) can-di-date
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 967--967
+[]|\T1/ppl/m/n/8.03 (+20) Call reload
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 967--968
+[]|\T1/ppl/m/n/8.03 (+20) Activates lat-est
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 967--968
+\T1/ppl/m/n/8.03 (+20) model with-out
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:969: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.969 \end
+          {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1102: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.1102 C
+        omponent & Simple role & When it matters \\
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1104: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.1104 P
+        refect & Runs tasks in order and records failures & During training ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1105--1105
+[]|\T1/ppl/m/n/8.03 (+20) Serves pre-dic-tions
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1105--1106
+[]|\T1/ppl/m/n/8.03 (+20) During in-fer-ence
+ []
+
+
+Underfull \hbox (badness 2951) in paragraph at lines 1106--1106
+[]|\T1/ppl/m/n/8.03 (+20) Packages the whole
+ []
+
+/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex:1109: Undefined control sequence.
+\@BTswitch ->{\CT@arc@ 
+                       \hrule \@height \@thisrulewidth }\futurenonspacelet \...
+l.1109 \end
+           {tabular}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+
+[11]
+
+
+
+[12
+
+] (./project_report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `project_report.out' has not changed.
-(rerunfilecheck)             Checksum: C05DE8BF7EBEDAF1E684139B19EEAC09;2742.
+
+
+Package rerunfilecheck Warning: File `project_report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `project_report.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  13BB0917615D5A83766A6E42196E4472;12294.
  ) 
 Here is how much of TeX's memory you used:
- 34726 strings out of 473190
- 827695 string characters out of 5715800
- 1331442 words of memory out of 5000000
- 57434 multiletter control sequences out of 15000+600000
- 660370 words of font info for 171 fonts, out of 8000000 for 9000
+ 43014 strings out of 473190
+ 1025039 string characters out of 5715800
+ 1522915 words of memory out of 5000000
+ 65069 multiletter control sequences out of 15000+600000
+ 692417 words of font info for 511 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,19n,87p,1094b,2348s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on project_report.pdf (3 pages, 331946 bytes).
+ 84i,19n,87p,1105b,2407s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
+Output written on project_report.pdf (12 pages, 481717 bytes).
 PDF statistics:
- 165 PDF objects out of 1000 (max. 8388607)
- 132 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 143 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 290 PDF objects out of 1000 (max. 8388607)
+ 233 compressed objects within 3 object streams
+ 119 named destinations out of 1000 (max. 500000)
+ 97815 words of extra memory for PDF output out of 106986 (max. 10000000)
 
