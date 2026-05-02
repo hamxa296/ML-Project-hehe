@@ -43,7 +43,9 @@
  fill=techblue!8,
  very thick,
  align=center,
- text width=2.5cm,
+ minimum width=2.2cm,
+ inner xsep=4pt,
+ inner ysep=4pt,
  minimum height=1cm,
  font=\small
  },
@@ -54,7 +56,9 @@
  fill=techblue!6,
  very thick,
  align=center,
- text width=2.3cm,
+ minimum width=2.2cm,
+ inner xsep=4pt,
+ inner ysep=4pt,
  minimum height=0.9cm,
  font=\small
  },
@@ -65,8 +69,9 @@
  very thick,
  align=center,
  aspect=2,
- text width=2.0cm,
- inner sep=2pt,
+ minimum width=2.0cm,
+ inner xsep=2pt,
+ inner ysep=2pt,
  font=\small
  },
  flowarrow/.style={-{Latex[length=2.2mm]}, very thick, draw=techblue}
@@ -128,8 +133,8 @@ The end-to-end system comprises four integrated layers: (1) Automation \& CI/CD 
 
 \begin{figure*}[t]
  \centering
- \includegraphics[width=0.95\textwidth]{assets/system_architecture.png}
- \caption{Complete system architecture showing CI/CD, orchestration, model registry, and serving layers with cleaner, production-quality layout.}
+ \includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/flowcharts/system_architecture.png}
+ \caption{Complete system architecture showing CI/CD, orchestration, model registry, and serving layers with reproducible, script-generated layout.}
 \end{figure*}
 
 \section{Data and Preliminary Analysis}
@@ -179,15 +184,15 @@ The pipeline begins with an automated EDA task (`raw\_eda\_task`) that identifie
 \subsection{Dataset Balance and Signal Distribution}
 The dataset is heavily imbalanced, which is the fundamental challenge a reader must understand before interpreting any model score. Most rows are safe transactions, and a small minority are fraud. That means the model must be judged by whether it can find fraud, not by whether it can simply say "safe" all the time.
 
-\begin{figure*}[t]
+ \begin{figure*}[t]
  \centering
  \begin{tabular}{cc}
-  \includegraphics[width=0.46\textwidth]{assets/eda_class_imbalance.png} &
-  \includegraphics[width=0.46\textwidth]{assets/eda_amounts.png} \\
-  \includegraphics[width=0.46\textwidth]{assets/eda_correlation.png} &
-  \includegraphics[width=0.46\textwidth]{assets/eda_temporal.png}
+  \includegraphics[width=0.46\textwidth]{../project/artifacts/report_figures/raw_eda/01_class_balance.png} &
+  \includegraphics[width=0.46\textwidth]{../project/artifacts/report_figures/raw_eda/02_amount_distribution.png} \\
+  \includegraphics[width=0.46\textwidth]{../project/artifacts/report_figures/raw_eda/04_missingness_correlation.png} &
+  \includegraphics[width=0.46\textwidth]{../project/artifacts/report_figures/raw_eda/03_temporal_patterns.png}
  \end{tabular}
- \caption{Actual EDA outputs from the project: class balance, transaction amount behavior, feature correlation structure, and temporal fraud patterns.}
+ \caption{Reproducible EDA outputs used in the report: class balance, transaction amount behavior, feature correlation structure, and temporal fraud patterns.}
 \end{figure*}
 
 \begin{table}[H]
@@ -214,36 +219,11 @@ Initial analysis revealed that fraud is inherently non-linear. No single feature
 \subsection{Methodology Flow and Stage Gates}
 The methodology follows a robust MLOps sequence: from raw ingestion and baseline comparison to advanced feature enrichment and ML health validation. Each stage has explicit quality criteria, and only stages that pass their quality gates proceed to the next phase.
 
-\begin{figure}[H]
- \centering
- \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=7mm and 8mm]
- \node[flowbox] (ingest) {Data Ingestion};
- \node[flowbox, right=of ingest] (eda) {EDA \& Baselines};
- \node[flowbox, right=of eda] (prep) {Pruning};
- \node[flowbox, right=of prep] (feat) {Feature Engineering};
- \node[flowbox, right=of feat] (cluster) {KMeans Clustering};
- \node[flowbox, right=of cluster] (train) {XGBoost Training};
-
- \node[flowbox, below=of train, yshift=-12mm] (health) {ML Health Checks};
- \node[decision, left=of health] (gate) {Quality Gate};
- \node[stage, below right=of gate, xshift=6mm] (save) {Model Saving};
- \node[stage, below left=of gate, xshift=-6mm] (tasks) {Analytics Tasks};
-
- \draw[flowarrow] (ingest) -- (eda);
- \draw[flowarrow] (eda) -- (prep);
- \draw[flowarrow] (prep) -- (feat);
- \draw[flowarrow] (feat) -- (cluster);
- \draw[flowarrow] (cluster) -- (train);
- \draw[flowarrow] (train) -- (health);
- \draw[flowarrow] (health) -- (gate);
- \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {pass} (save);
- \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {fail} (tasks);
- \draw[flowarrow] (tasks) -| (ingest);
- \end{tikzpicture}%
- }
- \caption{End-to-end methodology flow from data ingestion through model validation and deployment.}
-\end{figure}
+ \begin{figure*}[t]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/flowcharts/methodology_flow.png}
+	\caption{End-to-end methodology flow from data ingestion through model validation and deployment, generated from scripts for clarity.}
+\end{figure*}
 
 \subsection{Preprocessing Philosophy}
 Our methodology is built on a "Pruning-First" foundation. We found through extensive experimentation (documented in the `notebooks/` folder) that engineering features on raw, noisy data leads to significant performance degradation. When practitioners extract features from 431 raw columns without first filtering away high-missingness columns, they inadvertently teach the model to recognize noise patterns rather than true fraud signals. The process therefore follows a deliberate, sequential flow:
@@ -298,10 +278,10 @@ In detail, the clustering layer achieves three concrete improvements:
  \item \textbf{Robustness to Feature Drift}: In production, individual feature distributions shift over time (concept drift). Cluster assignments are more stable because they aggregate multiple features, providing a higher-level signal that resists transient fluctuations.
 \end{enumerate}
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=0.95\textwidth]{assets/methodology_flow.png}
-\caption{End-to-end machine learning methodology from raw data to evaluation, using the actual project workflow graphic.}
+ \begin{figure*}[t]
+ \centering
+ \includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/flowcharts/methodology_flow.png}
+ \caption{End-to-end machine learning methodology from raw data to evaluation, generated programmatically for reproducibility.}
 \end{figure*}
 
 \subsection{Post-Preprocessing Validation}
@@ -346,11 +326,9 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 	\end{axis}
 \end{tikzpicture}
 \caption{Memory footprint after type downsampling: 69\% reduction enables efficient development workflow.}
-\begin{figure*}[t]
- \\centering
- \\includegraphics[width=0.95\\textwidth]{assets/model_comparison.png}
- \\caption{Model comparison and benchmark context rendered from the project's generated evaluation artifact.}
-\\end{figure*}
+	\end{figure}
+
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}
 	\begin{axis}[
@@ -374,11 +352,12 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 	\end{axis}
 \end{tikzpicture}
 \caption{Temporal fraud clustering: fraud rate peaks during off-hours (00:00--06:00 UTC), motivating explicit hour feature extraction.}
-\begin{figure*}[t]
- \\centering
- \\includegraphics[width=0.95\\textwidth]{assets/prefect_orchestration.png}
- \\caption{Operational run order and orchestration flow used during model training and retraining.}
-\\end{figure*}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+	\begin{axis}[
 		xlabel={Missingness Threshold (\%)},
 		width=0.85\columnwidth,
 		height=5cm,
@@ -423,24 +402,22 @@ The raw dataset consists of two separately-collected CSV files (train\_transacti
 	\node[flowbox, right=of merge] (mem) {Memory\\Downcast};
 	\node[flowbox, right=of mem] (time) {Extract\\Hour, Day};
   
-	\node[flowbox, below=of raw] (log) {Log\\Transform};
-	\node[flowbox, right=of log] (prune) {Drop\\>70\% Null};
-	\node[flowbox, right=of prune] (freq) {Frequency\\Encode};
-	\node[flowbox, right=of freq] (impute) {Median\\Impute};
+	\node[flowbox, below=of time, yshift=-0.5cm] (log) {Log\\Transform};
+	\node[flowbox, left=of log] (prune) {Drop\\>70\% Null};
+	\node[flowbox, left=of prune] (freq) {Frequency\\Encode};
+	\node[flowbox, left=of freq] (impute) {Median\\Impute};
   
-	\node[flowbox, below=of log, xshift=4.5cm, yshift=-0.3cm] (output) {Clean CSV\\(processed\_train.csv)};
+	\node[flowbox, below=of impute, yshift=-0.5cm] (output) {Clean CSV\\(processed\_train.csv)};
   
 	\draw[flowarrow] (raw) -- (merge);
 	\draw[flowarrow] (merge) -- (mem);
 	\draw[flowarrow] (mem) -- (time);
-	\draw[flowarrow] (time) -| (output);
+	\draw[flowarrow] (time) -- (log);
   
 	\draw[flowarrow] (log) -- (prune);
 	\draw[flowarrow] (prune) -- (freq);
 	\draw[flowarrow] (freq) -- (impute);
-	\draw[flowarrow] (impute) -| (output);
-  
-	\draw[flowarrow] (raw) -- (log);
+	\draw[flowarrow] (impute) -- (output);
 \end{tikzpicture}%
 }
 \caption{Notebook 01 refinery process: raw CSVs flow through a 7-stage pipeline (merge, memory optimization, time engineering, log transformation, null pruning, frequency encoding, imputation) to produce a clean, numeric dataset.}
@@ -507,34 +484,30 @@ Stage & Transformation & Output & Key Rationale \\
 \begin{figure}[H]
 \centering
 \resizebox{0.98\columnwidth}{!}{%
-\begin{tikzpicture}[node distance=1cm and 0.9cm]
+\begin{tikzpicture}[node distance=0.8cm and 0.8cm]
 	\node[flowbox] (raw) {Raw Kaggle\\Files\\(1.5 GB)};
-  
 	\node[flowbox, right=of raw] (stage1a) {Memory\\Optimization};
 	\node[flowbox, right=of stage1a] (stage1b) {Merge \&\\Join};
 	\node[flowbox, right=of stage1b] (stage1c) {Time\\Features};
   
-	\node[flowbox, below=of raw, yshift=-1.5cm] (stage1d) {Log\\Transform};
-	\node[flowbox, right=of stage1d] (stage1e) {Prune\\Nulls};
-	\node[flowbox, right=of stage1e] (stage1f) {Freq\\Encode};
-	\node[flowbox, right=of stage1f] (stage1g) {Impute\\Median};
+	\node[flowbox, below=of stage1c, yshift=-0.4cm] (stage1d) {Log\\Transform};
+	\node[flowbox, left=of stage1d] (stage1e) {Prune\\Nulls};
+	\node[flowbox, left=of stage1e] (stage1f) {Freq\\Encode};
+	\node[flowbox, left=of stage1f] (stage1g) {Impute\\Median};
   
-	\node[flowbox, below=of stage1d, yshift=-1.5cm] (clean) {Clean CSV\\(processed\_train.csv)};
-  
-	\node[flowbox, right=of clean, xshift=1.5cm] (split) {Stratified\\80/20\\Split};
-  
-	\node[flowbox, right=of split] (output) {\textbf{Train Set}\\(train\_unbalanced.csv)\\377k rows, 3.5\% fraud};
+	\node[flowbox, below=of stage1g, yshift=-0.4cm] (clean) {Clean CSV\\(processed\_train.csv)};
+	\node[flowbox, right=of clean] (split) {Stratified\\80/20\\Split};
+	\node[flowbox, right=of split] (output) {\textbf{Train Set}\\(train\_unbalanced.csv)};
   
 	\draw[flowarrow] (raw) -- (stage1a);
 	\draw[flowarrow] (stage1a) -- (stage1b);
 	\draw[flowarrow] (stage1b) -- (stage1c);
-	\draw[flowarrow] (stage1c) -| (clean);
+	\draw[flowarrow] (stage1c) -- (stage1d);
   
-	\draw[flowarrow] (raw) -- (stage1d);
 	\draw[flowarrow] (stage1d) -- (stage1e);
 	\draw[flowarrow] (stage1e) -- (stage1f);
 	\draw[flowarrow] (stage1f) -- (stage1g);
-	\draw[flowarrow] (stage1g) -| (clean);
+	\draw[flowarrow] (stage1g) -- (clean);
   
 	\draw[flowarrow] (clean) -- (split);
 	\draw[flowarrow] (split) -- (output);
@@ -727,29 +700,11 @@ Balanced operations & Mid threshold + manual review zone & Better compromise bet
 \subsection{Benchmark Context}
 The project targets paper-style performance behavior. A simple benchmark view is shown below.
 
-\begin{figure}[H]
- \centering
- \begin{tikzpicture}
- \begin{axis}[
- ybar,
- bar width=9pt,
- width=0.9\columnwidth,
- height=5.2cm,
- ymin=0,
- ymax=1.0,
- symbolic x coords={PR Target,PR Achieved,ROC Target,ROC Achieved},
- xtick=data,
- x tick label style={rotate=20,anchor=east,font=\scriptsize},
- nodes near coords,
- every node near coord/.append style={font=\scriptsize},
- grid=major,
- grid style={gray!20}
- ]
- \addplot+[fill=techblue!60] coordinates {(PR Target,0.834) (PR Achieved,0.793) (ROC Target,0.887) (ROC Achieved,0.965)};
- \end{axis}
- \end{tikzpicture}
- \caption{Paper benchmark context versus current run summary.}
-\end{figure}
+ \begin{figure*}[t]
+	\centering
+	\includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/model_eval/03_metric_summary.png}
+	\caption{Paper benchmark context versus current run summary, rendered from reproducible evaluation artifacts.}
+\end{figure*}
 
 
 \section{Model Architecture and Hyperparameter Justification}
@@ -836,16 +791,18 @@ Endpoint & Method & What it does \\
 \begin{figure}[H]
  \centering
  \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=8mm and 9mm]
+ \begin{tikzpicture}[node distance=10mm and 15mm]
  \node[stage] (user) {User or Dashboard};
  \node[stage, right=of user] (api) {FastAPI};
  \node[stage, right=of api] (model) {model\_latest.pkl};
  \node[stage, below=of api] (metrics) {latest\_metrics.json};
 
- \draw[flowarrow] (user) -- node[above, font=\scriptsize] {request} (api);
- \draw[flowarrow] (api) -- node[above, font=\scriptsize] {load/score} (model);
- \draw[flowarrow] (model) -- node[above, font=\scriptsize] {probability} (api);
- \draw[flowarrow] (api) -- node[below, font=\scriptsize] {response} (user);
+ \draw[flowarrow] ([yshift=2mm]user.east) -- node[above, font=\scriptsize] {request} ([yshift=2mm]api.west);
+ \draw[flowarrow] ([yshift=-2mm]api.west) -- node[below, font=\scriptsize] {response} ([yshift=-2mm]user.east);
+ 
+ \draw[flowarrow] ([yshift=2mm]api.east) -- node[above, font=\scriptsize] {load/score} ([yshift=2mm]model.west);
+ \draw[flowarrow] ([yshift=-2mm]model.west) -- node[below, font=\scriptsize] {probability} ([yshift=-2mm]api.east);
+ 
  \draw[flowarrow] (metrics) -- node[left, font=\scriptsize] {curves, history} (api);
  \end{tikzpicture}%
  }
@@ -877,17 +834,19 @@ The system is built as a microservices architecture. The React Frontend provides
 \begin{figure}[H]
  \centering
  \resizebox{\columnwidth}{!}{%
- \begin{tikzpicture}[node distance=10mm and 14mm]
+ \begin{tikzpicture}[node distance=15mm and 20mm]
  \node[stage] (frontend) {React Frontend};
- \node[stage, right=of frontend, xshift=8mm] (backend) {FastAPI Backend};
+ \node[stage, right=of frontend] (backend) {FastAPI Backend};
  \node[stage, below=of backend] (models) {Models and Artifacts};
- \node[stage, left=of models, xshift=-8mm] (data) {Shared Data Volume};
+ \node[stage, below=of frontend] (data) {Shared Data Volume};
 
- \draw[flowarrow] (frontend) -- node[above, font=\scriptsize] {API calls} (backend);
- \draw[flowarrow] (backend) -- node[right, font=\scriptsize] {load / save} (models);
- \draw[flowarrow] (backend) -- node[below, font=\scriptsize] {read features} (data);
- \draw[flowarrow] (models) -- node[left, font=\scriptsize] {predictions} (backend);
- \draw[flowarrow] (backend) -- node[below, font=\scriptsize] {responses} (frontend);
+ \draw[flowarrow] ([yshift=2mm]frontend.east) -- node[above, font=\scriptsize] {API calls} ([yshift=2mm]backend.west);
+ \draw[flowarrow] ([yshift=-2mm]backend.west) -- node[below, font=\scriptsize] {responses} ([yshift=-2mm]frontend.east);
+ 
+ \draw[flowarrow] ([xshift=2mm]backend.south) -- node[right, font=\scriptsize] {load / save} ([xshift=2mm]models.north);
+ \draw[flowarrow] ([xshift=-2mm]models.north) -- node[left, font=\scriptsize] {predictions} ([xshift=-2mm]backend.south);
+ 
+ \draw[flowarrow] (backend.south west) -- node[sloped, above, font=\scriptsize] {read features} (data.north east);
  \end{tikzpicture}%
  }
  \caption{Integrated system architecture showing frontend, backend, and shared volumes.}
@@ -907,19 +866,19 @@ To bridge the gap between local development and centralized orchestration, we im
  \resizebox{\columnwidth}{!}{%
  \begin{tikzpicture}[node distance=8mm and 8mm]
  \node[stage] (push) {Code Push};
- \node[stage, right=of push] (actions) {GitHub Actions};
- \node[stage, right=of actions] (tests) {Tests \& Smoke Test};
- \node[stage, right=of tests] (build) {Docker Build};
- \node[decision, right=of build] (gate) {Quality Gate};
- \node[stage, above right=of gate] (deploy) {Deploy};
- \node[stage, below right=of gate] (block) {Block Release};
+ \node[stage, right=of push] (actions) {GitHub\\Actions};
+ \node[stage, right=of actions] (tests) {Tests \&\\Smoke Test};
+ \node[stage, right=of tests] (build) {Docker\\Build};
+ \node[decision, right=of build] (gate) {Quality\\Gate};
+ \node[stage, right=of gate, xshift=4mm] (deploy) {Deploy};
+ \node[stage, below=of gate, yshift=-4mm] (block) {Block\\Release};
 
  \draw[flowarrow] (push) -- (actions);
  \draw[flowarrow] (actions) -- (tests);
  \draw[flowarrow] (tests) -- (build);
  \draw[flowarrow] (build) -- (gate);
- \draw[flowarrow] (gate) -- node[above, font=\scriptsize] {pass} (deploy);
- \draw[flowarrow] (gate) -- node[below, font=\scriptsize] {fail} (block);
+ \draw[flowarrow] (gate.east) -- node[above, font=\scriptsize] {pass} (deploy.west);
+ \draw[flowarrow] (gate.south) -- node[right, font=\scriptsize] {fail} (block.north);
  \end{tikzpicture}%
  }
  \caption{Automated CI/CD workflow featuring cloud smoke testing and local Git hook triggers.}
@@ -928,30 +887,48 @@ To bridge the gap between local development and centralized orchestration, we im
 \subsection{Prefect Orchestration}
 All machine learning tasks are orchestrated by Prefect. This ensures that data loading, training, and evaluation occur in a strict, observable sequence with automated retries and failure logging.
 
-\begin{figure*}[t]
- \centering
- \includegraphics[width=0.95\textwidth]{assets/prefect_orchestration.png}
- \caption{Prefect orchestration flow for model training and validation, rendered from the generated project asset.}
+ \begin{figure*}[t]
+  \centering
+ \includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/flowcharts/prefect_orchestration.png}
+ \caption{Prefect orchestration flow for model training and validation, generated programmatically.}
 \end{figure*}
 
 \section{Operational Notes and Future Work}
 \subsection{How a Full Run Happens}
 A full run starts by loading the CSV files, then the pipeline performs EDA on the raw data, trains the model, runs EDA again on the transformed data, evaluates the result, writes metrics to disk, and only then saves the model. That order is deliberate: it gives us visibility into both the starting data and the transformed features.
 
-\begin{figure*}[t]
- \centering
- \includegraphics[width=0.95\textwidth]{assets/containerization_workflow.png}
- \caption{The end-to-end run order used by Prefect and the training pipeline, shown with the generated orchestration workflow graphic.}
+ \begin{figure*}[t]
+  \centering
+ \includegraphics[width=0.95\textwidth]{../project/artifacts/report_figures/flowcharts/containerization_workflow.png}
+ \caption{The end-to-end run order used by Prefect and the training pipeline, shown with reproducible orchestration graphics.}
 \end{figure*}
 
 \subsection{Monitoring and Model Health}
 Beyond performance metrics, the pipeline incorporates automated drift detection using the **Evidently.ai** framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
 
-\begin{figure*}[t]
- \centering
- \includegraphics[width=0.95\textwidth]{assets/model_comparison.png}
- \caption{Paper benchmark context versus current run summary, rendered from the generated model comparison artifact.}
-\end{figure*}
+\begin{table}[H]
+\centering
+\caption{Project components and their operational roles}
+\begin{tabular}{p{0.22\columnwidth}p{0.32\columnwidth}p{0.28\columnwidth}}
+\toprule
+Component & Simple role & When it matters \\
+\midrule
+Prefect & Orchestrates task sequencing and error handling & During training and retraining \\
+FastAPI & Serves low-latency predictions via HTTP & Real-time inference and UI interaction \\
+Evidently & Automated drift and health reporting & Post-training validation and monitoring \\
+Docker & Environment parity and microservice isolation & Deployment and CI/CD validation \\
+Git Hooks & Local automation and instant feedback & Developer workflow and iteration \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Future Work}
+The next natural improvements are to add live drift monitoring, more robust probability calibration, and better integration between the dashboard and the latest model artifacts. Another useful step would be to add a richer explanation layer so an analyst can see which inputs pushed a prediction toward fraud.
+
+\subsection{Final Observations and Future Work}
+The project bridges research and production engineering by combining a measured modeling strategy with a fully operational serving stack. In practical terms, it shows that a carefully controlled tabular-learning pipeline can still perform strongly in a domain where the minority class is rare, feature redundancy is high, and the deployment environment must remain deterministic. The achieved ROC-AUC exceeds the paper benchmark, while the PR-AUC remains close to the target, confirming that the system is competitive rather than merely functional.
+
+Future work will focus on:
 \begin{itemize}
  \item Integrating **Real-Time Feature Stores** to reduce latency in user behavioral aggregates.
  \item Implementing **Graph Neural Networks (GNNs)** to capture network-level fraudulent relationships.
