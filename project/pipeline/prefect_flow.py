@@ -72,6 +72,7 @@ def load_task():
     
 
 
+
 @task(name="Train Model")
 def train_pipeline_task(X_train, y_train):
     return train_model(X_train, y_train)
