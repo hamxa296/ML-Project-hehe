@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  3 MAY 2026 04:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2026.2.21)  3 MAY 2026 04:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1166,7 +1166,7 @@ Underfull \hbox (badness 6141) in paragraph at lines 196--197
 -i-mum single-feature
  []
 
-<assets/01_class_balance.png, id=186, 472.7115pt x 331.4565pt>
+<assets/01_class_balance.png, id=190, 472.7115pt x 331.4565pt>
 File: assets/01_class_balance.png Graphic file (type png)
 <use assets/01_class_balance.png>
 Package pdftex.def Info: assets/01_class_balance.png  used on input line 201.
@@ -1182,7 +1182,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 
 
-<assets/03_temporal_patterns.png, id=188, 798.5835pt x 345.2535pt>
+<assets/03_temporal_patterns.png, id=192, 798.5835pt x 345.2535pt>
 File: assets/03_temporal_patterns.png Graphic file (type png)
 <use assets/03_temporal_patterns.png>
 Package pdftex.def Info: assets/03_temporal_patterns.png  used on input line 20
@@ -1203,13 +1203,13 @@ Underfull \hbox (badness 4913) in paragraph at lines 222--223
 []|\T1/ppl/m/n/8.03 (+20) Non-linear en-sem-bles (XG-Boost) vs.
  []
 
-<assets/10_category_fraud_rates.png, id=189, 1293.07707pt x 424.72523pt>
+<assets/10_category_fraud_rates.png, id=193, 1293.07707pt x 424.72523pt>
 File: assets/10_category_fraud_rates.png Graphic file (type png)
 <use assets/10_category_fraud_rates.png>
 Package pdftex.def Info: assets/10_category_fraud_rates.png  used on input line
  234.
 (pdftex.def)             Requested size: 252.94499pt x 83.07707pt.
-<assets/09_correlation_matrix.png, id=190, 915.6053pt x 860.013pt>
+<assets/09_correlation_matrix.png, id=194, 915.6053pt x 860.013pt>
 File: assets/09_correlation_matrix.png Graphic file (type png)
 <use assets/09_correlation_matrix.png>
 Package pdftex.def Info: assets/09_correlation_matrix.png  used on input line 2
@@ -1227,13 +1227,13 @@ Underfull \hbox (badness 1484) in paragraph at lines 241--241
 
 [2 <./assets/01_class_balance.png> <./assets/03_temporal_patterns.png> <./asset
 s/10_category_fraud_rates.png>]
-<assets/11_outlier_analysis.png, id=213, 714.91708pt x 352.45523pt>
+<assets/11_outlier_analysis.png, id=217, 714.91708pt x 352.45523pt>
 File: assets/11_outlier_analysis.png Graphic file (type png)
 <use assets/11_outlier_analysis.png>
 Package pdftex.def Info: assets/11_outlier_analysis.png  used on input line 246
 .
 (pdftex.def)             Requested size: 252.94499pt x 124.7003pt.
-<assets/08_v_features_missing.png, id=214, 1003.99707pt x 352.45523pt>
+<assets/08_v_features_missing.png, id=218, 1003.99707pt x 352.45523pt>
 File: assets/08_v_features_missing.png Graphic file (type png)
 <use assets/08_v_features_missing.png>
 Package pdftex.def Info: assets/08_v_features_missing.png  used on input line 2
@@ -1257,13 +1257,13 @@ Underfull \hbox (badness 1509) in paragraph at lines 285--286
 e is
  []
 
-<assets/p01_engineered_features.png, id=215, 1437.06116pt x 710.4697pt>
+<assets/p01_engineered_features.png, id=219, 1437.06116pt x 710.4697pt>
 File: assets/p01_engineered_features.png Graphic file (type png)
 <use assets/p01_engineered_features.png>
 Package pdftex.def Info: assets/p01_engineered_features.png  used on input line
  289.
 (pdftex.def)             Requested size: 252.94499pt x 125.04955pt.
-<assets/p02_cluster_analysis.png, id=216, 1293.07707pt x 426.94893pt>
+<assets/p02_cluster_analysis.png, id=220, 1293.07707pt x 426.94893pt>
 File: assets/p02_cluster_analysis.png Graphic file (type png)
 <use assets/p02_cluster_analysis.png>
 Package pdftex.def Info: assets/p02_cluster_analysis.png  used on input line 29
@@ -1273,19 +1273,19 @@ Package pdftex.def Info: assets/p02_cluster_analysis.png  used on input line 29
 
 [3 <./assets/09_correlation_matrix.png> <./assets/11_outlier_analysis.png> <./a
 ssets/08_v_features_missing.png> <./assets/p01_engineered_features.png>]
-<assets/p04_pca_visualisation.png, id=232, 1148.53708pt x 496.99522pt>
+<assets/p04_pca_visualisation.png, id=236, 1148.53708pt x 496.99522pt>
 File: assets/p04_pca_visualisation.png Graphic file (type png)
 <use assets/p04_pca_visualisation.png>
 Package pdftex.def Info: assets/p04_pca_visualisation.png  used on input line 3
 01.
 (pdftex.def)             Requested size: 252.94499pt x 109.45303pt.
-<assets/p07_mutual_information.png, id=233, 714.91708pt x 641.53523pt>
+<assets/p07_mutual_information.png, id=237, 714.91708pt x 641.53523pt>
 File: assets/p07_mutual_information.png Graphic file (type png)
 <use assets/p07_mutual_information.png>
 Package pdftex.def Info: assets/p07_mutual_information.png  used on input line 
 307.
 (pdftex.def)             Requested size: 252.94499pt x 226.97815pt.
-<assets/p05_top_feature_distributions.png, id=234, 1436.50523pt x 1135.75084pt>
+<assets/p05_top_feature_distributions.png, id=238, 1436.50523pt x 1135.75084pt>
 
 File: assets/p05_top_feature_distributions.png Graphic file (type png)
 <use assets/p05_top_feature_distributions.png>
@@ -1308,7 +1308,7 @@ Underfull \hbox (badness 1881) in paragraph at lines 328--329
 -creases from 1.5 GB to
  []
 
-<assets/03_transaction_amount.png, id=235, 1002.88522pt x 732.1507pt>
+<assets/03_transaction_amount.png, id=239, 1002.88522pt x 732.1507pt>
 File: assets/03_transaction_amount.png Graphic file (type png)
 <use assets/03_transaction_amount.png>
 Package pdftex.def Info: assets/03_transaction_amount.png  used on input line 3
@@ -1336,7 +1336,7 @@ Underfull \hbox (badness 1515) in paragraph at lines 341--342
 d
  []
 
-<assets/04_time_analysis.png, id=248, 1003.99707pt x 710.4697pt>
+<assets/04_time_analysis.png, id=252, 1003.99707pt x 710.4697pt>
 File: assets/04_time_analysis.png Graphic file (type png)
 <use assets/04_time_analysis.png>
 Package pdftex.def Info: assets/04_time_analysis.png  used on input line 358.
@@ -1354,7 +1354,7 @@ Underfull \hbox (badness 1546) in paragraph at lines 365--366
 [] \OT1/cmr/m/n/10 = [][](1 + [])$\T1/ppl/m/n/9.53561 (+20) . The
  []
 
-<assets/07_v_features_corr.png, id=249, 711.58154pt x 569.26523pt>
+<assets/07_v_features_corr.png, id=253, 711.58154pt x 569.26523pt>
 File: assets/07_v_features_corr.png Graphic file (type png)
 <use assets/07_v_features_corr.png>
 Package pdftex.def Info: assets/07_v_features_corr.png  used on input line 378.
@@ -1709,12 +1709,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 581--582
 
  []
 
-<assets/01_roc_pr_curves.png, id=281, 801.54pt x 402.741pt>
+<assets/01_roc_pr_curves.png, id=285, 801.54pt x 402.741pt>
 File: assets/01_roc_pr_curves.png Graphic file (type png)
 <use assets/01_roc_pr_curves.png>
 Package pdftex.def Info: assets/01_roc_pr_curves.png  used on input line 585.
 (pdftex.def)             Requested size: 252.94499pt x 127.09146pt.
-<assets/04_confusion_matrix.png, id=282, 413.91pt x 348.21pt>
+<assets/04_confusion_matrix.png, id=286, 413.91pt x 348.21pt>
 File: assets/04_confusion_matrix.png Graphic file (type png)
 <use assets/04_confusion_matrix.png>
 Package pdftex.def Info: assets/04_confusion_matrix.png  used on input line 591
@@ -1722,7 +1722,7 @@ Package pdftex.def Info: assets/04_confusion_matrix.png  used on input line 591
 (pdftex.def)             Requested size: 252.94499pt x 212.79565pt.
 
 
-<assets/02_threshold_tradeoff.png, id=283, 577.503pt x 361.6785pt>
+<assets/02_threshold_tradeoff.png, id=287, 577.503pt x 361.6785pt>
 File: assets/02_threshold_tradeoff.png Graphic file (type png)
 <use assets/02_threshold_tradeoff.png>
 Package pdftex.def Info: assets/02_threshold_tradeoff.png  used on input line 5
@@ -1796,73 +1796,90 @@ Underfull \hbox (badness 10000) in paragraph at lines 662--663
 
 
 [10]
+<assets/dashboard_overview.png, id=307, 1027.84pt x 525.965pt>
+File: assets/dashboard_overview.png Graphic file (type png)
+<use assets/dashboard_overview.png>
+Package pdftex.def Info: assets/dashboard_overview.png  used on input line 742.
+
+(pdftex.def)             Requested size: 252.94499pt x 129.43637pt.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 773--773
+<assets/dashboard_registry.png, id=308, 1027.84pt x 532.99126pt>
+File: assets/dashboard_registry.png Graphic file (type png)
+<use assets/dashboard_registry.png>
+Package pdftex.def Info: assets/dashboard_registry.png  used on input line 754.
+
+(pdftex.def)             Requested size: 252.94499pt x 131.1655pt.
+
+
+[11 <./assets/dashboard_overview.png> <./assets/dashboard_registry.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 796--796
 []|\T1/ppl/m/n/8.03 (+20) Orchestrates task
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 775--775
+Underfull \hbox (badness 10000) in paragraph at lines 798--798
 []|\T1/ppl/m/n/8.03 (+20) Serves low-latency
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 779--779
+Underfull \hbox (badness 10000) in paragraph at lines 802--802
 []|\T1/ppl/m/n/8.03 (+20) Environment par-ity
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 779--779
+Underfull \hbox (badness 10000) in paragraph at lines 802--802
 \T1/ppl/m/n/8.03 (+20) and mi-croser-vice
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 779--780
+Underfull \hbox (badness 10000) in paragraph at lines 802--803
 []|\T1/ppl/m/n/8.03 (+20) Deployment and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 781--782
+Underfull \hbox (badness 10000) in paragraph at lines 804--805
 []|\T1/ppl/m/n/8.03 (+20) Developer work-
  []
 
 
 
-[11]
-Underfull \hbox (badness 2165) in paragraph at lines 799--803
+
+Underfull \hbox (badness 2165) in paragraph at lines 822--826
 \T1/ppl/m/n/8.03 (+20) Production-Grade Fraud De-tec-tion Ecosys-tem: Source Co
 de
  []
 
 
-Underfull \hbox (badness 1466) in paragraph at lines 799--803
+Underfull \hbox (badness 1466) in paragraph at lines 822--826
 \T1/ppl/m/n/8.03 (+20) and Ar-ti-facts,'' GitHub repos-i-tory, 2026. [On-line].
  Avail-able:
  []
 
 
+Underfull \hbox (badness 10000) in paragraph at lines 833--836
+\T1/ppl/m/n/8.03 (+20) [On-line]. Avail-able: []$https : / / www . kaggle . com
+ / competitions /
+ []
 
 
 
-[12
-
-] (./project_report.aux)
+[12] (./project_report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `project_report.out' has not changed.
-(rerunfilecheck)             Checksum: 3D94EE6C90417BD5A566696B48A61E94;9718.
+(rerunfilecheck)             Checksum: BD442C309A8564BC8DBD32A158C3A997;10006.
  ) 
 Here is how much of TeX's memory you used:
- 43186 strings out of 473190
- 1027494 string characters out of 5715800
- 1503148 words of memory out of 5000000
- 65303 multiletter control sequences out of 15000+600000
- 691168 words of font info for 467 fonts, out of 8000000 for 9000
+ 43217 strings out of 473190
+ 1028185 string characters out of 5715800
+ 1503165 words of memory out of 5000000
+ 65319 multiletter control sequences out of 15000+600000
+ 691571 words of font info for 473 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,90p,1011b,1163s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,11n,90p,1011b,1033s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 ></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><
 /usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
@@ -1879,10 +1896,10 @@ nts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/ty
 pe1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw
 /palatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/palati
 no/uplri8a.pfb>
-Output written on project_report.pdf (12 pages, 2279595 bytes).
+Output written on project_report.pdf (12 pages, 2409136 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 328 compressed objects within 4 object streams
- 96 named destinations out of 1000 (max. 500000)
- 102834 words of extra memory for PDF output out of 106986 (max. 10000000)
+ 428 PDF objects out of 1000 (max. 8388607)
+ 340 compressed objects within 4 object streams
+ 102 named destinations out of 1000 (max. 500000)
+ 102852 words of extra memory for PDF output out of 106986 (max. 10000000)
 

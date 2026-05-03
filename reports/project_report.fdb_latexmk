@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1777763346.97483 "/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex" "project_report.pdf" "project_report" 1777763351.30087 0
-  "/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex" 1777763343.76534 46202 03e2900e8d15f48a324c63e38816b522 ""
+["pdflatex"] 1777764951.80628 "/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex" "project_report.pdf" "project_report" 1777764956.37191 0
+  "/Users/hassan/Library/CloudStorage/OneDrive-HigherEducationCommission/ML-Project-hehe/reports/project_report.tex" 1777764950.607 48065 e8eac05230d8d2ebab8afcb7984eadb8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -270,14 +270,16 @@
   "assets/09_correlation_matrix.png" 1777761578.90592 210284 70d4daeaea1d8048d8886fb7dd0aaf31 ""
   "assets/10_category_fraud_rates.png" 1777761578.90621 96580 5cb2f1752ada2779853335e9127777ce ""
   "assets/11_outlier_analysis.png" 1777761578.90655 78506 f291c0c194859ca3a48ffc38f9784c2a ""
+  "assets/dashboard_overview.png" 1777764933.22893 90009 8d4ebf88f0653421e2bad812eb7268a4 ""
+  "assets/dashboard_registry.png" 1777764933.22645 98275 64547273027511d3c66dd0d73c26eac6 ""
   "assets/p01_engineered_features.png" 1777761578.92919 246289 4f7bcde680931d216cc9ec263618ed00 ""
   "assets/p02_cluster_analysis.png" 1777761578.92964 130438 d6b5278ffa4695a601ebfc858b125ffb ""
   "assets/p04_pca_visualisation.png" 1777761578.93039 473452 33566fb6caae0201ea44129e8cf66dcc ""
   "assets/p05_top_feature_distributions.png" 1777761578.93237 311068 5e4feccb543bc82d6a184c21ada4bdcf ""
   "assets/p07_mutual_information.png" 1777761578.93351 134482 39428d9b055b46906e56874214f9efb2 ""
-  "project_report.aux" 1777763351.18405 15016 e8bbe0c7aa0f55b867f50e722ef8b3a7 "pdflatex"
-  "project_report.out" 1777763351.18544 9718 3d94ee6c90417bd5a566696b48a61e94 "pdflatex"
-  "project_report.tex" 1777763343.76534 46202 03e2900e8d15f48a324c63e38816b522 ""
+  "project_report.aux" 1777764956.17205 15847 611ec2bd9e75c8b857311e8d3721cd52 "pdflatex"
+  "project_report.out" 1777764956.17345 10006 bd442c309a8564bc8dbd32a158c3a997 "pdflatex"
+  "project_report.tex" 1777764950.607 48065 e8eac05230d8d2ebab8afcb7984eadb8 ""
   (generated)
   "project_report.aux"
   "project_report.log"
