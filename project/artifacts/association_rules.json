@@ -34,8 +34,8 @@
         "ProductCD=0.1160277034578521"
       ],
       "consequents": [
-        "isFraud=Yes",
-        "Amt=Low"
+        "Amt=Low",
+        "isFraud=Yes"
       ],
       "support": 0.01317,
       "confidence": 0.113,
@@ -69,8 +69,8 @@
         "card6=0.2522877366478138"
       ],
       "consequents": [
-        "isFraud=Yes",
-        "Amt=Low"
+        "Amt=Low",
+        "isFraud=Yes"
       ],
       "support": 0.01682,
       "confidence": 0.0669,

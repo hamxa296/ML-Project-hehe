@@ -12,107 +12,107 @@
     {
       "window": 3519,
       "actual": 4.0,
-      "predicted": 4.6837848974380085
+      "predicted": 4.683784897438007
     },
     {
       "window": 3520,
       "actual": 3.0,
-      "predicted": 5.138008479906373
+      "predicted": 5.1380084799063725
     },
     {
       "window": 3521,
       "actual": 7.0,
-      "predicted": 5.8302370950476305
+      "predicted": 5.83023709504763
     },
     {
       "window": 3522,
       "actual": 4.0,
-      "predicted": 6.2274166272263445
+      "predicted": 6.227416627226344
     },
     {
       "window": 3523,
       "actual": 7.0,
-      "predicted": 6.720155082431481
+      "predicted": 6.72015508243148
     },
     {
       "window": 3524,
       "actual": 7.0,
-      "predicted": 6.621834458912128
+      "predicted": 6.621834458912126
     },
     {
       "window": 3525,
       "actual": 4.0,
-      "predicted": 6.734355561534524
+      "predicted": 6.7343555615345245
     },
     {
       "window": 3526,
       "actual": 3.0,
-      "predicted": 6.483847828066478
+      "predicted": 6.4838478280664775
     },
     {
       "window": 3527,
       "actual": 5.0,
-      "predicted": 5.870264152915743
+      "predicted": 5.870264152915744
     },
     {
       "window": 3528,
       "actual": 6.0,
-      "predicted": 5.430350548163288
+      "predicted": 5.43035054816329
     },
     {
       "window": 3529,
       "actual": 2.0,
-      "predicted": 4.900446254673154
+      "predicted": 4.900446254673156
     },
     {
       "window": 3530,
       "actual": 1.0,
-      "predicted": 4.279734891680533
+      "predicted": 4.279734891680534
     },
     {
       "window": 3531,
       "actual": 2.0,
-      "predicted": 3.2865932190078126
+      "predicted": 3.2865932190078144
     },
     {
       "window": 3532,
       "actual": 0.0,
-      "predicted": 2.5191986625746807
+      "predicted": 2.519198662574684
     },
     {
       "window": 3533,
       "actual": 0.0,
-      "predicted": 2.069542894025676
+      "predicted": 2.069542894025678
     },
     {
       "window": 3534,
       "actual": 0.0,
-      "predicted": 1.538757133479387
+      "predicted": 1.5387571334793888
     },
     {
       "window": 3535,
       "actual": 0.0,
-      "predicted": 1.2002752770653577
+      "predicted": 1.2002752770653595
     },
     {
       "window": 3536,
       "actual": 1.0,
-      "predicted": 1.1478342428206076
+      "predicted": 1.147834242820609
     },
     {
       "window": 3537,
       "actual": 1.0,
-      "predicted": 1.310739148584001
+      "predicted": 1.3107391485840028
     },
     {
       "window": 3538,
       "actual": 4.0,
-      "predicted": 1.6811586034686616
+      "predicted": 1.6811586034686625
     },
     {
       "window": 3539,
       "actual": 8.0,
-      "predicted": 2.1935944761351385
+      "predicted": 2.193594476135139
     },
     {
       "window": 3540,
@@ -122,32 +122,32 @@
     {
       "window": 3541,
       "actual": 3.0,
-      "predicted": 4.1122490893676575
+      "predicted": 4.112249089367657
     },
     {
       "window": 3542,
       "actual": 2.0,
-      "predicted": 4.549687717225568
+      "predicted": 4.5496877172255665
     },
     {
       "window": 3543,
       "actual": 5.0,
-      "predicted": 5.241159208560674
+      "predicted": 5.241159208560672
     },
     {
       "window": 3544,
       "actual": 2.0,
-      "predicted": 5.828894995373948
+      "predicted": 5.828894995373945
     },
     {
       "window": 3545,
       "actual": 4.0,
-      "predicted": 6.523903484362692
+      "predicted": 6.523903484362689
     },
     {
       "window": 3546,
       "actual": 3.0,
-      "predicted": 6.58830722685253
+      "predicted": 6.588307226852527
     },
     {
       "window": 3547,
@@ -157,87 +157,87 @@
     {
       "window": 3548,
       "actual": 6.0,
-      "predicted": 6.8405838059428214
+      "predicted": 6.840583805942821
     },
     {
       "window": 3549,
       "actual": 2.0,
-      "predicted": 6.611858061633467
+      "predicted": 6.611858061633468
     },
     {
       "window": 3550,
       "actual": 2.0,
-      "predicted": 6.489810612695983
+      "predicted": 6.489810612695984
     },
     {
       "window": 3551,
       "actual": 2.0,
-      "predicted": 5.83009069698291
+      "predicted": 5.830090696982911
     },
     {
       "window": 3552,
       "actual": 1.0,
-      "predicted": 5.15618483586921
+      "predicted": 5.1561848358692135
     },
     {
       "window": 3553,
       "actual": 4.0,
-      "predicted": 4.464945073441784
+      "predicted": 4.464945073441788
     },
     {
       "window": 3554,
       "actual": 2.0,
-      "predicted": 3.7251544751700854
+      "predicted": 3.725154475170089
     },
     {
       "window": 3555,
       "actual": 0.0,
-      "predicted": 3.1643937507920277
+      "predicted": 3.164393750792031
     },
     {
       "window": 3556,
       "actual": 0.0,
-      "predicted": 2.4824001032089
+      "predicted": 2.482400103208903
     },
     {
       "window": 3557,
       "actual": 0.0,
-      "predicted": 1.8216636251334366
+      "predicted": 1.8216636251334402
     },
     {
       "window": 3558,
       "actual": 1.0,
-      "predicted": 1.4101300887251043
+      "predicted": 1.4101300887251074
     },
     {
       "window": 3559,
       "actual": 0.0,
-      "predicted": 1.2297161518821356
+      "predicted": 1.2297161518821382
     },
     {
       "window": 3560,
       "actual": 0.0,
-      "predicted": 1.2223003608663197
+      "predicted": 1.2223003608663219
     },
     {
       "window": 3561,
       "actual": 1.0,
-      "predicted": 1.3002284224704153
+      "predicted": 1.300228422470418
     },
     {
       "window": 3562,
       "actual": 0.0,
-      "predicted": 1.628198253089332
+      "predicted": 1.6281982530893342
     },
     {
       "window": 3563,
       "actual": 2.0,
-      "predicted": 2.189595813955225
+      "predicted": 2.1895958139552265
     },
     {
       "window": 3564,
       "actual": 3.0,
-      "predicted": 2.7457328078235657
+      "predicted": 2.7457328078235665
     },
     {
       "window": 3565,
@@ -247,7 +247,7 @@
     {
       "window": 3566,
       "actual": 3.0,
-      "predicted": 4.348325727914137
+      "predicted": 4.348325727914136
     },
     {
       "window": 3567,
@@ -262,12 +262,12 @@
     {
       "window": 3569,
       "actual": 9.0,
-      "predicted": 6.535120551573676
+      "predicted": 6.535120551573675
     },
     {
       "window": 3570,
       "actual": 3.0,
-      "predicted": 7.030541518990229
+      "predicted": 7.030541518990228
     },
     {
       "window": 3571,
@@ -277,12 +277,12 @@
     {
       "window": 3572,
       "actual": 5.0,
-      "predicted": 7.155439263309646
+      "predicted": 7.1554392633096455
     },
     {
       "window": 3573,
       "actual": 9.0,
-      "predicted": 7.013408007563905
+      "predicted": 7.013408007563906
     },
     {
       "window": 3574,
@@ -297,67 +297,67 @@
     {
       "window": 3576,
       "actual": 6.0,
-      "predicted": 5.301401669033796
+      "predicted": 5.301401669033797
     },
     {
       "window": 3577,
       "actual": 0.0,
-      "predicted": 4.472850233429654
+      "predicted": 4.472850233429656
     },
     {
       "window": 3578,
       "actual": 8.0,
-      "predicted": 3.9785860113570273
+      "predicted": 3.97858601135703
     },
     {
       "window": 3579,
       "actual": 2.0,
-      "predicted": 2.940794108327391
+      "predicted": 2.9407941083273923
     },
     {
       "window": 3580,
       "actual": 5.0,
-      "predicted": 2.6937459112248194
+      "predicted": 2.6937459112248225
     },
     {
       "window": 3581,
       "actual": 1.0,
-      "predicted": 1.881847407086548
+      "predicted": 1.881847407086549
     },
     {
       "window": 3582,
       "actual": 0.0,
-      "predicted": 1.6922235676459727
+      "predicted": 1.6922235676459754
     },
     {
       "window": 3583,
       "actual": 0.0,
-      "predicted": 1.1942841326087685
+      "predicted": 1.194284132608769
     },
     {
       "window": 3584,
       "actual": 0.0,
-      "predicted": 1.129907335210266
+      "predicted": 1.1299073352102686
     },
     {
       "window": 3585,
       "actual": 0.0,
-      "predicted": 1.1213239619247193
+      "predicted": 1.1213239619247197
     },
     {
       "window": 3586,
       "actual": 2.0,
-      "predicted": 1.434028153954523
+      "predicted": 1.4340281539545243
     },
     {
       "window": 3587,
       "actual": 1.0,
-      "predicted": 1.8054393179488102
+      "predicted": 1.805439317948811
     },
     {
       "window": 3588,
       "actual": 1.0,
-      "predicted": 2.51902802013415
+      "predicted": 2.5190280201341517
     },
     {
       "window": 3589,
@@ -377,117 +377,117 @@
     {
       "window": 3592,
       "actual": 3.0,
-      "predicted": 5.095317073617835
+      "predicted": 5.095317073617836
     },
     {
       "window": 3593,
       "actual": 2.0,
-      "predicted": 5.529638579654638
+      "predicted": 5.529638579654639
     },
     {
       "window": 3594,
       "actual": 8.0,
-      "predicted": 6.079929976114897
+      "predicted": 6.079929976114899
     },
     {
       "window": 3595,
       "actual": 1.0,
-      "predicted": 6.255139990681295
+      "predicted": 6.255139990681297
     },
     {
       "window": 3596,
       "actual": 3.0,
-      "predicted": 6.711289034894151
+      "predicted": 6.711289034894152
     },
     {
       "window": 3597,
       "actual": 1.0,
-      "predicted": 6.2228407922000954
+      "predicted": 6.222840792200097
     },
     {
       "window": 3598,
       "actual": 4.0,
-      "predicted": 5.988268409504321
+      "predicted": 5.9882684095043235
     },
     {
       "window": 3599,
       "actual": 0.0,
-      "predicted": 5.373207248590055
+      "predicted": 5.373207248590058
     },
     {
       "window": 3600,
       "actual": 2.0,
-      "predicted": 4.587327199556038
+      "predicted": 4.58732719955604
     },
     {
       "window": 3601,
       "actual": 0.0,
-      "predicted": 3.546663643744855
+      "predicted": 3.546663643744857
     },
     {
       "window": 3602,
       "actual": 4.0,
-      "predicted": 2.944947581382953
+      "predicted": 2.9449475813829578
     },
     {
       "window": 3603,
       "actual": 2.0,
-      "predicted": 2.1246004039813267
+      "predicted": 2.12460040398133
     },
     {
       "window": 3604,
       "actual": 0.0,
-      "predicted": 1.8051891021458975
+      "predicted": 1.8051891021459014
     },
     {
       "window": 3605,
       "actual": 1.0,
-      "predicted": 1.1941102488895887
+      "predicted": 1.194110248889591
     },
     {
       "window": 3606,
       "actual": 0.0,
-      "predicted": 0.718605045475551
+      "predicted": 0.718605045475555
     },
     {
       "window": 3607,
       "actual": 0.0,
-      "predicted": 0.5460713494137281
+      "predicted": 0.5460713494137308
     },
     {
       "window": 3608,
       "actual": 0.0,
-      "predicted": 0.5216957207309312
+      "predicted": 0.5216957207309334
     },
     {
       "window": 3609,
       "actual": 0.0,
-      "predicted": 0.6068547118372729
+      "predicted": 0.6068547118372747
     },
     {
       "window": 3610,
       "actual": 1.0,
-      "predicted": 0.8957273933827139
+      "predicted": 0.8957273933827152
     },
     {
       "window": 3611,
       "actual": 0.0,
-      "predicted": 1.3839178322009897
+      "predicted": 1.3839178322009906
     },
     {
       "window": 3612,
       "actual": 0.0,
-      "predicted": 2.031338089427647
+      "predicted": 2.031338089427648
     },
     {
       "window": 3613,
       "actual": 1.0,
-      "predicted": 2.648027046723911
+      "predicted": 2.6480270467239113
     },
     {
       "window": 3614,
       "actual": 4.0,
-      "predicted": 3.3238473349773594
+      "predicted": 3.32384733497736
     },
     {
       "window": 3615,
