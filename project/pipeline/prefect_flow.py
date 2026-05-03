@@ -235,6 +235,60 @@ def evidently_report_task(X_train, X_test, y_train, y_test, pipeline):
     print(f">>> Evidently report generated at {report_path}")
 
 
+# ── Phase 1: Analytical ML Tasks ─────────────────────────────────────────────
+
+@task(name="Regression — Transaction Velocity Forecasting")
+def regression_task(train_df: pd.DataFrame):
+    """Ridge regression: predict next-window fraud count from lag + time features."""
+    from src.regression import run_regression
+    graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
+    return run_regression(train_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
+
+
+@task(name="Time Series — Fraud Rate Analysis")
+def timeseries_task(train_df: pd.DataFrame):
+    """Descriptive time series: rolling fraud rates, z-score anomaly detection, heatmap."""
+    from src.timeseries import run_timeseries
+    graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
+    return run_timeseries(train_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
+
+
+@task(name="Dimensionality Reduction — PCA")
+def dimensionality_reduction_task(pipeline, X_train: pd.DataFrame, y_train: pd.Series):
+    """PCA on processed feature space — 2D scatter plot, variance explained."""
+    from src.dimensionality_reduction import run_dimensionality_reduction
+    
+    # Access each fitted step directly by name
+    steps = pipeline.named_steps
+    X_t = steps['prune'].transform(X_train)
+    X_t = steps['fe'].transform(X_t)
+    X_t = steps['clustering'].transform(X_t)
+    
+    feature_names = list(X_t.columns)
+    graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
+    return run_dimensionality_reduction(
+        X_t.values, y_train, feature_names,
+        artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir
+    )
+
+
+@task(name="Clustering — Behaviour Profile Analysis")
+def clustering_analysis_task(pipeline, X_train: pd.DataFrame, y_train: pd.Series):
+    """Profile KMeans clusters: fraud rate per cluster, feature centroids."""
+    from src.clustering_analysis import run_clustering_analysis
+    graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
+    return run_clustering_analysis(pipeline, X_train, y_train,
+                                   artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
+
+
+@task(name="Association Rules — Fraud Pattern Mining")
+def association_task(train_df: pd.DataFrame):
+    """FPGrowth on categorical features — finds fraud-consequent association rules."""
+    from src.association import run_association
+    graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
+    return run_association(train_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
+
+
 # ── Main Flow ─────────────────────────────────────────────────────────────────
 
 from pipeline.notify import send_email
