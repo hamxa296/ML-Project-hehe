@@ -1,10 +1,10 @@
-14:31:09.008 | INFO    | prefect.engine - Created flow run 'cryptic-collie' for flow 'Robust Fraud Detection Unified Pipeline'
-14:31:09.023 | INFO    | Flow run 'cryptic-collie' - View at http://localhost:4200/flow-runs/flow-run/1e722cd8-091c-4791-8904-1e4a41384e86
-14:31:09.212 | INFO    | Flow run 'cryptic-collie' - Created task run 'Load Data-0' for task 'Load Data'
-14:31:09.217 | INFO    | Flow run 'cryptic-collie' - Executing 'Load Data-0' immediately...
-14:31:30.567 | INFO    | Task run 'Load Data-0' - Finished in state Completed()
-14:31:44.403 | INFO    | Flow run 'cryptic-collie' - Created task run 'Raw Data EDA-0' for task 'Raw Data EDA'
-14:31:44.406 | INFO    | Flow run 'cryptic-collie' - Executing 'Raw Data EDA-0' immediately...
+15:23:21.161 | INFO    | prefect.engine - Created flow run 'merciful-camel' for flow 'Robust Fraud Detection Unified Pipeline'
+15:23:21.171 | INFO    | Flow run 'merciful-camel' - View at http://localhost:4200/flow-runs/flow-run/10adea65-7a29-46f7-9878-d7a73b26189d
+15:23:21.403 | INFO    | Flow run 'merciful-camel' - Created task run 'Load Data-0' for task 'Load Data'
+15:23:21.407 | INFO    | Flow run 'merciful-camel' - Executing 'Load Data-0' immediately...
+15:23:35.806 | INFO    | Task run 'Load Data-0' - Finished in state Completed()
+15:23:46.196 | INFO    | Flow run 'merciful-camel' - Created task run 'Raw Data EDA-0' for task 'Raw Data EDA'
+15:23:46.197 | INFO    | Flow run 'merciful-camel' - Executing 'Raw Data EDA-0' immediately...
 Loading Raw Datasets...
 Initial Features: 226
 
@@ -13,15 +13,83 @@ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:
   df['hour'] = (df['TransactionDT'] // 3600) % 24
 C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:152: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   df['dow']  = (df['TransactionDT'] // (3600*24)) % 7
-14:35:46.799 | INFO    | Task run 'Raw Data EDA-0' - Finished in state Completed()
-14:35:46.865 | INFO    | Flow run 'cryptic-collie' - Created task run 'Baseline Experiment-0' for task 'Baseline Experiment'
-14:35:46.866 | INFO    | Flow run 'cryptic-collie' - Executing 'Baseline Experiment-0' immediately...
-14:37:20.910 | INFO    | Task run 'Baseline Experiment-0' - Finished in state Completed()
-14:37:20.985 | INFO    | Flow run 'cryptic-collie' - Created task run 'Train Model-0' for task 'Train Model'
-14:37:20.987 | INFO    | Flow run 'cryptic-collie' - Executing 'Train Model-0' immediately...
-14:51:52.762 | INFO    | Task run 'Train Model-0' - Finished in state Completed()
-14:51:52.860 | INFO    | Flow run 'cryptic-collie' - Created task run 'Processed Data EDA-0' for task 'Processed Data EDA'
-14:51:52.862 | INFO    | Flow run 'cryptic-collie' - Executing 'Processed Data EDA-0' immediately...
+15:26:46.916 | ERROR   | Task run 'Raw Data EDA-0' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f/set_state'
+Response: {'exception_message': 'Task run with id f272d432-5265-4e20-a92c-0b86e583377f not found'}
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+15:26:46.989 | ERROR   | Flow run 'merciful-camel' - Encountered exception during execution:
+Traceback (most recent call last):
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 894, in orchestrate_flow_run
+    result = await flow_call.aresult()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 327, in aresult
+    return await asyncio.wrap_future(self.future)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 352, in _run_sync
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 325, in training_pipeline
+    raw_eda_task(train_path_str)
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\tasks.py", line 716, in __call__
+    return enter_task_run_engine(
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 1469, in enter_task_run_engine
+    return from_sync.wait_for_call_in_loop_thread(begin_run)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\api.py", line 218, in wait_for_call_in_loop_thread
+    return call.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 318, in result
+    return self.future.result(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 179, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 389, in _run_async
+    result = await coro
+             ^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 1605, in get_task_call_return_value
+    return await future._result()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\futures.py", line 237, in _result
+    return await final_state.result(raise_on_failure=raise_on_failure, fetch=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\states.py", line 91, in _get_state_result
+    raise await get_state_exception(state)
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\task_runners.py", line 231, in submit
+    result = await call()
+             ^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 1828, in begin_task_run
+    async with AsyncExitStack() as stack:
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 745, in __aexit__
+    raise exc_details[1]
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 728, in __aexit__
+    cb_suppress = await cb(*exc_details)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 231, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 2328, in report_task_run_crashes
+    await client.set_task_run_state(
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\orchestration.py", line 2372, in set_task_run_state
+    response = await self._client.post(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\httpx\_client.py", line 1859, in post
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\httpx\_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 358, in send
+    response.raise_for_status()
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 171, in raise_for_status
+    raise PrefectHTTPStatusError.from_httpx_error(exc) from exc.__cause__
+prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f/set_state'
+Response: {'exception_message': 'Task run with id f272d432-5265-4e20-a92c-0b86e583377f not found'}
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
+15:26:47.329 | ERROR   | Flow run 'merciful-camel' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f'
+Response: {'detail': 'Task not found'}
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
 ============================================================
   RAW DATA EDA
@@ -227,409 +295,73 @@ TransactionAmt       16231  3.435627                0.050397
   RAW EDA COMPLETE â€” plots saved to C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
 ============================================================
 >>> Raw EDA complete. Plots -> C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
->>> [Baseline] Training Logistic Regression Baseline...
->>> Baseline evaluation complete. AUC-PR: 0.3303
-Building Integrated ML Pipeline...
-Training XGBoost + Clustering (this will take time)...
-Fitting PruningTransformer...
-Calculating Information Gain...
-Baseline Feature Set Size after pruning: 167
+Traceback (most recent call last):
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\orchestration.py", line 2170, in set_flow_run_state
+    response = await self._client.post(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\httpx\_client.py", line 1859, in post
+    return await self.request(
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\httpx\_client.py", line 1540, in request
+    return await self.send(request, auth=auth, follow_redirects=follow_redirects)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 358, in send
+    response.raise_for_status()
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 171, in raise_for_status
+    raise PrefectHTTPStatusError.from_httpx_error(exc) from exc.__cause__
+prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/flow_runs/10adea65-7a29-46f7-9878-d7a73b26189d/set_state'
+Response: {'exception_message': 'Flow run with id 10adea65-7a29-46f7-9878-d7a73b26189d not found'}
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
->>> Running Processed Data EDA...
-14:55:06.734 | INFO    | Task run 'Processed Data EDA-0' - Finished in state Completed()
-14:55:06.806 | INFO    | Flow run 'cryptic-collie' - Created task run 'Evidently ML Health Report-0' for task 'Evidently ML Health Report'
-14:55:06.808 | INFO    | Flow run 'cryptic-collie' - Executing 'Evidently ML Health Report-0' immediately...
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[:, None]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[None, :]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[:, None]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[None, :]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[:, None]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[None, :]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2922: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[:, None]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\numpy\lib\_function_base_impl.py:2923: RuntimeWarning: invalid value encountered in divide
-  c /= stddev[None, :]
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_axis_nan_policy.py:592: RuntimeWarning: ks_2samp: Exact calculation unsuccessful. Switching to method=asymp.
-  res = hypotest_fun_out(*samples, **kwds)
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\scipy\stats\_stats_py.py:7192: RuntimeWarning: divide by zero encountered in divide
-  terms = (f_obs - f_exp)**2 / f_exp
-14:56:10.160 | INFO    | Task run 'Evidently ML Health Report-0' - Finished in state Completed()
-14:56:10.249 | INFO    | Flow run 'cryptic-collie' - Created task run 'Evaluate and Log-0' for task 'Evaluate and Log'
-14:56:10.252 | INFO    | Flow run 'cryptic-collie' - Executing 'Evaluate and Log-0' immediately...
-14:56:14.920 | INFO    | Task run 'Evaluate and Log-0' - Finished in state Completed()
-14:56:14.982 | INFO    | Flow run 'cryptic-collie' - Created task run 'Save Model-0' for task 'Save Model'
-14:56:14.984 | INFO    | Flow run 'cryptic-collie' - Executing 'Save Model-0' immediately...
-14:56:16.542 | INFO    | Task run 'Save Model-0' - Finished in state Completed()
-14:56:16.595 | INFO    | Flow run 'cryptic-collie' - Created task run 'Regression — Transaction Velocity Forecasting-0' for task 'Regression — Transaction Velocity Forecasting'
-14:56:16.597 | INFO    | Flow run 'cryptic-collie' - Executing 'Regression — Transaction Velocity Forecasting-0' immediately...
-14:56:22.238 | INFO    | Task run 'Regression — Transaction Velocity Forecasting-0' - Finished in state Completed()
-14:56:22.362 | INFO    | Flow run 'cryptic-collie' - Created task run 'Time Series — Fraud Rate Analysis-0' for task 'Time Series — Fraud Rate Analysis'
-14:56:22.364 | INFO    | Flow run 'cryptic-collie' - Executing 'Time Series — Fraud Rate Analysis-0' immediately...
-14:56:27.720 | INFO    | Task run 'Time Series — Fraud Rate Analysis-0' - Finished in state Completed()
-14:56:27.802 | INFO    | Flow run 'cryptic-collie' - Created task run 'Dimensionality Reduction — PCA-0' for task 'Dimensionality Reduction — PCA'
-14:56:27.804 | INFO    | Flow run 'cryptic-collie' - Executing 'Dimensionality Reduction — PCA-0' immediately...
-14:56:43.114 | INFO    | Task run 'Dimensionality Reduction — PCA-0' - Finished in state Completed()
-14:56:43.194 | INFO    | Flow run 'cryptic-collie' - Created task run 'Clustering — Behaviour Profile Analysis-0' for task 'Clustering — Behaviour Profile Analysis'
-14:56:43.196 | INFO    | Flow run 'cryptic-collie' - Executing 'Clustering — Behaviour Profile Analysis-0' immediately...
-14:56:51.553 | INFO    | Task run 'Clustering — Behaviour Profile Analysis-0' - Finished in state Completed()
-14:56:51.611 | INFO    | Flow run 'cryptic-collie' - Created task run 'Association Rules — Fraud Pattern Mining-0' for task 'Association Rules — Fraud Pattern Mining'
-14:56:51.614 | INFO    | Flow run 'cryptic-collie' - Executing 'Association Rules — Fraud Pattern Mining-0' immediately...
-C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\mlxtend\frequent_patterns\association_rules.py:186: RuntimeWarning:
+The above exception was the direct cause of the following exception:
 
-invalid value encountered in divide
-
-15:00:45.728 | INFO    | Task run 'Association Rules — Fraud Pattern Mining-0' - Finished in state Completed()
-15:00:45.841 | INFO    | Flow run 'cryptic-collie' - Running hook 'notify_success' in response to entering state 'Completed'
-15:00:45.844 | INFO    | Flow run 'cryptic-collie' - Hook 'notify_success' finished running successfully
-15:00:45.845 | INFO    | Flow run 'cryptic-collie' - Finished in state Completed('All states completed.')
-
-============================================================
-  PROCESSED DATA EDA
-============================================================
-
-[1] Feature Reduction Summary...
-  Raw features      : 226
-  Processed features: 172
-  Reduction         : 54 features removed
-  Kept (%)          : 76.1%
-  Processed rows    : 472,432
-  Missing values    : 0
-  Dtypes            : {dtype('float64'): 172, dtype('int64'): 1}
-
-[2] Engineered Features Analysis...
-  Engineered features found: ['hour', 'dow', 'Amt_to_Median_User', 'user_count']
-  Saved -> p01_engineered_features.png
-
-[3] Cluster Label Analysis...
-  Cluster distribution:
-    Cluster 0.0: 124,422 samples  |  Fraud rate: 2.690%  |  Fraud count: 3,347
-    Cluster 1.0:  84,343 samples  |  Fraud rate: 3.945%  |  Fraud count: 3,327
-    Cluster 2.0:  89,486 samples  |  Fraud rate: 3.653%  |  Fraud count: 3,269
-    Cluster 3.0:  88,071 samples  |  Fraud rate: 3.372%  |  Fraud count: 2,970
-    Cluster 4.0:  86,110 samples  |  Fraud rate: 4.200%  |  Fraud count: 3,617
-  Saved -> p02_cluster_analysis.png
-  Saved -> p03_cluster_amounts.png
-
-[4] PCA 2D Visualisation...
-  PC1 variance explained: 100.00%
-  PC2 variance explained: 0.00%
-  Saved -> p04_pca_visualisation.png
-
-[5] Processed Feature Distributions (top 20 by corr)...
-  Saved -> p05_top_feature_distributions.png
-
-[6] Processed Feature Correlation Heatmap (top 25)...
-  Saved -> p06_processed_correlation.png
-
-[7] Mutual Information with isFraud (top 30)...
-V45           0.021136
-V86           0.020965
-V87           0.020935
-card1         0.020904
-ProductCD     0.020742
-C4            0.017739
-V44           0.017608
-V113          0.017434
-V78           0.017189
-card2         0.016652
-C7            0.016549
-card3         0.016344
-V38           0.016306
-V111          0.014793
-V47           0.014700
-V109          0.014661
-addr2         0.014165
-V67           0.013822
-V123          0.013652
-V66           0.013613
-V3            0.013580
-user_count    0.013535
-V37           0.013372
-V23           0.013349
-V114          0.012919
-V35           0.012906
-V88           0.012549
-V7            0.012524
-V52           0.012516
-V83           0.012504
-  Saved -> p07_mutual_information.png
-
-[8] Mann-Whitney U Tests on Engineered + Top Features...
-  Feature                           U-stat      p-value  Significant
-  hour                          3699957952     7.52e-05          YES
-  dow                           3685325025     1.22e-06          YES
-  Amt_to_Median_User            4119976498     5.78e-93          YES
-  user_count                    4165193990    1.20e-117          YES
-  V45                           4486954292     0.00e+00          YES
-  V86                           4384138362     0.00e+00          YES
-  V87                           4452291064     0.00e+00          YES
-  V44                           4406357222     0.00e+00          YES
-  V52                           4828932068     0.00e+00          YES
-  V51                           4810452081     0.00e+00          YES
-  V40                           4750682548     0.00e+00          YES
-  V79                           4787801728     0.00e+00          YES
-  V38                           4432553417     0.00e+00          YES
-  V39                           4739955832     0.00e+00          YES
-
-[9] Exporting JSON data for frontend...
-  JSON exported -> processed_eda_data.json
-
-============================================================
-  PROCESSED EDA COMPLETE â€” plots saved to C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_processed
-============================================================
->>> Processed EDA complete. Plots -> C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_processed
->>> Evidently report generated at C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\evidently_report.html
-
---- CLASSIFICATION REPORT ---
-              precision    recall  f1-score   support
-
-           0       0.99      0.98      0.99     91180
-           1       0.59      0.79      0.68      3306
-
-    accuracy                           0.97     94486
-   macro avg       0.79      0.89      0.83     94486
-weighted avg       0.98      0.97      0.98     94486
-
-PR-AUC:  0.7930 (Paper XGBoost Benchmark: 0.834)
-ROC-AUC: 0.9645 (Paper XGBoost Benchmark: 0.887)
-Saved roc_curve â†’ roc_curve_v_20260503_143109.png + latest_roc_curve.png
-Saved pr_curve â†’ pr_curve_v_20260503_143109.png + latest_pr_curve.png
-Saved confusion_matrix â†’ confusion_matrix_v_20260503_143109.png + latest_confusion_matrix.png
-Saved metric_summary â†’ metric_summary_v_20260503_143109.png + latest_metric_summary.png
-Saved interactive curve data â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\latest_metrics.json
-All graphs saved to â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs/
-
---- PIPELINE METRICS FOR CI/CD ---
-AUC-PR:    0.7930
-Recall:    0.7910
-Precision: 0.5895
-----------------------------------
-
-Pipeline saved as models/model_v_20260503_143109.pkl and model_latest.pkl
-
->>> [Regression] Building time-window aggregation...
->>> [Regression] 4367 hourly windows found. Building lag features...
->>> [Regression] Train windows: 3488 | Test windows: 872
->>> [Regression] RMSE=3.1029 | MAE=2.2810 | RÂ²=0.1608
->>> [Regression] Metrics saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\regression_metrics.json
->>> [Regression] Forecast plot saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_regression_forecast.png
-
->>> [TimeSeries] Aggregating by hourly window...
->>> [TimeSeries] Windows=4367 | Anomalies=138 | Peak=0.8182
->>> [TimeSeries] JSON saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\timeseries_fraud_rate.json
->>> [TimeSeries] Line chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_timeseries_line.png
->>> [TimeSeries] Heatmap â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_timeseries_heatmap.png
-
->>> [PCA] Input shape: (472432, 172) | Fitting PCA(n=10)...
->>> [PCA] PC1=0.196 | PC2=0.056 | Top-10 cumulative=0.507
->>> [PCA] Results saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\pca_results.json
->>> [PCA] Scatter plot â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_pca_scatter.png
->>> [PCA] Variance plot â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_pca_variance.png
-
->>> [Clustering] Extracting cluster assignments from fitted pipeline...
->>> [Clustering] 5 clusters | 472432 samples
->>> [Clustering] Saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\cluster_profiles.json | Cluster 4 has highest fraud rate: 4.20%
->>> [Clustering] Fraud rate chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_cluster_fraud_rate.png
->>> [Clustering] Size chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_cluster_size.png
-
->>> [Association] Discretizing features...
->>> [Association] Running FPGrowth on 80,000 transactions | min_support=0.01
->>> [Association] 733 frequent itemsets found
->>> [Association] 6 fraud-consequent rules | Top lift: 3.278
->>> [Association] Rules saved â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\association_rules.json
->>> [Association] Lift chart â†’ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\results\graphs\latest_association_lift.png
-Email configuration incomplete (SMTP_SERVER, SENDER_EMAIL, etc.), skipping email notification.
---- EMAIL NOTIFICATION (SKIPPED) ---
-Subject: âœ… Pipeline Success
-Message: Pipeline cryptic-collie succeeded! View dashboard for metrics.
------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 357, in <module>
+    training_pipeline()
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\flows.py", line 1289, in __call__
+    return enter_flow_run_engine_from_flow_call(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 298, in enter_flow_run_engine_from_flow_call
+    retval = from_sync.wait_for_call_in_loop_thread(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\api.py", line 218, in wait_for_call_in_loop_thread
+    return call.result()
+           ^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 318, in result
+    return self.future.result(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 179, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 389, in _run_async
+    result = await coro
+             ^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\utilities.py", line 100, in with_injected_client
+    return await fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 399, in create_then_begin_flow_run
+    state = await begin_flow_run(
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 527, in begin_flow_run
+    async with AsyncExitStack() as stack:
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 745, in __aexit__
+    raise exc_details[1]
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 728, in __aexit__
+    cb_suppress = await cb(*exc_details)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 231, in __aexit__
+    await self.gen.athrow(typ, value, traceback)
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 2290, in report_flow_run_crashes
+    flow_run_state = await propose_state(client, state, flow_run_id=flow_run.id)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\utilities\engine.py", line 387, in propose_state
+    response = await set_state_and_handle_waits(set_state)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\utilities\engine.py", line 371, in set_state_and_handle_waits
+    response = await set_state_func()
+               ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\orchestration.py", line 2176, in set_flow_run_state
+    raise prefect.exceptions.ObjectNotFound(http_exc=e) from e
+prefect.exceptions.ObjectNotFound

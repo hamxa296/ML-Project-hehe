@@ -19,8 +19,8 @@
     },
     {
       "antecedents": [
-        "ProductCD=0.1160277034578521",
-        "Amt=Low"
+        "Amt=Low",
+        "ProductCD=0.1160277034578521"
       ],
       "consequents": [
         "isFraud=Yes"
@@ -54,8 +54,8 @@
     },
     {
       "antecedents": [
-        "card6=0.2522877366478138",
-        "Amt=Low"
+        "Amt=Low",
+        "card6=0.2522877366478138"
       ],
       "consequents": [
         "isFraud=Yes"
