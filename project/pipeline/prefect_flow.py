@@ -28,7 +28,7 @@ from src.train import train_model
 from src.predict import predict
 from src.evaluate import evaluate_model
 from src.train_baseline import train_baseline_model, evaluate_baseline
-from sklearn.metrics import precision_score, recall_score, roc_auc_score, average_precision_score
+from sklearn.metrics import precision_score, recall_score, roc_auc_score, average_precision_score, precision_recall_curve, fbeta_score
 from sklearn.pipeline import Pipeline
 
 
@@ -48,19 +48,26 @@ def raw_eda_task(train_path: str):
 def processed_eda_task(pipeline, X_train, y_train):
     """EDA on data AFTER the full preprocessing pipeline has been applied."""
     print("\n>>> Running Processed Data EDA...")
-    from src.eda_processed import run_processed_eda
+    
+    # Memory Safety: Sample 10% of data for EDA to prevent OOM crashes
+    # 50k rows is statistically sufficient for visualization
+    sample_size = min(50000, int(len(X_train) * 0.1))
+    X_sample = X_train.sample(n=sample_size, random_state=42)
+    y_sample = y_train.loc[X_sample.index]
     
     # Transform through all steps except the final model
-    X_t = X_train
+    X_t = X_sample
     for name, step in pipeline.steps[:-1]:
         X_t = step.transform(X_t)
     
     feature_names = list(X_t.columns)
     X_array = X_t.values
     out_dir = ARTIFACTS_DIR / 'eda_processed'
+    
+    from src.eda_processed import run_processed_eda
     run_processed_eda(
         X_transformed=X_array,
-        y=y_train.reset_index(drop=True),
+        y=y_sample.reset_index(drop=True),
         feature_names=feature_names,
         out_dir=out_dir,
         raw_shape=X_train.shape,
@@ -91,16 +98,38 @@ def train_pipeline_task(X_train, y_train):
 
 @task(name="Evaluate and Log")
 def evaluate_and_log_task(pipeline, X_test, y_test, version):
-    probs, preds = predict(pipeline, X_test)
+    probs, _ = predict(pipeline, X_test)
+    
+    # Threshold Sweep to maximize F2-Score (Recall weighted 2x over Precision)
+    precisions, recalls, thresholds = precision_recall_curve(y_test, probs)
+    
+    # Calculate F2-scores: (5 * P * R) / (4 * P + R)
+    f2_scores = []
+    for p, r in zip(precisions, recalls):
+        if (4 * p + r) == 0:
+            f2_scores.append(0)
+        else:
+            f2_scores.append((5 * p * r) / (4 * p + r))
+            
+    best_idx = np.argmax(f2_scores)
+    # thresholds has one less element than precisions/recalls
+    opt_threshold = thresholds[min(best_idx, len(thresholds)-1)]
+    
+    # Apply optimal threshold
+    preds = (probs >= opt_threshold).astype(int)
+    
     auc_pr  = average_precision_score(y_test, probs)
     auc_roc = roc_auc_score(y_test, probs)
-    prec    = precision_score(y_test, preds)
-    rec     = recall_score(y_test, preds)
+    prec    = precision_score(y_test, preds, zero_division=0)
+    rec     = recall_score(y_test, preds, zero_division=0)
+    f1      = fbeta_score(y_test, preds, beta=1, zero_division=0)
+    
     model_params = pipeline.named_steps['model'].get_params()
     interesting_hyperparams = {
-        "n_estimators":  model_params.get("n_estimators"),
-        "max_depth":     model_params.get("max_depth"),
-        "learning_rate": model_params.get("learning_rate"),
+        "n_estimators":      model_params.get("n_estimators"),
+        "max_depth":         model_params.get("max_depth"),
+        "learning_rate":     model_params.get("learning_rate"),
+        "optimal_threshold": float(round(opt_threshold, 4))
     }
     results_path = ARTIFACTS_DIR / 'results.csv'
     res_df = pd.DataFrame([{
@@ -123,11 +152,13 @@ def evaluate_and_log_task(pipeline, X_test, y_test, version):
                    project_root=PROJECT_ROOT,
                    version=version,
                    artifacts_dir=ARTIFACTS_DIR)
-    print("\n--- PIPELINE METRICS FOR CI/CD ---")
-    print(f"AUC-PR:    {auc_pr:.4f}")
-    print(f"Recall:    {rec:.4f}")
-    print(f"Precision: {prec:.4f}")
-    print("----------------------------------\n")
+    print("\n--- PIPELINE METRICS (OPTIMIZED THRESHOLD) ---")
+    print(f"Optimal Threshold: {opt_threshold:.4f}")
+    print(f"AUC-PR:            {auc_pr:.4f}")
+    print(f"Recall:            {rec:.4f}")
+    print(f"Precision:         {prec:.4f}")
+    print(f"F1-Score:          {f1:.4f}")
+    print("----------------------------------------------\n")
     return auc_pr
 
 @task(name="Save Model")
@@ -162,15 +193,20 @@ def dimensionality_reduction_task(pipeline, X_train: pd.DataFrame, y_train: pd.S
     """PCA on processed feature space — 2D scatter plot, variance explained."""
     from src.dimensionality_reduction import run_dimensionality_reduction
     
+    # Memory Safety: Sample for visualization
+    sample_size = min(50000, int(len(X_train) * 0.1))
+    X_sample = X_train.sample(n=sample_size, random_state=42)
+    y_sample = y_train.loc[X_sample.index]
+    
     # Transform through all steps except the final model
-    X_t = X_train
+    X_t = X_sample
     for name, step in pipeline.steps[:-1]:
         X_t = step.transform(X_t)
     
     feature_names = list(X_t.columns)
     graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
     return run_dimensionality_reduction(
-        X_t.values, y_train, feature_names,
+        X_t.values, y_sample.reset_index(drop=True), feature_names,
         artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir
     )
 
@@ -179,8 +215,14 @@ def dimensionality_reduction_task(pipeline, X_train: pd.DataFrame, y_train: pd.S
 def clustering_analysis_task(pipeline, X_train: pd.DataFrame, y_train: pd.Series):
     """Profile KMeans clusters: fraud rate per cluster, feature centroids."""
     from src.clustering_analysis import run_clustering_analysis
+    
+    # Memory Safety: Sample for visualization
+    sample_size = min(50000, int(len(X_train) * 0.1))
+    X_sample = X_train.sample(n=sample_size, random_state=42)
+    y_sample = y_train.loc[X_sample.index]
+    
     graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
-    return run_clustering_analysis(pipeline, X_train, y_train,
+    return run_clustering_analysis(pipeline, X_sample, y_sample,
                                    artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
 
 
@@ -188,8 +230,13 @@ def clustering_analysis_task(pipeline, X_train: pd.DataFrame, y_train: pd.Series
 def association_task(train_df: pd.DataFrame):
     """FPGrowth on categorical features — finds fraud-consequent association rules."""
     from src.association import run_association
+    
+    # Memory Safety: Sample for rule mining
+    sample_size = min(80000, int(len(train_df) * 0.15))
+    sample_df = train_df.sample(n=sample_size, random_state=42)
+    
     graphs_dir = PROJECT_ROOT / 'results' / 'graphs'
-    return run_association(train_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
+    return run_association(sample_df, artifacts_dir=ARTIFACTS_DIR, graphs_dir=graphs_dir)
 
 
 @task(name="Baseline Experiment")

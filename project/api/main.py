@@ -403,7 +403,7 @@ def list_models():
 
 @app.post("/models/activate/{name}")
 def activate_model(name: str):
-    """Hot-swaps the active model in memory and updates model_latest.pkl for persistence."""
+    """Hot-swaps the active model and synchronizes all dashboard artifacts."""
     global model_pipeline
     if "/" in name or "\\" in name or ".." in name:
         raise HTTPException(status_code=400, detail="Invalid model name")
@@ -412,14 +412,28 @@ def activate_model(name: str):
     if not target.exists():
         raise HTTPException(status_code=404, detail=f"Model {name} not found")
     
+    # 1. Extract version from filename (model_v_20230101_120000.pkl -> v_20230101_120000)
+    version = name.replace("model_", "").replace(".pkl", "")
+    
     try:
-        # 1. Load into memory for instant hot-swap
+        # 2. Hot-swap in memory
         model_pipeline = joblib.load(target)
-        
-        # 2. Overwrite the 'latest' pointer so it persists across container restarts
         shutil.copy2(target, MODEL_PATH)
         
-        return {"status": "activated", "model": name}
+        # 3. Synchronize Graphs (Copy *_v_timestamp.png -> latest_*.png)
+        graph_types = ["roc_curve", "pr_curve", "confusion_matrix", "metric_summary"]
+        for gtype in graph_types:
+            versioned_graph = GRAPHS_DIR / f"{gtype}_{version}.png"
+            latest_graph    = GRAPHS_DIR / f"latest_{gtype}.png"
+            if versioned_graph.exists():
+                shutil.copy2(versioned_graph, latest_graph)
+        
+        # 4. Synchronize Metrics JSON (metrics_v_timestamp.json -> latest_metrics.json)
+        versioned_json = ARTIFACTS_DIR / f"metrics_{version}.json"
+        if versioned_json.exists():
+            shutil.copy2(versioned_json, METRICS_PATH)
+            
+        return {"status": "activated", "model": name, "version": version}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to activate model: {str(e)}")
 

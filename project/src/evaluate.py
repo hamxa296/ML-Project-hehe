@@ -121,19 +121,23 @@ def evaluate_model(y_test, probs, preds, project_root: Path = None, version: str
     # ── 3. Confusion Matrix ───────────────────────────────────────────────────
     cm = confusion_matrix(y_test, preds)
     fig, ax = plt.subplots(figsize=FIGSIZE)
-    ax.set_facecolor(PALETTE['bg'])
-    fig.set_facecolor(PALETTE['bg'])
-    cmap = sns.color_palette([PALETTE['card'], PALETTE['violet']], as_cmap=True)
+    
+    # Custom high-contrast colormap for dark theme
+    from matplotlib.colors import LinearSegmentedColormap
+    custom_cmap = LinearSegmentedColormap.from_list("fraud_cmap", [PALETTE['card'], PALETTE['cyan']])
+    
     sns.heatmap(
-        cm, annot=True, fmt='d', cmap='Purples',
-        linewidths=1, linecolor=PALETTE['border'],
-        annot_kws={'size': 18, 'color': PALETTE['text'], 'weight': 'bold'},
-        xticklabels=['Predicted Safe', 'Predicted Fraud'],
-        yticklabels=['Actual Safe',    'Actual Fraud'],
+        cm, annot=True, fmt='d', cmap=custom_cmap,
+        linewidths=2, linecolor=PALETTE['bg'],
+        annot_kws={'size': 22, 'weight': 'bold'}, # Removed fixed color for auto-contrast
+        xticklabels=['Safe', 'Fraud'],
+        yticklabels=['Safe', 'Fraud'],
         ax=ax, cbar=False
     )
-    ax.set_title('Confusion Matrix', color=PALETTE['text'], fontsize=14, fontweight='bold', pad=14)
-    ax.tick_params(colors=PALETTE['muted'], labelsize=10)
+    ax.set_title('Confusion Matrix', color=PALETTE['text'], fontsize=16, fontweight='bold', pad=20)
+    ax.set_xlabel('Predicted Label', color=PALETTE['muted'], fontsize=12)
+    ax.set_ylabel('True Label', color=PALETTE['muted'], fontsize=12)
+    ax.tick_params(colors=PALETTE['text'], labelsize=11)
     plt.tight_layout()
     _save_versioned(fig, 'confusion_matrix')
 
@@ -187,7 +191,12 @@ def evaluate_model(y_test, probs, preds, project_root: Path = None, version: str
     }
 
     metrics_path = artifacts_dir / 'latest_metrics.json'
+    versioned_metrics_path = artifacts_dir / f'metrics_{version}.json'
+    
     with open(metrics_path, 'w') as f:
+        json.dump(metrics_data, f)
+    
+    with open(versioned_metrics_path, 'w') as f:
         json.dump(metrics_data, f)
 
     print(f"Saved interactive curve data → {metrics_path}")

@@ -1,10 +1,10 @@
-15:23:21.161 | INFO    | prefect.engine - Created flow run 'merciful-camel' for flow 'Robust Fraud Detection Unified Pipeline'
-15:23:21.171 | INFO    | Flow run 'merciful-camel' - View at http://localhost:4200/flow-runs/flow-run/10adea65-7a29-46f7-9878-d7a73b26189d
-15:23:21.403 | INFO    | Flow run 'merciful-camel' - Created task run 'Load Data-0' for task 'Load Data'
-15:23:21.407 | INFO    | Flow run 'merciful-camel' - Executing 'Load Data-0' immediately...
-15:23:35.806 | INFO    | Task run 'Load Data-0' - Finished in state Completed()
-15:23:46.196 | INFO    | Flow run 'merciful-camel' - Created task run 'Raw Data EDA-0' for task 'Raw Data EDA'
-15:23:46.197 | INFO    | Flow run 'merciful-camel' - Executing 'Raw Data EDA-0' immediately...
+18:15:54.391 | INFO    | prefect.engine - Created flow run 'carrot-narwhal' for flow 'Robust Fraud Detection Unified Pipeline'
+18:15:54.436 | INFO    | Flow run 'carrot-narwhal' - View at http://localhost:4200/flow-runs/flow-run/a561f207-b60f-4ec9-b35b-e47f443fbc58
+18:15:54.638 | INFO    | Flow run 'carrot-narwhal' - Created task run 'Load Data-0' for task 'Load Data'
+18:15:54.639 | INFO    | Flow run 'carrot-narwhal' - Executing 'Load Data-0' immediately...
+18:16:10.893 | INFO    | Task run 'Load Data-0' - Finished in state Completed()
+18:16:22.087 | INFO    | Flow run 'carrot-narwhal' - Created task run 'Raw Data EDA-0' for task 'Raw Data EDA'
+18:16:22.089 | INFO    | Flow run 'carrot-narwhal' - Executing 'Raw Data EDA-0' immediately...
 Loading Raw Datasets...
 Initial Features: 226
 
@@ -13,10 +13,18 @@ C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:
   df['hour'] = (df['TransactionDT'] // 3600) % 24
 C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\src\eda_raw.py:152: PerformanceWarning: DataFrame is highly fragmented.  This is usually the result of calling `frame.insert` many times, which has poor performance.  Consider joining all columns at once using pd.concat(axis=1) instead. To get a de-fragmented frame, use `newframe = frame.copy()`
   df['dow']  = (df['TransactionDT'] // (3600*24)) % 7
-15:26:46.916 | ERROR   | Task run 'Raw Data EDA-0' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f/set_state'
-Response: {'exception_message': 'Task run with id f272d432-5265-4e20-a92c-0b86e583377f not found'}
+18:19:14.149 | INFO    | Task run 'Raw Data EDA-0' - Finished in state Completed()
+18:19:14.271 | INFO    | Flow run 'carrot-narwhal' - Created task run 'Baseline Experiment-0' for task 'Baseline Experiment'
+18:19:14.274 | INFO    | Flow run 'carrot-narwhal' - Executing 'Baseline Experiment-0' immediately...
+18:21:27.553 | INFO    | Task run 'Baseline Experiment-0' - Finished in state Completed()
+18:21:27.614 | INFO    | Flow run 'carrot-narwhal' - Created task run 'Train Model-0' for task 'Train Model'
+18:21:27.616 | INFO    | Flow run 'carrot-narwhal' - Executing 'Train Model-0' immediately...
+C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\mlxtend\frequent_patterns\association_rules.py:186: RuntimeWarning: invalid value encountered in divide
+  cert_metric = np.where(certainty_denom == 0, 0, certainty_num / certainty_denom)
+18:51:44.594 | ERROR   | Task run 'Train Model-0' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/82cfb206-6430-4039-b09c-327199cdcace/set_state'
+Response: {'exception_message': 'Task run with id 82cfb206-6430-4039-b09c-327199cdcace not found'}
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
-15:26:46.989 | ERROR   | Flow run 'merciful-camel' - Encountered exception during execution:
+18:51:44.721 | ERROR   | Flow run 'carrot-narwhal' - Encountered exception during execution:
 Traceback (most recent call last):
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\engine.py", line 894, in orchestrate_flow_run
     result = await flow_call.aresult()
@@ -27,8 +35,9 @@ Traceback (most recent call last):
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\_internal\concurrency\calls.py", line 352, in _run_sync
     result = self.fn(*self.args, **self.kwargs)
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 325, in training_pipeline
-    raw_eda_task(train_path_str)
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 288, in training_pipeline
+    pipeline = train_pipeline_task(X_train, y_train)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\tasks.py", line 716, in __call__
     return enter_task_run_engine(
            ^^^^^^^^^^^^^^^^^^^^^^
@@ -84,10 +93,10 @@ Traceback (most recent call last):
     response.raise_for_status()
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 171, in raise_for_status
     raise PrefectHTTPStatusError.from_httpx_error(exc) from exc.__cause__
-prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f/set_state'
-Response: {'exception_message': 'Task run with id f272d432-5265-4e20-a92c-0b86e583377f not found'}
+prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/82cfb206-6430-4039-b09c-327199cdcace/set_state'
+Response: {'exception_message': 'Task run with id 82cfb206-6430-4039-b09c-327199cdcace not found'}
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
-15:26:47.329 | ERROR   | Flow run 'merciful-camel' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/f272d432-5265-4e20-a92c-0b86e583377f'
+18:51:45.306 | ERROR   | Flow run 'carrot-narwhal' - Crash detected! Execution was interrupted by an unexpected exception: PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/task_runs/82cfb206-6430-4039-b09c-327199cdcace'
 Response: {'detail': 'Task not found'}
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
@@ -295,6 +304,13 @@ TransactionAmt       16231  3.435627                0.050397
   RAW EDA COMPLETE — plots saved to C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
 ============================================================
 >>> Raw EDA complete. Plots -> C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\artifacts\eda_raw
+>>> [Baseline] Training Logistic Regression Baseline...
+>>> Baseline evaluation complete. AUC-PR: 0.3303
+Building Augmented Integrated ML Pipeline...
+Training XGBoost + Clustering (this will take time)...
+Fitting PruningTransformer...
+Calculating Information Gain...
+Baseline Feature Set Size after pruning: 167
 Traceback (most recent call last):
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\orchestration.py", line 2170, in set_flow_run_state
     response = await self._client.post(
@@ -309,14 +325,14 @@ Traceback (most recent call last):
     response.raise_for_status()
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\client\base.py", line 171, in raise_for_status
     raise PrefectHTTPStatusError.from_httpx_error(exc) from exc.__cause__
-prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/flow_runs/10adea65-7a29-46f7-9878-d7a73b26189d/set_state'
-Response: {'exception_message': 'Flow run with id 10adea65-7a29-46f7-9878-d7a73b26189d not found'}
+prefect.exceptions.PrefectHTTPStatusError: Client error '404 Not Found' for url 'http://localhost:4200/api/flow_runs/a561f207-b60f-4ec9-b35b-e47f443fbc58/set_state'
+Response: {'exception_message': 'Flow run with id a561f207-b60f-4ec9-b35b-e47f443fbc58 not found'}
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404
 
 The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
-  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 357, in <module>
+  File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\project\pipeline\prefect_flow.py", line 314, in <module>
     training_pipeline()
   File "C:\Users\hamzz\OneDrive\Documents\GitHub\ML-Project-hehe\venv\Lib\site-packages\prefect\flows.py", line 1289, in __call__
     return enter_flow_run_engine_from_flow_call(
