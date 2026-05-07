@@ -84,7 +84,7 @@
 
 \IEEEtitleabstractindextext{
 \begin{abstract}
-The detection of fraudulent transactions within massive, high-dimensional datasets is a critical challenge in modern financial technology. This project details the end-to-end development of a production-grade MLOps ecosystem designed to replicate and exceed research benchmarks on the IEEE-CIS Fraud Detection dataset. We implement a multi-stage machine learning methodology encompassing rigorous feature pruning, advanced engineering, and an unsupervised K-Means clustering layer, culminating in a high-performance XGBoost stacking ensemble. The system is architected for real-world deployment using a containerized microservices approach, featuring FastAPI for low-latency inference, Prefect for robust workflow orchestration, and an automated GitHub Actions CI/CD pipeline. The latest validated production run achieves a PR-AUC of 0.7930 and an ROC-AUC of 0.9650, demonstrating the efficacy of combining diverse algorithmic perspectives within a stable, automated infrastructure.
+ The detection of fraudulent transactions within massive, high-dimensional datasets is a critical challenge in modern financial technology. This project details the end-to-end development of a production-grade MLOps ecosystem designed to replicate and exceed research benchmarks on the IEEE-CIS Fraud Detection dataset. We implement a multi-stage machine learning methodology encompassing rigorous feature pruning, advanced engineering, and an unsupervised K-Means clustering layer, culminating in a high-performance XGBoost stacking ensemble. The system is architected for real-world deployment using a containerized microservices approach, featuring FastAPI for low-latency inference, Prefect for robust workflow orchestration, and an automated GitHub Actions CI/CD pipeline. The latest validated production run achieves a PR-AUC of 0.775008 and an ROC-AUC of 0.960122, demonstrating the efficacy of combining diverse algorithmic perspectives within a stable, automated infrastructure.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -250,14 +250,14 @@ Initial analysis revealed that fraud is inherently non-linear. No single feature
 
 \begin{figure}[H]
  \centering
- \includegraphics[width=0.45\textwidth]{assets/eda_class_imbalance.png}
- \caption{Severe class imbalance (3.5\% fraud) necessitating a focus on PR-AUC over standard accuracy.}
+ \includegraphics[width=0.45\textwidth]{artifacts/latest_metric_summary.png}
+ \caption{Severe class imbalance and the latest metric snapshot; use PR-AUC as primary metric.}
 \end{figure}
 
 \begin{figure}[H]
  \centering
- \includegraphics[width=0.45\textwidth]{assets/eda_amounts.png}
- \caption{Transaction amount distribution (log-scale) for safe vs. fraudulent cases.}
+ \includegraphics[width=0.45\textwidth]{artifacts/latest_pr_curve.png}
+ \caption{Latest precision-recall curve from the validated run; shows trade-offs across thresholds.}
 \end{figure}
 
 \section{Methodology and Preprocessing}
@@ -668,7 +668,7 @@ XGBoost Baseline (08) & 0.9466 & 0.6920 & Excellent non-linear learner with nati
 \midrule
 XGBoost + PCA (13) & 0.9540 & 0.6850 & PCA preserves global variance but loses local non-linear structure defining fraud. Dimensionality compression is too aggressive. \\
 \midrule
-\textbf{XGBoost + KMeans (Current)} & \textbf{0.9650} & \textbf{0.7930} & \textbf{Winner}: Combines gradient boosting with unsupervised behavioral profiling. KMeans preserves high-level archetype structure while XGBoost learns micro-level feature splits. Maximizes both ranking quality and minority-class recovery. \\
+\textbf{XGBoost + KMeans (Current)} & \textbf{0.960122} & \textbf{0.775008} & \textbf{Winner}: Combines gradient boosting with unsupervised behavioral profiling. KMeans preserves high-level archetype structure while XGBoost learns micro-level feature splits. Maximizes both ranking quality and minority-class recovery. \\
 \end{tabular}
 \end{table}
 
@@ -715,7 +715,7 @@ Recall & Share of total fraud events successfully captured & Increase within ope
 \tableheader
 Metric / Reference & {Target} & {Observed} & Status \\
 PR-AUC & 0.8340 & 0.7930 & Near-target \\
-ROC-AUC & 0.8870 & 0.9650 & Exceeded \\
+ROC-AUC & 0.8870 & 0.960122 & Exceeded \\
 Quality gate (PR-AUC) & 0.6000 & 0.7930 & Passed \\
 \end{tabular}
 \end{table}
@@ -753,7 +753,7 @@ High-precision slice & 0.2253 & 0.9077 & 0.3610 \\
  ymajorgrids=true,
  grid style={gray!20}
  ]
- \addplot+[fill=techblue!60] coordinates {(PR Target,0.8340) (PR Observed,0.7930) (ROC Target,0.8870) (ROC Observed,0.9650)};
+ \addplot+[fill=techblue!60] coordinates {(PR Target,0.8340) (PR Observed,0.775008) (ROC Target,0.8870) (ROC Observed,0.960122)};
  \end{axis}
  \end{tikzpicture}
  \caption{Validated production-run metrics versus benchmark thresholds.}

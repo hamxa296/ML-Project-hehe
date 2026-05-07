@@ -25,7 +25,7 @@
 
 \IEEEtitleabstractindextext{
 \begin{abstract}
-The IEEE-CIS Fraud Detection dataset presents a formidable challenge due to its massive scale, extreme class imbalance, and anonymized feature space. This paper documents a systematic, 6-day engineering sprint that transformed raw financial data into a deployment-ready MLOps system. We detail the evolution from memory-optimized preprocessing and SMOTE-based balancing to a hybrid stacking ensemble and a deep learning-based Artificial Neural Network (ANN). The report highlights a critical architectural shift where targeted dimensionality reduction (PCA) on V-features and K-Means clustering provided the model with a multi-perspective view of transaction behavior, resulting in a Grand Champion model with an ROC-AUC of 0.9921.
+ The IEEE-CIS Fraud Detection dataset presents a formidable challenge due to its massive scale, extreme class imbalance, and anonymized feature space. This paper documents a systematic, 6-day engineering sprint that transformed raw financial data into a deployment-ready MLOps system. We detail the evolution from memory-optimized preprocessing and SMOTE-based balancing to a hybrid stacking ensemble and a deep learning-based Artificial Neural Network (ANN). The report highlights a critical architectural shift where targeted dimensionality reduction (PCA) on V-features and K-Means clustering provided the model with a multi-perspective view of transaction behavior, resulting in a Grand Champion model with an ROC-AUC of 0.960122 and a PR-AUC of 0.775008 (latest validated run).
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -58,10 +58,8 @@ The exploratory phase utilized a 7-section automated analysis suite. This includ
 
 \begin{figure}[h]
     \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
-        \textit{[Placeholder: Class Imbalance Bar/Pie Charts]}
-    \end{tcolorbox}
-    \caption{Visualizing the severe class imbalance driving the choice of PR-AUC as a primary metric.}
+    \includegraphics[width=0.95\columnwidth]{../project/artifacts/latest_metric_summary.png}
+    \caption{Latest metric summary (PR / ROC and operating diagnostics) from the most recent validated run.}
 \end{figure}
 
 \subsection{Handling the Imbalance Crisis}
@@ -82,10 +80,8 @@ Initial models included Logistic Regression and Random Forest as baselines. Whil
 
 \begin{figure}[h]
     \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
-        \textit{[Placeholder: Model Comparison Bar Chart]}
-    \end{tcolorbox}
-    \caption{Benchmarking results showing the progression from linear baselines to ensemble methods.}
+    \includegraphics[width=0.95\columnwidth]{../project/artifacts/latest_metric_summary.png}
+    \caption{Benchmarking results and the latest validated model comparison (see artifact images).}
 \end{figure}
 
 \section{Phase 4: Advanced Architectures (Day 6)}
@@ -112,7 +108,7 @@ The following table summarizes the performance of the various iterations of our 
 \toprule
 \textbf{Model} & \textbf{PR-AUC} & \textbf{ROC-AUC} & \textbf{Status} \\
 \midrule
-Optimized Hybrid & 0.7124 & 0.9921 & \textcolor{techblue}{🥇 Grand Champion} \\
+Optimized Hybrid & 0.7750 & 0.960122 & \textcolor{techblue}{🥇 Grand Champion} \\
 Advanced Experiments & 0.6882 & 0.9899 & \textcolor{gray}{🥈 Silver Medal} \\
 Random Forest & 0.6157 & 0.9542 & \textcolor{orange}{🥉 Bronze Medal} \\
 XGBoost Baseline & 0.6029 & 0.9412 & Solid \\
@@ -124,10 +120,10 @@ Logistic Regression & 0.3405 & 0.7421 & Baseline \\
 
 \begin{figure}[h]
     \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=6cm,valign=center, halign=center]
-        \textit{[Placeholder: ROC and PR Curves for the Grand Champion]}
-    \end{tcolorbox}
-    \caption{Performance curves demonstrating high precision-recall balance even under extreme class imbalance.}
+    \includegraphics[width=0.95\columnwidth]{../project/artifacts/latest_roc_curve.png}
+    \vspace{4pt}
+    \includegraphics[width=0.95\columnwidth]{../project/artifacts/latest_pr_curve.png}
+    \caption{ROC (top) and PR (bottom) curves for the latest validated Champion model.}
 \end{figure}
 
 \section{Production MLOps and Deployment}
