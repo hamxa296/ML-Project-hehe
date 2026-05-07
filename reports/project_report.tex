@@ -5,136 +5,835 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{amsmath}
-\usepackage{booktabs}
 \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usepackage{pgfplots}
 \usepackage{tcolorbox}
 \usepackage{array}
+\usepackage{float}
+\usepackage{tabularx}
+\usepackage{siunitx}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage[moderate]{savetrees}
+
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\pgfplotsset{compat=1.18}
 
 % Custom colors for a premium feel
 \definecolor{techblue}{RGB}{0, 102, 204}
 \definecolor{alertred}{RGB}{204, 0, 0}
+\definecolor{tablehead}{RGB}{226,238,255}
+\definecolor{tablerow}{RGB}{245,249,255}
 
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{5pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\tableheader}{}
+\newcommand{\styledtable}[1]{#1}
+\captionsetup[table]{font=small,labelfont=bf,aboveskip=4pt,belowskip=2pt}
+\captionsetup[figure]{font=small,labelfont=bf,aboveskip=4pt,belowskip=2pt}
+
+\linespread{0.98}
+% Remove the compsoc diamond separator line under the abstract
+\renewcommand{\IEEEcompsocdiamondline}{}
+
+\raggedbottom
+\setlength{\textfloatsep}{5pt plus 1pt minus 1pt}
+\setlength{\intextsep}{5pt plus 1pt minus 1pt}
+
+\usepackage{enumitem}
+\setlist{nosep}
+
+\tikzset{
+ flowbox/.style={
+ rectangle,
+ rounded corners=2pt,
+ draw=techblue,
+ fill=techblue!8,
+ very thick,
+ align=center,
+ text width=2.5cm,
+ minimum height=1cm,
+ font=\small
+ },
+ stage/.style={
+ rectangle,
+ rounded corners=2pt,
+ draw=techblue,
+ fill=techblue!6,
+ very thick,
+ align=center,
+ text width=2.3cm,
+ minimum height=0.9cm,
+ font=\small
+ },
+ decision/.style={
+ diamond,
+ draw=alertred,
+ fill=alertred!8,
+ very thick,
+ align=center,
+ aspect=2,
+ text width=2.0cm,
+ inner sep=2pt,
+ font=\small
+ },
+ flowarrow/.style={-{Latex[length=2.2mm]}, very thick, draw=techblue}
+}
+
+\linespread{1.03}
 \begin{document}
 
-\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Ecosystem:}\\ \large \textit{A Chronological Journey from Raw Data to Stacking Ensembles and Deep Learning}}
-
-\author{Project Engineering Team}
-
-\markboth{IEEE-CIS Project Report, April 2026}%
-{Technical Narrative: Evolution of a Fraud Detection Ecosystem}
-
-\IEEEtitleabstractindextext{
-\begin{abstract}
-The IEEE-CIS Fraud Detection dataset presents a formidable challenge due to its massive scale, extreme class imbalance, and anonymized feature space. This paper documents a systematic, 6-day engineering sprint that transformed raw financial data into a deployment-ready MLOps system. We detail the evolution from memory-optimized preprocessing and SMOTE-based balancing to a hybrid stacking ensemble and a deep learning-based Artificial Neural Network (ANN). The report highlights a critical architectural shift where targeted dimensionality reduction (PCA) on V-features and K-Means clustering provided the model with a multi-perspective view of transaction behavior, resulting in a Grand Champion model with an ROC-AUC of 0.9921.
-\end{abstract}
-
-\begin{IEEEkeywords}
-Fraud Detection, MLOps, Stacking Ensemble, SMOTE, Deep Learning, PCA, Cluster Analysis.
-\end{IEEEkeywords}}
+\title{\huge \textbf{Architecting a Production-Grade Fraud Detection Pipeline} \\ [0.3em] \large Course: AI221 \quad Instructor: Dr. Ali Imran Sandhu}
+\author{%
+\begin{tabular}[t]{c@{\hspace{2.5em}}c@{\hspace{2.5em}}c@{\hspace{2.5em}}c}
+\textbf{Hassan Raza}   & \textbf{Hamza Arif}   & \textbf{Emaan Swati}  & \textbf{Rabia Ashraf} \\[2pt]
+Reg.\ No.\ 2024229     & Reg.\ No.\ 2024206    & Reg.\ No.\ 2024156    & Reg.\ No.\ 2024527
+\end{tabular}%
+}
 
 \maketitle
 
+\begin{abstract}
+\textit{The detection of fraudulent transactions within massive, 
+high-dimensional datasets is a critical challenge in modern financial technology. 
+This project details the end-to-end development of a production-grade MLOps ecosystem 
+designed to replicate and exceed research benchmarks on the IEEE-CIS Fraud Detection 
+dataset. We implement a multi-stage machine learning methodology encompassing rigorous 
+feature pruning, advanced engineering, and an unsupervised K-Means clustering layer, 
+culminating in a high-performance XGBoost stacking ensemble. The system is architected 
+for real-world deployment using a containerized microservices approach, featuring 
+FastAPI for low-latency inference, Prefect for robust workflow orchestration, 
+and an automated GitHub Actions CI/CD pipeline. The latest validated production 
+run achieves a PR-AUC of 0.7930 and an ROC-AUC of 0.9650, demonstrating the efficacy 
+of combining diverse algorithmic perspectives within a stable, automated infrastructure.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Fraud Detection, MLOps, XGBoost, Stacking Ensemble, Prefect Orchestration, FastAPI, Docker, CI/CD.
+\end{IEEEkeywords}
+
 \section{Introduction}
-\IEEEPARstart{T}{he} modern digital economy necessitates real-time vigilance against increasingly sophisticated fraudulent actors. While standard machine learning models offer a baseline defense, they often fail to capture the subtle, cyclical, and high-dimensional patterns inherent in financial transaction data. This project documents the end-to-end development of a fraud detection ecosystem, emphasizing the transition from exploratory research to a containerized production environment. We focus on the IEEE-CIS dataset, chosen for its vast feature set and the realistic challenges it presents in terms of memory management and class imbalance.
+\IEEEPARstart{T}{he} digital economy is under constant threat from increasingly sophisticated fraudulent activities. In practical terms, financial systems face adversaries who continuously adapt behavior, distribute attacks across accounts, and exploit operational blind spots in rule-based monitoring. Fraud detection therefore cannot be treated as a one-time modeling exercise; it must be approached as a continuously operating risk-control system with measurable service quality and repeatable retraining.
 
-\section{Phase 1: Foundation and Preprocessing (Days 1--2)}
+This report documents the design and implementation of an end-to-end fraud analytics stack built on the IEEE-CIS dataset, with emphasis on reproducibility, operational governance, and deployment readiness. The work couples statistical modeling decisions with system engineering choices: feature pruning to stabilize signal-to-noise ratio, engineered behavioral features to expose temporal and transactional context, clustering to add latent structure, and ensemble learning to improve minority-class retrieval under extreme imbalance.
 
-\subsection{Dataset Selection and Strategy}
-The project initiated with a comparative analysis of fraud datasets. While alternatives like the "Credit Card Fraud Detection" dataset or "PaySim" were considered, the IEEE-CIS dataset was selected due to its rich feature set, which allowed for a more nuanced exploration of feature engineering and interpretability.
+Beyond model quality, the project formalizes how model artifacts are produced, validated, versioned, and served. The resulting architecture integrates training orchestration, quality gates, API-based inference, and containerized execution so that performance claims remain auditable and repeatable from raw data ingestion to runtime prediction.
 
-The initial strategy focused on eight critical preprocessing pillars: Data Integration, Missing Value Handling, Irrelevant Feature Removal, Categorical Encoding, Temporal Transformation, Feature Engineering, Imbalance Correction, and Feature Selection.
+\subsection{System Architecture at a Glance}
+The end-to-end system comprises four integrated layers: (1) Automation \& CI/CD via GitHub Actions for continuous validation and containerization, (2) Orchestration via Prefect for deterministic task sequencing and observability, (3) Serving via FastAPI and React for real-time inference and dashboarding, and (4) Model Registry and Artifact Storage for versioning and hot-reload capability. Each layer is independently scalable yet tightly coupled through well-defined data contracts and serialization boundaries.
 
-\subsection{The Preprocessing Pipeline Infrastructure}
-Handling a 1.5GB dataset required a focus on memory efficiency. We implemented a custom \texttt{MemoryOptimizer} that automatically downcasted data types (e.g., \texttt{float64} to \texttt{float32}), preventing kernel crashes and ensuring local processing viability.
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[stage] (ci) {CI/CD\\(GitHub Actions)};
+ \node[stage, below=of ci] (prefect) {Prefect\\Orchestration};
+ \node[stage, below=of prefect] (training) {Training Pipeline\\(XGBoost + KMeans)};
+ \node[stage, below=of training] (registry) {Model Registry\\(Artifacts)};
+ \node[stage, below=of registry] (api) {FastAPI\\Inference};
+ \node[stage, below=of api] (dashboard) {React\\Dashboard};
 
-A robust \texttt{DataMerger} was developed to resolve naming discrepancies between training and test sets (e.g., \texttt{id-01} vs \texttt{id\_01}). Furthermore, we engineered a \texttt{TimeFeatureExtractor} to mine the \texttt{TransactionDT} delta for cyclical patterns such as \textit{Hour of Day} and \textit{Day of Week}, acknowledging that fraud often peaks during specific temporal windows.
-
-To handle sparsity, columns with $>80\%$ null values were dynamically dropped using a \texttt{DropHighNulls} transformer, while the remaining values were filled using a \texttt{SmartImputer}. Categorical data was handled via \texttt{FrequencyEncoding}, which replaces categories with their normalized frequency—a technique highly effective for tree-based models like XGBoost.
-
-\section{Phase 2: Exploratory Analysis and Data Integrity (Days 3--4)}
-
-\subsection{Multi-Dimensional EDA}
-The exploratory phase utilized a 7-section automated analysis suite. This included class imbalance audits (revealing a ~3\% fraud ratio), KDE plots of transaction amounts on a log-scale, and fraud rate heatmaps. These visualizations validated our temporal engineering and identified "hotspots" such as card testing at micro-amounts ($<\$10$) and high-value fraud ($>\$5000$).
-
-\begin{figure}[h]
-    \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
-        \textit{[Placeholder: Class Imbalance Bar/Pie Charts]}
-    \end{tcolorbox}
-    \caption{Visualizing the severe class imbalance driving the choice of PR-AUC as a primary metric.}
+ \draw[flowarrow] (ci) -- (prefect);
+ \draw[flowarrow] (prefect) -- (training);
+ \draw[flowarrow] (training) -- (registry);
+ \draw[flowarrow] (registry) -- (api);
+ \draw[flowarrow] (api) -- (dashboard);
+ \end{tikzpicture}%
+ \caption{Complete system architecture: Automation \& CI/CD feed into Orchestration, which populates the Model Registry, which powers Serving and Dashboard layers.}
 \end{figure}
 
-\subsection{Handling the Imbalance Crisis}
-To prevent the model from adopting a "lazy" strategy of predicting 100\% legitimacy, we implemented a dual-phase strategy in the \texttt{ClassImbalanceHandler}. This involved:
-\begin{enumerate}
-    \item \textbf{SMOTE (Synthetic Minority Over-sampling Technique)}: Generating synthetic fraud samples to enrich the minority class.
-    \item \textbf{Random Undersampling}: Trimming the majority class to reach a manageable balance for memory-intensive algorithms like SVM.
-\end{enumerate}
-Crucially, this balancing was applied only to the training data to prevent data leakage into the validation sets.
+\section{Data and Preliminary Analysis}
 
-\section{Phase 3: Model Evolution (Day 5)}
+\subsection{Raw Dataset Overview}
+The project utilizes the IEEE-CIS Fraud Detection dataset, consisting of over 472,000 training samples. The data is characterized by extreme sparsity and a severe class imbalance, with a fraud rate of only 3.5\% (a 27.6:1 ratio of safe to fraudulent transactions). The raw features include anonymized Vesta proprietary signals (V-features), count-based features (C-features), and timedelta signals (D-features), along with transaction metadata like amount and device identity.
 
-\subsection{The Hybrid Feature Set}
-A critical breakthrough occurred when we shifted from global PCA to \textbf{Targeted PCA}. We identified that the 339 anonymized V-columns were highly redundant. By compressing only these features into 50 components—while keeping high-signal features like \texttt{TransactionAmt} in their raw form—we created a "Hybrid" feature set. This was further enriched by K-Means Cluster IDs, allowing models to see data from three perspectives: raw, compressed, and grouped.
-
-\subsection{Benchmarking Baselines}
-Initial models included Logistic Regression and Random Forest as baselines. While Logistic Regression provided a low PR-AUC (0.3405), it served as a vital "sanity check" for our preprocessing and scaling.
-
-\begin{figure}[h]
-    \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=4cm,valign=center, halign=center]
-        \textit{[Placeholder: Model Comparison Bar Chart]}
-    \end{tcolorbox}
-    \caption{Benchmarking results showing the progression from linear baselines to ensemble methods.}
-\end{figure}
-
-\section{Phase 4: Advanced Architectures (Day 6)}
-
-\subsection{Deep Learning: The ANN Integration}
-We challenged the dominance of XGBoost by implementing a multi-layer \textbf{Artificial Neural Network (ANN)} using TensorFlow. Designing an ANN for tabular data required strict scaling (StandardScaler) and Dropout layers (20--30\%) to prevent overfitting on synthetic SMOTE samples. The ANN's ability to learn complex latent relationships served as a powerful benchmark against traditional gradient boosting.
-
-\subsection{The Grand Champion Stacking Ensemble}
-The pinnacle of our modeling effort was the \textbf{Optimized Hybrid Ensemble}. This model combines:
-\begin{itemize}
-    \item \textbf{XGBoost (Enhanced)}: Trained on the full dataset, PCA components, and Cluster IDs.
-    \item \textbf{Random Forest Regressor}: Specifically tuned to predict financial loss on fraudulent rows.
-    \item \textbf{Kernel SVM}: Leveraging PCA for high-dimensional boundary detection.
-\end{itemize}
-
-\section{Experimental Results and Analysis}
-
-The following table summarizes the performance of the various iterations of our ecosystem. The "Optimized Hybrid" model emerged as the clear leader.
-
-\begin{table}[h]
+\begin{table}[H]
 \centering
-\caption{Benchmark Comparison of Fraud Detection Models}
-\begin{tabular}{l c c r}
+\caption{Comprehensive dataset profile used for model design decisions}
+
+\begin{tabular}{p{0.36\columnwidth}p{0.50\columnwidth}}
 \toprule
-\textbf{Model} & \textbf{PR-AUC} & \textbf{ROC-AUC} & \textbf{Status} \\
+\textbf{Dataset Property} & \textbf{Observed Value} \\
 \midrule
-Optimized Hybrid & 0.7124 & 0.9921 & \textcolor{techblue}{🥇 Grand Champion} \\
-Advanced Experiments & 0.6882 & 0.9899 & \textcolor{gray}{🥈 Silver Medal} \\
-Random Forest & 0.6157 & 0.9542 & \textcolor{orange}{🥉 Bronze Medal} \\
-XGBoost Baseline & 0.6029 & 0.9412 & Solid \\
-KNN & 0.3863 & 0.7512 & Baseline \\
-Logistic Regression & 0.3405 & 0.7421 & Baseline \\
+Total training rows & 472,432 \\
+\midrule
+Fraud rows & 16,530 \\
+\midrule
+Safe rows & 455,902 \\
+\midrule
+Fraud prevalence & 3.4989\% \\
+\midrule
+Imbalance ratio (safe:fraud) & 27.6:1 \\
+\midrule
+Raw feature count & 228 columns \\
+\midrule
+V-feature family & 180 columns (proprietary signals) \\
+\midrule
+C-feature family & 14 columns (count-based) \\
+\midrule
+D-feature family & 8 columns (time delta) \\
+\midrule
+Maximum missing (\%) & >95\% in 208 columns \\
+\midrule
+Mean feature correlation with target & 0.18 \\
+\midrule
+Max single-feature correlation & 0.24 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[h]
-    \centering
-    \begin{tcolorbox}[colback=white,colframe=black,height=6cm,valign=center, halign=center]
-        \textit{[Placeholder: ROC and PR Curves for the Grand Champion]}
-    \end{tcolorbox}
-    \caption{Performance curves demonstrating high precision-recall balance even under extreme class imbalance.}
+This raw profile immediately informs critical design decisions: (1) the overwhelming imbalance necessitates \textbf{weighted loss functions} and \textbf{PR-AUC} as the primary metric, (2) the weak max correlation of 0.24 indicates that \textbf{fraud is inherently multi-feature and non-linear}, and (3) the prevalence of missing data justifies an aggressive \textbf{pruning-first approach}.
+
+\subsection{Exploratory Data Analysis (EDA) and Structural Insights}
+The pipeline begins with an automated EDA task that identifies the fundamental characteristics of the raw dataset. These findings directly drive the design of the preprocessing and modeling strategies.
+
+\begin{enumerate}
+ \item \textbf{Extreme Class Imbalance}: The dataset exhibits a \textbf{27.6 : 1} ratio (96.5\% safe, 3.5\% fraud). This makes PR-AUC the only defensible primary success metric, as accuracy would be misleading.
+ \item \textbf{Temporal Non-Uniformity}: Fraud rates spike between 00:00--06:00 UTC, confirming that fraudsters exploit low-monitoring windows and justifying cyclical time engineering.
+ \item \textbf{Feature Sparsity}: Over 91\% of columns exceed 70\% missingness, necessitating an aggressive pruning-first foundation to prevent noise amplification.
+ \item \textbf{Non-Linearity}: With a maximum single-feature correlation of $r = 0.24$, fraud is clearly a multi-feature interaction problem requiring non-linear learners like gradient-boosted trees.
+\end{enumerate}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/01_class_balance.png}
+ \caption{Class balance: 96.5\% safe vs 3.5\% fraud. This skew drives our choice of PR-AUC and \texttt{scale\_pos\_weight}.}
 \end{figure}
 
-\section{Production MLOps and Deployment}
-The final phase involved containerizing the system using \textbf{Docker} and \textbf{FastAPI}. This architecture allows for a "Plug-and-Play" deployment where the ANN and XGBoost models coexist. The FastAPI backend ensures that incoming transactions are preprocessed through the exact same pipeline used in training, maintaining data parity and ensuring reliable real-time predictions.
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/03_temporal_patterns.png}
+ \caption{Temporal fraud patterns. Spikes during off-hours motivate cyclical feature extraction.}
+\end{figure}
 
-\section{Conclusion}
-This project demonstrates that high-performance fraud detection is a multi-stage engineering endeavor. By systematically addressing memory constraints, feature redundancy (via Targeted PCA), and class imbalance (via SMOTE), we evolved a 0.34 PR-AUC baseline into a 0.7124 PR-AUC production-ready system. The integration of hybrid feature sets and deep learning proves that modern fraud detection benefits significantly from viewing data through multiple algorithmic lenses.
+\begin{table}[H]
+\centering
+\caption{Raw data insights and their architectural consequences}
+\begin{tabular}{p{0.31\columnwidth}p{0.58\columnwidth}}
+\toprule
+\textbf{Structural Finding} & \textbf{Architectural Response} \\
+\midrule
+27.6:1 Class Ratio & PR-AUC focus; Weighted learning pressure. \\
+\midrule
+91\% Sparse Columns & Aggressive Null-Pruning (>70\% threshold). \\
+\midrule
+Max $r=0.24$ with target & Non-linear ensembles (XGBoost) vs. linear models. \\
+\midrule
+Off-hour fraud spikes & Cyclical hour/day feature enrichment. \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\bibliographystyle{IEEEtran}
+\subsection{Exploratory Data Analysis: Feature-Level Signals}
+Beyond the class distribution, the raw EDA reveals key structural properties of each feature family that directly inform which preprocessing steps are applied.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/10_category_fraud_rates.png}
+ \caption{Fraud rate by product category and card type. Certain categories exhibit dramatically higher fraud rates, confirming that categorical features carry meaningful signal and should be frequency-encoded rather than dropped.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/09_correlation_matrix.png}
+ \caption{Pairwise correlation matrix of retained numeric features after pruning. Several V-feature clusters exhibit high inter-correlation ($r > 0.9$), validating redundancy-based pruning to prevent multicollinearity.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/11_outlier_analysis.png}
+ \caption{Outlier analysis across transaction features. Fraud transactions are disproportionately represented in extreme value ranges, especially for the amount feature, reinforcing the decision to apply log transformation before training.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/08_v_features_missing.png}
+ \caption{Missing value density across the 180 V-feature columns. The majority exceed 70\% missingness — imputing these would be three parts fiction to one part fact, making their removal the only defensible choice.}
+\end{figure}
+
+\section{Technical Methodology and Implementation}
+
+\subsection{Workflow Overview and Methodology Flow}
+The project follows a robust MLOps sequence designed to transform raw, high-cardinality data into a production-ready model. The process moves from ingestion and baseline comparison to advanced feature enrichment and validation, with explicit quality gates at each stage.
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[flowbox] (raw) {Raw CSVs\\(train\_transaction.csv\\+ train\_identity.csv)};
+ \node[flowbox, below=of raw] (merge) {Merge \& Memory\\Downcast};
+ \node[flowbox, below=of merge] (feat) {Feature Engineering\\(time, freq enc, log)};
+ \node[flowbox, below=of feat] (prune) {Pruning\\(>70\% nulls)};
+ \node[flowbox, below=of prune] (cluster) {KMeans\\(n=5)};
+ \node[flowbox, below=of cluster] (train) {Train XGBoost\\(scale\_pos\_weight)};
+ \node[flowbox, below=of train] (eval) {Evaluate\\(PR/ROC, Confusion)};
+ \node[flowbox, below=of eval] (serve) {Save \& Serve\\(model\_latest.pkl)};
+
+ \draw[flowarrow] (raw) -- (merge);
+ \draw[flowarrow] (merge) -- (feat);
+ \draw[flowarrow] (feat) -- (prune);
+ \draw[flowarrow] (prune) -- (cluster);
+ \draw[flowarrow] (cluster) -- (train);
+ \draw[flowarrow] (train) -- (eval);
+ \draw[flowarrow] (eval) -- (serve);
+ \end{tikzpicture}%
+ \caption{End-to-end methodology flow from data ingestion through model validation and deployment.}
+\end{figure}
+
+\subsection{Post-Preprocessing Validation}
+After cleaning and engineering, the feature space is dramatically reduced and enriched with behavioral signals. The following figures show the actual processed EDA outputs from the pipeline.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/p01_engineered_features.png}
+ \caption{Engineered feature distributions after preprocessing. The pruned and encoded feature set shows cleaner, more separable distributions between safe and fraud classes compared to the raw V-feature noise.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/p02_cluster_analysis.png}
+ \caption{K-Means cluster profiles ($k=5$). Each cluster exhibits a distinct fraud rate, validating that the clustering layer successfully separates high-risk behavioral archetypes from low-risk ones.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/p04_pca_visualisation.png}
+ \caption{PCA visualization of the processed feature space colored by cluster assignment. The five behavioral archetypes are largely separable in 2D principal component space, confirming that K-Means captures structurally meaningful groupings.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/p07_mutual_information.png}
+ \caption{Mutual information scores between engineered features and the fraud label. Features like cluster label, transaction hour, and frequency-encoded categorical variables rank among the most informative, validating the engineering decisions made in Stage 1.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/p05_top_feature_distributions.png}
+ \caption{Top feature distributions by class (fraud vs. safe) after preprocessing. Engineered features show notably stronger class separation than raw V-features, confirming the value of the preprocessing pipeline.}
+\end{figure}
+
+\subsection{Implementation Detail: The Two-Stage Refinery Process}
+The journey from raw files to production training data is managed across two critical stages. This section details the engineering decisions and operational impact of each transformation.
+
+\subsection{Stage 1: Preprocessing and Engineering}
+The raw dataset consists of two separately-collected CSV files. This stage converts this raw collection into a clean, numerically-homogeneous format.
+
+\subsubsection{Memory Optimization (reduce\_mem\_usage)}
+\textbf{Challenge}: The raw data occupies approximately 1.5 GB of RAM, which exceeds practical limits on consumer hardware and slows experimentation.
+
+\textbf{Solution}: Apply intelligent data type downsampling. By default, pandas loads all floating-point columns as \texttt{float64} (8 bytes per value) and all integer columns as \texttt{int64} (8 bytes per value). We scan the data and downcast conservatively: if a column's maximum value fits within \texttt{float16}, we downcast it; likewise for integers. For example, a V-feature with values in the range $[0, 100]$ can safely fit in \texttt{int16}, reducing 8 bytes to 2 bytes per value - a 4x compression.
+
+\textbf{Impact}: Memory usage decreases from 1.5 GB to approximately 0.47 GB (69\% reduction), enabling smooth local development and faster experimentation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{assets/03_transaction_amount.png}
+\caption{Transaction amount distribution (raw vs log-transformed). The right-skewed raw distribution is compressed by $\log(1+x)$ into a roughly symmetric form, stabilizing tree splits and reducing the influence of outliers.}
+\end{figure}
+
+\subsubsection{The Big Merge (DataMerger)}
+\textbf{Challenge}: Vesta's raw data comes in two files: (1) train\_transaction.csv with per-transaction features and per-transaction labels, and (2) train\_identity.csv with per-identity features (card, device, email signatures). These are related via a \texttt{TransactionID} key, but are stored separately.
+
+\textbf{Solution}: Perform an outer left join on \texttt{TransactionID}. All 472k training transactions are guaranteed to be in train\_transaction.csv, but not all have corresponding identity rows. An outer left join preserves the full transaction history and fills missing identity fields with NaN, which is acceptable for downstream imputation.
+
+\textbf{Impact}: A single unified table with shape (472k, 434 columns) enables end-to-end pipeline processing and simplifies feature engineering logic.
+
+\subsubsection{Time Engineering (TimeFeatureExtractor)}
+\textbf{Challenge}: The raw \texttt{TransactionDT} column is a Unix-like timestamp (integer seconds since an arbitrary reference point). This representation is opaque to the model and prevents learning time-dependent patterns.
+
+\textbf{Solution}: Extract cyclical components:
+\begin{itemize}
+	\item \textbf{Transaction\_Hour}: Hour of day (0-23), computed as $\lfloor (\texttt{TransactionDT} \mod 86400) / 3600 \rfloor$.
+	\item \textbf{Transaction\_Day}: Day of week (0-6, where 0=Monday), computed by converting the timestamp to a calendar date and extracting the weekday.
+\end{itemize}
+
+\textbf{Theoretical Basis}: Fraud is not uniformly distributed across time. Attackers prefer windows with low monitoring (late night, weekends). By encoding time explicitly, we give the model direct access to temporal fraud patterns without requiring it to reconstruct them from raw timestamp values.
+
+\textbf{Impact}: Two new engineered features that reduce the effective non-linearity of the learning problem and improve generalization.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{assets/04_time_analysis.png}
+\caption{Time-of-day and day-of-week fraud rate analysis from raw EDA. Off-hours (00:00--06:00 UTC) and certain weekdays show elevated fraud rates, directly motivating the extraction of \texttt{Transaction\_Hour} and \texttt{Transaction\_Day} features.}
+\end{figure}
+
+\subsubsection{Skewness Correction (LogTransformer)}
+\textbf{Challenge}: Transaction amounts range from \$0.01 to \$30,000, with a long right tail dominated by outliers. This extreme skewness can confuse tree-based models, causing them to allocate disproportionate splits to outlier values.
+
+\textbf{Solution}: Apply the log-plus-one transformation: $\text{Amount\_Transformed} = \log_e(1 + \text{Amount\_Raw})$. The constant 1 prevents $\log(0)$ errors. This transformation compresses the long tail, making the distribution roughly bell-shaped.
+
+\textbf{Impact}: The model sees a more symmetric feature distribution, reduces outlier influence, and learns more stable split rules.
+
+\subsubsection{High-Null Pruning (DropHighNulls)}
+\textbf{Challenge}: The dataset contains 228 raw columns, of which 208 (91\%) have $>70\%$ missing values. These columns add noise and computational overhead without signal.
+
+\textbf{Solution}: Prune any column with $>70\%$ nullness. This aggressive threshold is justified because: (1) imputation of a column that is 75\% empty is unreliable (imputed values are 3:1 fiction-to-fact), and (2) pruned columns are likely deprecated features from Vesta's legacy systems.
+
+\textbf{Impact}: Removes 208 columns, reducing feature space from 228 to 20 remaining columns. This dramatically reduces noise and accelerates downstream processing.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\columnwidth]{assets/07_v_features_corr.png}
+\caption{V-feature correlation heatmap. Dense correlation clusters confirm high redundancy within the V-feature family. Correlated pairs (Pearson $r > 0.98$) are pruned to prevent multicollinearity from inflating boosting weights on redundant signals.}
+\end{figure}
+
+\subsubsection{Frequency Encoding (FrequencyEncoder)}
+\textbf{Challenge}: Many categorical features (e.g., \texttt{ProductCD}, \texttt{addr1}, \texttt{card1}) must be converted to numeric form, but one-hot encoding creates thousands of sparse columns. For example, \texttt{addr1} has 300+ unique values; one-hot encoding would create a 300-column sparse matrix.
+
+\textbf{Solution}: Replace each categorical value with the frequency (count) of that value in the training set. For example, if \texttt{addr1=100} appears 1,000 times out of 472k rows, we encode that row with the value 1,000. This encoding is theoretically sound because fraudsters often cluster by geography; high-frequency addresses are legitimate, and low-frequency addresses are more likely fraud.
+
+\textbf{Impact}: Categorical features are converted to numeric form without creating high-cardinality sparsity. The resulting numeric encodings carry semantic meaning (frequency approx. legitimacy).
+
+\subsubsection{Final Imputation (Median Filling)}
+\textbf{Challenge}: After all transformations, some columns still contain NaN values in scattered locations.
+
+\textbf{Solution}: For each remaining column, compute the median and fill NaN values with that median. This is a simple, robust imputation strategy that preserves the median and avoids artificial clustering around a single imputed value.
+
+\textbf{Output of Notebook 1}: A clean CSV file, \texttt{data/processed\_train.csv}, with 472k rows and approximately 20 numeric columns, ready for downstream modeling.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[flowbox] (raw) {Raw CSVs\\(1.5 GB)};
+ \node[flowbox, below=of raw] (merge) {Merge on\\TransactionID};
+ \node[flowbox, below=of merge] (mem) {Memory\\Downcast};
+ \node[flowbox, below=of mem] (time) {Extract\\Hour, Day};
+ \node[flowbox, below=of time] (log) {Log\\Transform};
+ \node[flowbox, below=of log] (prune) {Drop\\>70\% Null};
+ \node[flowbox, below=of prune] (freq) {Frequency\\Encode};
+ \node[flowbox, below=of freq] (impute) {Median\\Impute};
+ \node[flowbox, below=of impute] (output) {Clean CSV\\(processed\_train.csv)};
+ 
+ \draw[flowarrow] (raw) -- (merge);
+ \draw[flowarrow] (merge) -- (mem);
+ \draw[flowarrow] (mem) -- (time);
+ \draw[flowarrow] (time) -- (log);
+ \draw[flowarrow] (log) -- (prune);
+ \draw[flowarrow] (prune) -- (freq);
+ \draw[flowarrow] (freq) -- (impute);
+ \draw[flowarrow] (impute) -- (output);
+\end{tikzpicture}%
+\caption{Notebook 01 refinery process: raw CSVs flow through a 7-stage pipeline (merge, memory optimization, time engineering, log transformation, null pruning, frequency encoding, imputation) to produce a clean, numeric dataset.}
+\end{figure}
+
+\subsection{Stage 2: The Partition}
+Now that the data is clean and numeric (processed\_train.csv), it must be divided into training and testing sets, following strict MLOps principles to prevent data leakage.
+
+\subsubsection{Stratified Train-Test Splitting}
+\textbf{Challenge}: A naive random split would likely result in training and test sets with different fraud rates by random chance. For example, the test set might have 3.2\% fraud while the training set has 3.8\%, violating the assumption that train and test are identically distributed.
+
+\textbf{Solution}: Use stratified splitting. This algorithm groups rows by their target label (fraud/safe) and then splits each group independently, guaranteeing that both the training set and test set maintain the original 3.5\% fraud rate.
+
+\textbf{Impact}: Both training and test sets have identical class distribution, enabling fair performance comparison and eliminating a major source of bias.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[flowbox, text width=4.5cm] (orig) {\textbf{Original Data}\\Safe: 455,902 (96.5\%)\\Fraud: 16,530 (3.5\%)\\Total: 472,432};
+ \node[flowbox, below=of orig, text width=4.5cm, draw=alertred, fill=alertred!6] (train) {\textbf{Train Set (80\%)}\\Safe: 364,722 (96.5\%)\\Fraud: 13,224 (3.5\%)\\Total: 377,946};
+ \node[flowbox, below=of train, text width=4.5cm, draw=alertred, fill=alertred!6] (test) {\textbf{Test Set (20\%)}\\Safe: 91,180 (96.5\%)\\Fraud: 4,306 (3.5\%)\\Total: 95,486};
+ \draw[flowarrow] (orig) -- node[midway, right, font=\scriptsize] {stratified (80\%)} (train);
+ \draw[flowarrow] (train) -- node[midway, right, font=\scriptsize] {stratified (20\%)} (test);
+\end{tikzpicture}%
+\caption{Stratified splitting ensures train and test maintain the 3.5\% fraud rate, preventing distribution mismatch.}
+\end{figure}
+
+\subsubsection{Saving the Pipeline Input: train\_unbalanced.csv}
+\textbf{Why "Unbalanced"?}: The 80\% training set is saved as \texttt{data/train\_unbalanced.csv} because it preserves the original 3.5\% fraud rate. We intentionally did NOT apply SMOTE (Synthetic Minority Oversampling) or random undersampling in this stage.
+
+\textbf{Design Rationale}: The Prefect orchestration pipeline is designed to handle class imbalance internally using XGBoost's native \texttt{scale\_pos\_weight} mechanism. By feeding the pipeline the unbalanced data, we force the model to learn robust imbalance-handling strategies, which generalize better to real-world deployments where the fraud rate is similarly skewed. If we had pre-balanced the data via SMOTE or undersampling, we would mask this critical learning signal and potentially overfit to the balanced distribution.
+
+\textbf{Impact}: The pipeline sees realistic class imbalance and learns to handle it natively, improving real-world fraud recovery.
+
+\subsubsection{Summary of the Two-Stage Journey}
+The path from raw Kaggle files to production training data is intentionally multi-stage and auditable:
+
+\begin{table}[H]
+\centering
+\caption{Data transformation pipeline stages: from raw files to production training set}
+
+\begin{tabular}{p{0.15\columnwidth}p{0.27\columnwidth}p{0.18\columnwidth}p{0.25\columnwidth}}
+\toprule
+\textbf{Stage} & \textbf{Transformation} & \textbf{Output} & \textbf{Key Rationale} \\
+\midrule
+0 & Two raw Kaggle CSVs & train\_transaction.csv + train\_identity.csv & Original files \\
+\midrule
+1a & Memory downsampling & Reduced RAM (1.5 GB -> 0.47 GB) & Enable development \\
+\midrule
+1b & Merge on TransactionID & Single table (472k x 434) & Unified schema \\
+\midrule
+1c & Time extraction & Add hour, day\_of\_week features & Temporal signals \\
+\midrule
+1d & Log transformation & Compress amount skewness & Stabilize outliers \\
+\midrule
+1e & Null pruning (>70\%) & Drop 208 columns, keep 20 & Remove noise \\
+\midrule
+1f & Frequency encoding & Convert categories to counts & Semantic numeric features \\
+\midrule
+1g & Median imputation & Fill remaining NaN & Complete dataset \\
+\midrule
+1 Output & processed\_train.csv & 472k x 20 numeric columns & Clean, ready for splitting \\
+\midrule
+2a & Stratified 80/20 split & Separate train/test folders & Prevent distribution mismatch \\
+\midrule
+2 Output & train\_unbalanced.csv & 80\% of data (377k rows, 3.5\% fraud) & Production training input \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[flowbox] (raw) {Raw Kaggle\\Files\\(1.5 GB)};
+ \node[flowbox, below=of raw] (stage1a) {Memory\\Optimization};
+ \node[flowbox, below=of stage1a] (stage1b) {Merge \&\\Join};
+ \node[flowbox, below=of stage1b] (stage1c) {Time\\Features};
+ \node[flowbox, below=of stage1c] (stage1d) {Log\\Transform};
+ \node[flowbox, below=of stage1d] (stage1e) {Prune\\Nulls};
+ \node[flowbox, below=of stage1e] (stage1f) {Freq\\Encode};
+ \node[flowbox, below=of stage1f] (stage1g) {Impute\\Median};
+ \node[flowbox, below=of stage1g] (clean) {Clean CSV\\(processed\_train.csv)};
+ \node[flowbox, below=of clean] (split) {Stratified\\80/20\\Split};
+ \node[flowbox, below=of split] (output) {\textbf{Train Set}\\(train\_unbalanced.csv)\\377k rows, 3.5\% fraud};
+
+ \draw[flowarrow] (raw) -- (stage1a);
+ \draw[flowarrow] (stage1a) -- (stage1b);
+ \draw[flowarrow] (stage1b) -- (stage1c);
+ \draw[flowarrow] (stage1c) -- (stage1d);
+ \draw[flowarrow] (stage1d) -- (stage1e);
+ \draw[flowarrow] (stage1e) -- (stage1f);
+ \draw[flowarrow] (stage1f) -- (stage1g);
+ \draw[flowarrow] (stage1g) -- (clean);
+ \draw[flowarrow] (clean) -- (split);
+ \draw[flowarrow] (split) -- (output);
+\end{tikzpicture}%
+\caption{Complete two-stage data refinery pipeline: Stage 1 (Notebooks 01) transforms raw files into clean numeric data; Stage 2 (Notebook 03) partitions for training and evaluation, producing the production training set.}
+\end{figure}
+
+
+\section{Model Development, Comparison, and Architecture}
+
+\subsection{Model Selection Spectrum}
+We evaluated a wide range of models across experimental notebooks to benchmark performance and validate our final architectural choice. The comparison confirms that simple linear learners underperform in high-dimensional, imbalanced fraud manifolds.
+
+\begin{table}[H]
+\centering
+\caption{Comprehensive model comparison: performance metrics and theoretical justification}
+\begin{tabular}{p{0.18\columnwidth}S[table-format=1.4]S[table-format=1.4]p{0.36\columnwidth}}
+\toprule
+\textbf{Model} & \textbf{{ROC-AUC}} & \textbf{{PR-AUC}} & \textbf{Theoretical Rationale} \\
+\midrule
+Logistic Regression & 0.8409 & 0.3405 & Assumes linear separation; fails to exploit multi-feature interactions or native class weighting. \\
+\midrule
+KNN with PCA & 0.8950 & 0.4220 & Distance-based; struggles in sparse, high-dimensional spaces where Euclidean distance becomes less discriminative. \\
+\midrule
+Random Forest & 0.9200 & 0.5500 & Strong ensemble baseline; learns non-linear splits but lacks the native residual refinement of gradient boosting. \\
+\midrule
+XGBoost Baseline & 0.9466 & 0.6920 & Excellent non-linear learner with native \texttt{scale\_pos\_weight} support for imbalanced learning. \\
+\midrule
+\textbf{XGBoost + KMeans} & \textbf{0.9650} & \textbf{0.7930} & \textbf{Winner}: Combines gradient boosting with unsupervised behavioral profiling to maximize minority-class recovery. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{tcolorbox}[colback=techblue!3,colframe=techblue,title=Why Ensembles Outperform Linear Models]
+The gap between Logistic Regression's 0.8409 ROC-AUC and 0.3405 PR-AUC exemplifies the imbalanced-learning trap: good overall ranking but poor minority-class recall. Ensembles like XGBoost succeed because they learn non-linear splits and sequentially refine errors (residuals) specifically on the harder-to-classify fraud cases.
+\end{tcolorbox}
+
+\subsection{The Role of K-Means in Behavioral Profiling}
+Beyond individual features, the K-Means clustering layer (with $k=5$) serves as a latent feature-space compressor. This approach is rooted in \textbf{Latent Profile Analysis}: fraud occurs in discrete archetypes (e.g., high-velocity bot traffic vs. sleeping-account takeovers).
+
+\begin{itemize}
+ \item \textbf{Dimensionality Compression}: K-Means projects the high-dimensional manifold onto 5 discrete behavioral points, reducing effective complexity and combating the curse of dimensionality.
+ \item \textbf{Interpretable Proxy for Interactions}: XGBoost can split on cluster membership as a shortcut for discovering high-order interactions that would otherwise require deep, prone-to-overfit trees.
+ \item \textbf{Robustness to Feature Drift}: Individual feature values fluctuate in production, but cluster assignments are more stable, providing a higher-level signal that resists transient distribution shifts.
+\end{itemize}
+
+\subsection{Hyperparameter Optimization and Imbalance Theory}
+The model is tuned to handle the extreme $27.6:1$ class imbalance through weighted learning.
+
+\begin{table}[H]
+\centering
+\caption{XGBoost hyperparameters: values and theoretical justifications}
+\begin{tabular}{p{0.24\columnwidth}p{0.18\columnwidth}p{0.48\columnwidth}}
+\toprule
+\textbf{Parameter} & \textbf{Value} & \textbf{Theoretical and Empirical Justification} \\
+\midrule
+\texttt{scale\_pos\_weight} & 27.6 & Directly penalizes fraud misclassifications 27.6x more, preventing the model from defaulting to a "always safe" strategy. \\
+\midrule
+\texttt{n\_estimators} & 300--500 & Allows the model to refine predictions incrementally. Combined with low learning rate, this prevents memorization of training noise. \\
+\midrule
+\texttt{max\_depth} & 9--12 & Controls interaction complexity. Depth 9--12 captures multi-way feature interactions while remaining generalizable. \\
+\midrule
+\texttt{learning\_rate} & 0.02--0.03 & Ensures gradual convergence for better generalization to unseen fraud patterns. \\
+\midrule
+\texttt{subsample} & 0.8 & Fraction of rows per tree. Introduces randomness to prevent overfitting on individual transaction artifacts. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Theoretical Conclusion}
+XGBoost with weighted loss and K-Means clustering is superior because it addresses the three pillars of fraud data: (1) \textbf{Extreme Imbalance} via \texttt{scale\_pos\_weight}, (2) \textbf{Non-Linear Interactions} via gradient boosting, and (3) \textbf{Behavioral Heterogeneity} via unsupervised clustering.
+
+\subsection{Performance Benchmarking and Metrics}
+PR-AUC is our primary success metric as it measures retrieval quality under heavy imbalance without overwhelming operations with false positives.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/01_roc_pr_curves.png}
+ \caption{Validated ROC and PR curves. ROC-AUC (0.965) and PR-AUC (0.793) confirm strong ranking quality.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/04_confusion_matrix.png}
+ \caption{Confusion matrix. High recall ensures fraud capture; false positives remain manageable.}
+\end{figure}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/02_threshold_tradeoff.png}
+ \caption{Precision-recall threshold trade-off. The operating regime is selected based on business cost-benefit analysis.}
+\end{figure}
+
+\section{Serving, APIs, and Operations}
+\subsection{API Contract and Inference Surface}
+The API layer is the operational boundary between model artifacts and consuming clients (dashboard workflows, batch tools, and downstream automation). Requests are schema-validated, transformed into model-compatible payloads, and evaluated against the active serialized pipeline. The service returns calibrated fraud probabilities together with deterministic class decisions, enabling threshold policy to be adjusted without retraining the core model.
+
+In addition to inference endpoints, the API exposes observability-oriented surfaces for metrics history, latest curve snapshots, and model reload control. This allows deployment teams to verify runtime quality and switch to the newest approved artifact with minimal service disruption.
+
+\begin{table}[H]
+\centering
+\caption{Main API endpoints and purpose}
+
+\begin{tabular}{p{0.25\columnwidth}p{0.18\columnwidth}p{0.40\columnwidth}}
+\toprule
+\textbf{Endpoint} & \textbf{Method} & \textbf{What it does} \\
+\midrule
+/health & GET & Confirms API and model readiness \\
+\midrule
+/predict & POST & Scores one transaction \\
+\midrule
+/batch\_predict & POST & Scores many rows from CSV input \\
+\midrule
+/model\_evaluations & GET & Returns historical run metrics \\
+\midrule
+/latest\_metrics & GET & Returns latest ROC/PR curve JSON \\
+\midrule
+/reload\_model & POST & Hot-reloads newest saved model \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=8mm and 10mm]
+ \node[stage] (user) {User or Dashboard};
+ \node[stage, below=of user] (api) {FastAPI};
+ \node[stage, below=of api] (model) {model\_latest.pkl};
+ \node[stage, below=of model, text width=2.8cm] (metrics) {latest\_metrics.json};
+
+ \draw[flowarrow] (user) -- node[right, font=\scriptsize] {request} (api);
+ \draw[flowarrow] (api) -- node[right, font=\scriptsize] {load/score} (model);
+ \draw[flowarrow] (model.west) -- ++(-1cm, 0) |- node[pos=0.25, left, font=\scriptsize] {probability} (api.west);
+ \draw[flowarrow] (api.north west) -- ++(-0.8cm, 0) |- node[pos=0.25, left, font=\scriptsize] {response} (user.west);
+ \draw[flowarrow] (metrics.east) -- ++(1cm, 0) |- node[pos=0.25, right, font=\scriptsize] {curves, history} (api.east);
+ \end{tikzpicture}%
+ \caption{Prediction serving flow in practical order.}
+\end{figure}
+
+\subsection{How, Why, and When (Runbook)}
+\begin{table}[H]
+\centering
+\caption{Operational runbook for teams}
+
+\begin{tabular}{p{0.21\columnwidth}p{0.28\columnwidth}p{0.30\columnwidth}}
+\toprule
+\textbf{When} & \textbf{What to do} & \textbf{Why} \\
+\midrule
+New data arrives & Re-run Prefect pipeline & Refreshes model on latest behavior \\
+\midrule
+Metrics degrade & Check PR-AUC, drift, confusion matrix & Detects quality decay early \\
+\midrule
+Deployment candidate ready & Run CI + quality gate + Docker build & Prevents weak models from shipping \\
+\midrule
+API starts with old model & Call reload endpoint & Activates latest model without restart \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{The Production Architecture}
+
+\subsection{System Design}
+The system is built as a microservices architecture. The React Frontend provides an interactive dashboard, while the FastAPI Backend serves as the inference engine, loading the "Champion" model into memory for real-time predictions.
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=6mm and 10mm]
+ \node[stage] (frontend) {React Frontend};
+ \node[stage, below=of frontend] (backend) {FastAPI Backend};
+ \node[stage, below=of backend] (models) {Models and Artifacts};
+ \node[stage, below=of models] (data) {Shared Data Volume};
+
+ \draw[flowarrow] (frontend) -- node[right, font=\scriptsize] {API calls} (backend);
+ \draw[flowarrow] (backend) -- node[right, font=\scriptsize] {load / save} (models);
+ \draw[flowarrow] (backend.east) -- ++(1.5cm, 0) |- node[pos=0.25, right, font=\scriptsize] {read features} (data.east);
+ \draw[flowarrow] (models.west) -- ++(-1.2cm, 0) |- node[pos=0.25, left, font=\scriptsize] {predictions} (backend.south west);
+ \draw[flowarrow] (backend.north west) -- ++(-0.8cm, 0) |- node[pos=0.25, left, font=\scriptsize] {responses} (frontend.west);
+ \end{tikzpicture}%
+ \caption{Integrated system architecture showing frontend, backend, and shared volumes.}
+\end{figure}
+
+\subsection{Continuous Integration and Developer Experience}
+We utilize a multi-stage Docker build to ensure environment parity across developer machines and production runners. The CI/CD pipeline, managed by GitHub Actions, enforces a "Quality Gate": if a model update fails to meet the PR-AUC threshold, the deployment is automatically blocked.
+
+\subsubsection{Automated Smoke Testing}
+To ensure the pipeline remains functional across versions, we implemented an automated "Smoke Test" in GitHub Actions. When code is pushed, the runner executes a lightweight version of the full Prefect pipeline using a sampled subset of the \texttt{dev.csv} dataset. This validates the end-to-end integration of data loading, transformation, and training without the computational overhead of the full dataset. Generated plots and models are preserved as GitHub artifacts for immediate inspection.
+
+\subsubsection{Local Developer Automation (Git Hooks)}
+To bridge the gap between local development and centralized orchestration, we implemented a \texttt{post-commit} Git Hook. This local script automatically triggers the Prefect pipeline on the developer's machine immediately after a commit is finalized. By setting the \texttt{PREFECT\_API\_URL} to the local Dockerized server, we ensure that every code change is instantly reflected in the dashboard, providing immediate feedback on model performance impacts.
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[stage] (dev) {Developer};
+ \node[stage, below=of dev] (ci) {CI Runner\\(GitHub Actions)};
+ \node[stage, below=of ci] (build) {Docker Build};
+ \node[stage, below=of build] (registry) {Registry\\(Container Image)};
+ \node[stage, below=of registry] (prod) {Production};
+
+ \draw[flowarrow] (dev) -- (ci);
+ \draw[flowarrow] (ci) -- (build);
+ \draw[flowarrow] (build) -- (registry);
+ \draw[flowarrow] (registry) -- (prod);
+ \end{tikzpicture}%
+ \caption{Automated CI/CD workflow featuring cloud smoke testing and local Git hook triggers.}
+\end{figure}
+
+\subsection{Prefect Orchestration}
+All machine learning tasks are orchestrated by Prefect. This ensures that data loading, training, and evaluation occur in a strict, observable sequence with automated retries and failure logging.
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[stage] (ingest) {Ingest};
+ \node[stage, below=of ingest] (eda) {Raw EDA};
+ \node[stage, below=of eda] (preproc) {Preprocessing};
+ \node[stage, below=of preproc] (train) {Training};
+ \node[stage, below=of train] (eval) {Evaluation};
+ \node[stage, below=of eval] (publish) {Publish Artifacts};
+ 
+ \draw[flowarrow] (ingest) -- (eda);
+ \draw[flowarrow] (eda) -- (preproc);
+ \draw[flowarrow] (preproc) -- (train);
+ \draw[flowarrow] (train) -- (eval);
+ \draw[flowarrow] (eval) -- (publish);
+ \end{tikzpicture}%
+ \caption{Prefect orchestration flow for model training and validation.}
+\end{figure}
+
+\subsection{Interactive ML Dashboard and Model Registry}
+The system features a bespoke React-based dashboard that provides real-time observability into the model's lifecycle. This interface acts as the centralized control plane for both training outcomes and deployment health.
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/dashboard_overview.png}
+ \caption{The ML Pipeline Dashboard provides a real-time view of training performance, displaying critical metrics such as Precision, Recall, and the ROC/PR curves directly from the latest evaluation artifacts.}
+\end{figure}
+
+The dashboard is divided into two primary functional areas:
+\begin{enumerate}
+ \item \textbf{Performance Monitoring}: Visualizes the metrics and curves generated by the Prefect pipeline. This allows analysts to verify that a new model meets quality standards before it is moved to production.
+ \item \textbf{Model Registry}: A versioned history of every model artifact produced by the system. Each entry includes the creation timestamp, performance scores, and a unique filename.
+\end{enumerate}
+
+\begin{figure}[H]
+ \centering
+ \includegraphics[width=\columnwidth]{assets/dashboard_registry.png}
+ \caption{The Model Registry interface allows for direct management of model versions. Administrators can inspect historical performance and manually activate or hot-swap the 'Champion' model used by the inference API.}
+\end{figure}
+
+Through this interface, the platform achieves a "human-in-the-loop" MLOps workflow, where automated training is combined with manual oversight and deterministic version control.
+
+\section{Operational Notes and Future Work}
+\subsection{How a Full Run Happens}
+A full run starts by loading the CSV files, then the pipeline performs EDA on the raw data, trains the model, runs EDA again on the transformed data, evaluates the result, writes metrics to disk, and only then saves the model. That order is deliberate: it gives us visibility into both the starting data and the transformed features.
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}[node distance=4mm and 6mm]
+ \node[stage] (load) {Load CSVs};
+ \node[stage, below=of load] (eda1) {EDA on raw data};
+ \node[stage, below=of eda1] (train) {Train model};
+ \node[stage, below=of train] (eda2) {EDA on features};
+ \node[stage, below=of eda2] (eval) {Evaluate};
+ \node[decision, below=of eval] (gate) {Gate pass?};
+ \node[stage, below right=of gate] (save) {Save model};
+ \node[stage, below left=of gate] (stop) {Stop run};
+ \draw[flowarrow] (load) -- (eda1);
+ \draw[flowarrow] (eda1) -- (train);
+ \draw[flowarrow] (train) -- (eda2);
+ \draw[flowarrow] (eda2) -- (eval);
+ \draw[flowarrow] (eval) -- (gate);
+ \draw[flowarrow] (gate) -| node[above, font=\scriptsize] {yes} (save);
+ \draw[flowarrow] (gate) -| node[above, font=\scriptsize] {no} (stop);
+ \end{tikzpicture}%
+ \caption{The end-to-end run order used by Prefect and the training pipeline.}
+\end{figure}
+
+\subsection{Monitoring and Model Health}
+Beyond performance metrics, the pipeline incorporates automated drift detection using the \textbf{Evidently.ai} framework. This stage generates a comprehensive "Model Health Report" comparing the current training distribution against a historical baseline. It evaluates regression metrics, feature drift, and clustering stability, providing an early warning system for concept drift—a common failure mode in fraud detection where adversary behavior shifts over time.
+
+\begin{table}[H]
+\centering
+\caption{Project components and their operational roles}
+\begin{tabular}{p{0.22\columnwidth}p{0.32\columnwidth}p{0.28\columnwidth}}
+\toprule
+\textbf{Component} & \textbf{Simple role} & \textbf{When it matters} \\
+\midrule
+Prefect & Orchestrates task sequencing and error handling & During training and retraining \\
+\midrule
+FastAPI & Serves low-latency predictions via HTTP & Real-time inference and UI interaction \\
+\midrule
+Evidently & Automated drift and health reporting & Post-training validation and monitoring \\
+\midrule
+Docker & Environment parity and microservice isolation & Deployment and CI/CD validation \\
+\midrule
+Git Hooks & Local automation and instant feedback & Developer workflow and iteration \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\subsection{Conclusion and Future Roadmap}
+The project bridges research and production engineering by combining a measured modeling strategy with a fully operational serving stack. The system is competitive, with an ROC-AUC that exceeds paper benchmarks. Moving forward, we aim to enhance the platform through:
+\begin{itemize}
+ \item \textbf{Explainability Layer}: Integrating SHAP or LIME to provide per-prediction risk justifications for analysts.
+ \item \textbf{Real-Time Feature Stores}: Reducing inference latency for complex behavioral aggregates like user velocity.
+ \item \textbf{Graph Neural Networks (GNNs)}: Capturing network-level fraudulent relationships and community-based fraud rings.
+ \item \textbf{Drift Monitoring}: Implementing automated alerts for concept and feature drift in production.
+\end{itemize}
+
+\begin{thebibliography}{9}
+
+\bibitem{project_repo}
+H.~Raza, H.~Arif, E.~Swati, and R.~Ashraf,
+``Architecting a Production-Grade Fraud Detection Ecosystem: Source Code and Artifacts,''
+GitHub repository, 2026. [Online].
+Available: \url{https://github.com/hamxa296/ML-Project-hehe}
+
+\bibitem{baseline_paper}
+``IEEE-CIS Fraud Detection: Benchmark and Dataset,''
+\textit{Preprints.org}, 2025.
+DOI: \href{https://doi.org/10.20944/preprints202507.1711.v1}{10.20944/preprints202507.1711.v1}
+
+\bibitem{kaggle_dataset}
+``IEEE-CIS Fraud Detection Dataset,''
+Kaggle Competition, 2019. [Online].
+Available: \url{https://www.kaggle.com/competitions/ieee-fraud-detection/data}
+
+\end{thebibliography}
+
 \end{document}
