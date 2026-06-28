@@ -26,3 +26,7 @@ joblib
 jupyter>=1.0.0
 pytest
 flake8
+
+# Deep Learning (Optional / Research replication)
+tensorflow>=2.12.0
+torch>=2.0.0
