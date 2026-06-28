@@ -3,9 +3,11 @@
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
 ![XGBoost](https://img.shields.io/badge/XGBoost-1E88E5?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
-An end-to-end machine learning pipeline implementing advanced credit card fraud classification. Focuses on ensembling tree-based classifiers and handling imbalanced datasets.
+A production-grade, end-to-end machine learning pipeline implementing advanced credit card fraud classification. Focuses on ensembling tree-based classifiers and handling imbalanced datasets.
 
 ## Key Features
 *   **Ensemble Modeling**: Trains and compares XGBoost, LightGBM, and CatBoost models.
