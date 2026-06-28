@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  # 1. Unified App (FastAPI + React Frontend)
+  # 1. Unified App (FastAPI Backend serving built React Frontend)
   app:
     build: 
       context: ./project
     ports:
-      - "8000:8000"
+      - "8000:8000" # Expose the FastAPI backend port
     volumes:
-      - ./project/models:/app/models
+      - ./project/models:/app/models # Mount models directory for predictions
     environment:
       - PREFECT_API_URL=http://prefect:4200/api
     depends_on:
