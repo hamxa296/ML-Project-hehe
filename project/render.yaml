@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: fraud-detection-app
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 10000
