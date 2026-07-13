@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, GitMerge, BarChart2, PlayCircle, Settings, Activity, FileSpreadsheet, Layers, Brain } from 'lucide-react';
 
-const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '/api';
 
 const Sidebar = () => {
   return (

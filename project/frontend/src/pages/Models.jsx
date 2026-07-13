@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Box, Layers, Calendar, HardDrive, CheckCircle2, Play, Info, AlertCircle, RefreshCw } from 'lucide-react';
 
-const API = 'http://localhost:8000';
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '/api');
 
 const SC = ({ title, value, icon: Icon, color = 'cyan' }) => (
   <div className="glass-card p-5 flex-col gap-2" style={{ borderTop: `2px solid var(--${color})` }}>

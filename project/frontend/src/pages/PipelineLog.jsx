@@ -8,15 +8,17 @@ const PipelineLog = () => {
   const [runs, setRuns] = useState([]);
   const [pipelineStatus, setPipelineStatus] = useState({ status: 'IDLE' });
 
+  const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '/api');
+
   const fetchRuns = () => {
-    fetch('http://localhost:8000/model_evaluations')
+    fetch(`${API}/model_evaluations`)
       .then(res => res.json())
       .then(data => {
          if(data.evaluations) setRuns(data.evaluations.reverse());
       })
       .catch(err => console.error("Failed to load runs", err));
 
-    fetch('http://localhost:8000/pipeline/status')
+    fetch(`${API}/pipeline/status`)
       .then(res => res.json())
       .then(data => setPipelineStatus(data))
       .catch(err => console.error("Failed to load status", err));

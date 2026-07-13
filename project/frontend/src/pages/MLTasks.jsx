@@ -5,7 +5,7 @@ import {
   ResponsiveContainer, BarChart, Bar, ScatterChart, Scatter, Cell
 } from 'recharts';
 
-const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '/api';
 
 const EmptyState = ({ msg }) => (
   <div className="flex-col items-center justify-center" style={{ height: 200, opacity: 0.5 }}>

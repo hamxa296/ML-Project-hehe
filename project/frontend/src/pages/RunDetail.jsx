@@ -6,9 +6,10 @@ const RunDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [run, setRun] = useState(null);
+  const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '/api');
 
   useEffect(() => {
-    fetch('http://localhost:8000/model_evaluations')
+    fetch(`${API}/model_evaluations`)
       .then(res => res.json())
       .then(data => {
          if(data.evaluations) {

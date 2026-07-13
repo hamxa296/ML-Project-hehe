@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { RefreshCw, XCircle } from 'lucide-react';
 
-const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '/api';
 
 const PipelineBanner = () => {
   const [pipelineStatus, setPipelineStatus] = useState({ status: 'IDLE' });

@@ -41,6 +41,14 @@ EDA_PROC_JSON  = EDA_PROC_DIR / "processed_eda_data.json"
 
 model_pipeline = None
 
+
+def _payload_to_dataframe(payload):
+    if hasattr(payload, "model_dump"):
+        data = payload.model_dump()
+    else:
+        data = payload.dict()
+    return pd.DataFrame([data])
+
 @app.on_event("startup")
 def load_artifacts():
     global model_pipeline
@@ -77,7 +85,7 @@ def predict_single(payload: TransactionInput):
         raise HTTPException(status_code=503, detail="Pipeline not loaded")
 
     try:
-        df = pd.DataFrame([payload.model_dump()])
+        df = _payload_to_dataframe(payload)
         prob = float(model_pipeline.predict_proba(df)[:, 1][0])
         pred = int(prob > 0.5)
         return {"is_fraud": pred, "probability": prob}

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Activity, Database, GitCommit, Play, CheckCircle2, Image as ImageIcon, BarChart2, RefreshCw, XCircle } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
-const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '';
+const API_BASE = import.meta.env.DEV ? 'http://localhost:8000' : '/api';
 
 // Human-readable labels for each graph filename returned by /graph_list
 const GRAPH_LABELS = {

@@ -5,7 +5,7 @@ import {
 } from 'recharts';
 import { Database, Activity, Image, ZoomIn, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const API = 'http://localhost:8000';
+const API = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '/api');
 const C = { emerald: '#10b981', rose: '#f43f5e', cyan: '#06b6d4', violet: '#d4d4d4', amber: '#f59e0b' };
 const CLUSTER_COLORS = ['#06b6d4', '#d4d4d4', '#f43f5e', '#10b981', '#f59e0b'];
 
