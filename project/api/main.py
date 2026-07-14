@@ -73,6 +73,13 @@ class PredictionResponse(BaseModel):
     is_fraud: int
     probability: float
 
+@app.get("/")
+def root():
+    return {
+        "message": "Welcome to the Fraud Detection API!",
+        "documentation": "Visit /docs for the interactive API documentation."
+    }
+
 @app.get("/health")
 def health():
     if model_pipeline is None:
